@@ -144,7 +144,7 @@ export default function ActivityView() {
   const getNextStatus = () => {
     switch (activity?.Workflow_Status) {
       case 'Submitted': return 'Under Review';
-      case 'Returned for Revision': return 'Under Review';
+      case 'Returned for Revision': return 'Submitted';
       case 'Under Review': return 'Published';
       default: return null;
     }
@@ -558,7 +558,7 @@ export default function ActivityView() {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => transitionMutation.mutate({ newStatus: targetStatus })}
-              className={targetStatus === 'Returned for Revision' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#0d9488] hover:bg-[#0d9488]/90'}>
+              className={targetStatus === 'Returned for Revision' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1E3A5F] hover:bg-[#1E3A5F]/90'}>
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>
