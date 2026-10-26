@@ -1,0 +1,55 @@
+{
+  "name": "Document_Library",
+  "type": "object",
+  "properties": {
+    "Title": {
+      "type": "string",
+      "description": "Document title"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Document description or summary"
+    },
+    "Category": {
+      "type": "string",
+      "enum": [
+        "Policy",
+        "Report",
+        "Evidence",
+        "Reference",
+        "Template",
+        "Manual",
+        "Other"
+      ],
+      "description": "Document category for organization"
+    },
+    "File_URL": {
+      "type": "string",
+      "description": "Uploaded file URL"
+    },
+    "File_Name": {
+      "type": "string",
+      "description": "Original uploaded file name"
+    },
+    "Linked_Project": {
+      "type": "string",
+      "description": "Related Project ID (optional)"
+    },
+    "Linked_Activity": {
+      "type": "string",
+      "description": "Related DQAMP Activity ID (optional)"
+    },
+    "Tags": {
+      "type": "string",
+      "description": "Comma-separated tags for searchability"
+    },
+    "Uploaded_By": {
+      "type": "string",
+      "description": "Email of the user who uploaded the document"
+    }
+  },
+  "required": [
+    "Title",
+    "Category"
+  ]
+}

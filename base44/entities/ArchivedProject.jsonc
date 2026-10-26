@@ -1,0 +1,59 @@
+{
+  "name": "ArchivedProject",
+  "type": "object",
+  "properties": {
+    "Original_Project_ID": {
+      "type": "string",
+      "description": "ID of the original Project record"
+    },
+    "Project_Code": {
+      "type": "string",
+      "description": "Project code"
+    },
+    "Project_Title": {
+      "type": "string",
+      "description": "Project title"
+    },
+    "Functional_Division": {
+      "type": "string",
+      "enum": [
+        "CID",
+        "SGOD",
+        "OSDS"
+      ],
+      "description": "Functional division"
+    },
+    "Fiscal_Year": {
+      "type": "integer",
+      "description": "Fiscal year the project belongs to"
+    },
+    "Project_Status": {
+      "type": "string",
+      "description": "Status at time of archival"
+    },
+    "Financial_Allocation": {
+      "type": "number",
+      "description": "Total budget allocation"
+    },
+    "Financial_Utilization": {
+      "type": "number",
+      "description": "Actual expenditure"
+    },
+    "Summary": {
+      "type": "string",
+      "description": "Archival summary or notes"
+    },
+    "Archived_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the project was archived"
+    },
+    "Archived_By": {
+      "type": "string",
+      "description": "Email of user who archived the project"
+    }
+  },
+  "required": [
+    "Project_Title"
+  ]
+}

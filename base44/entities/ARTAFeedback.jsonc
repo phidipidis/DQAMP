@@ -1,0 +1,224 @@
+{
+  "name": "ARTAFeedback",
+  "type": "object",
+  "properties": {
+    "Linked_Activity": {
+      "type": "string",
+      "description": "Related Activity ID"
+    },
+    "Activity_Title": {
+      "type": "string",
+      "description": "Activity title (for reporting)"
+    },
+    "Operating_Unit": {
+      "type": "string",
+      "description": "Operating unit"
+    },
+    "Quarter": {
+      "type": "string",
+      "enum": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "description": "Quarter when feedback was collected"
+    },
+    "Year": {
+      "type": "integer",
+      "description": "Year when feedback was collected"
+    },
+    "Survey_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when survey was conducted"
+    },
+    "Age": {
+      "type": "string",
+      "description": "Respondent age"
+    },
+    "Sex": {
+      "type": "string",
+      "description": "Respondent sex"
+    },
+    "Region": {
+      "type": "string",
+      "description": "Respondent region"
+    },
+    "Agency_Visited": {
+      "type": "string",
+      "description": "Agency visited"
+    },
+    "Service_Availed": {
+      "type": "string",
+      "description": "Service availed"
+    },
+    "Customer_Type": {
+      "type": "string",
+      "enum": [
+        "Citizen",
+        "Business",
+        "Government"
+      ],
+      "description": "Type of customer"
+    },
+    "CC1": {
+      "type": "string",
+      "enum": [
+        "Aware before transaction",
+        "Aware only upon seeing CC",
+        "Not aware"
+      ],
+      "description": "Citizens Charter awareness"
+    },
+    "CC2": {
+      "type": "string",
+      "enum": [
+        "Easy to find",
+        "Hard to find",
+        "Did not see"
+      ],
+      "description": "Citizens Charter findability (skip if CC1 = Not aware)"
+    },
+    "CC3": {
+      "type": "string",
+      "enum": [
+        "Used CC",
+        "Did not use CC"
+      ],
+      "description": "Citizens Charter usage (skip if CC1 = Not aware)"
+    },
+    "CC3_Reason": {
+      "type": "string",
+      "description": "Reason for not using CC (required if CC3 = Did not use CC)"
+    },
+    "SQD0_Overall_Satisfaction": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 0: Overall Satisfaction (1-5)"
+    },
+    "SQD1_Responsiveness": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 1: Responsiveness (1-5)"
+    },
+    "SQD2_Reliability": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 2: Reliability (1-5)"
+    },
+    "SQD3_Access_Facilities": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 3: Access & Facilities (1-5)"
+    },
+    "SQD4_Communication": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 4: Communication (1-5)"
+    },
+    "SQD5_Costs": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 5: Costs (1-5)"
+    },
+    "SQD6_Integrity": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 6: Integrity (1-5)"
+    },
+    "SQD7_Assurance": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 7: Assurance (1-5)"
+    },
+    "SQD8_Outcome": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "description": "Service Quality Dimension 8: Outcome (1-5)"
+    },
+    "Average_SQD_Score": {
+      "type": "number",
+      "description": "Average score across all SQD dimensions"
+    },
+    "Remarks": {
+      "type": "string",
+      "description": "Additional remarks or comments"
+    },
+    "Common_Remarks": {
+      "type": "string",
+      "description": "Common feedback themes"
+    },
+    "Feedback_Comments": {
+      "type": "string",
+      "description": "Detailed feedback comments"
+    }
+  },
+  "required": [
+    "Linked_Activity",
+    "Customer_Type",
+    "CC1",
+    "SQD1_Responsiveness",
+    "SQD2_Reliability",
+    "SQD3_Access_Facilities",
+    "SQD4_Communication",
+    "SQD5_Costs",
+    "SQD6_Integrity",
+    "SQD7_Assurance",
+    "SQD8_Outcome"
+  ]
+}

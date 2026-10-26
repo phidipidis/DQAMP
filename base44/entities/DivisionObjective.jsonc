@@ -1,0 +1,88 @@
+{
+  "name": "DivisionObjective",
+  "type": "object",
+  "properties": {
+    "Objective_Code": {
+      "type": "string",
+      "description": "Objective code"
+    },
+    "Objective_Title": {
+      "type": "string",
+      "description": "Objective title"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Detailed description of the objective"
+    },
+    "Functional_Division": {
+      "type": "string",
+      "enum": [
+        "CID",
+        "SGOD",
+        "OSDS"
+      ],
+      "description": "Functional division"
+    },
+    "Target_Year": {
+      "type": "integer",
+      "description": "Target year for achieving the objective"
+    },
+    "Quarter": {
+      "type": "string",
+      "enum": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "description": "Target quarter"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "On Track",
+        "At Risk",
+        "Achieved",
+        "Not Achieved"
+      ],
+      "default": "Not Started",
+      "description": "Objective status"
+    },
+    "Owner": {
+      "type": "string",
+      "description": "Person responsible for the objective"
+    },
+    "Target_Value": {
+      "type": "string",
+      "description": "Target metric or outcome"
+    },
+    "Current_Progress": {
+      "type": "number",
+      "description": "Progress percentage (0-100)"
+    },
+    "Objective_Order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "Linked_Organizational_Goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Organizational Goal IDs (many-to-many)"
+    },
+    "Linked_Outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Output IDs (many-to-many)"
+    }
+  },
+  "required": [
+    "Objective_Title",
+    "Functional_Division"
+  ]
+}

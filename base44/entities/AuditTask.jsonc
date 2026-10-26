@@ -1,0 +1,69 @@
+{
+  "name": "AuditTask",
+  "type": "object",
+  "properties": {
+    "Task_Title": {
+      "type": "string",
+      "description": "Task title / action item"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Task details and context"
+    },
+    "Linked_Audit": {
+      "type": "string",
+      "description": "Related audit or quality review reference"
+    },
+    "Linked_Activity": {
+      "type": "string",
+      "description": "Related DQAMP Activity ID"
+    },
+    "Assigned_To": {
+      "type": "string",
+      "description": "Email of person assigned to the task"
+    },
+    "Assigned_By": {
+      "type": "string",
+      "description": "Email of person who assigned the task"
+    },
+    "Priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "default": "Medium",
+      "description": "Task priority level"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Open",
+      "description": "Task status"
+    },
+    "Due_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Task due date"
+    },
+    "Completed_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the task was completed"
+    },
+    "Remarks": {
+      "type": "string",
+      "description": "Notes and resolution remarks"
+    }
+  },
+  "required": [
+    "Task_Title"
+  ]
+}

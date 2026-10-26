@@ -1,0 +1,62 @@
+{
+  "name": "Audit_Log",
+  "type": "object",
+  "properties": {
+    "Action_Type": {
+      "type": "string",
+      "enum": [
+        "Create",
+        "Update",
+        "Delete",
+        "Submit",
+        "Review",
+        "Publish",
+        "Import",
+        "Upload",
+        "Download",
+        "Revert",
+        "Link_Change",
+        "Role_Change",
+        "Login",
+        "Assignment",
+        "Export"
+      ],
+      "description": "Type of action performed"
+    },
+    "Entity": {
+      "type": "string",
+      "description": "Entity type affected"
+    },
+    "Record_ID": {
+      "type": "string",
+      "description": "ID of the affected record"
+    },
+    "User_Email": {
+      "type": "string",
+      "description": "Email of user who performed action"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the action occurred"
+    },
+    "Remarks": {
+      "type": "string",
+      "description": "Additional details about the action"
+    },
+    "Previous_Values": {
+      "type": "string",
+      "description": "JSON string of previous values (for updates)"
+    },
+    "New_Values": {
+      "type": "string",
+      "description": "JSON string of new values (for updates)"
+    }
+  },
+  "required": [
+    "Action_Type",
+    "Entity",
+    "User_Email",
+    "Timestamp"
+  ]
+}

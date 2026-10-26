@@ -1,0 +1,129 @@
+{
+  "name": "ProjectOutputs",
+  "type": "object",
+  "properties": {
+    "Output_ID": {
+      "type": "string",
+      "description": "Output code/identifier"
+    },
+    "Output_Title": {
+      "type": "string",
+      "description": "Output title (canonical)"
+    },
+    "Output_Description": {
+      "type": "string",
+      "description": "Output description / statement"
+    },
+    "Output_Type": {
+      "type": "string",
+      "enum": [
+        "Deliverable",
+        "Capacity",
+        "Policy",
+        "System",
+        "Service",
+        "Product"
+      ],
+      "description": "Type of output (canonical)"
+    },
+    "Output_Category": {
+      "type": "string",
+      "enum": [
+        "Deliverable",
+        "Capacity",
+        "Policy",
+        "System"
+      ],
+      "description": "Output category (legacy)"
+    },
+    "Output_Order": {
+      "type": "number",
+      "description": "Display order within project"
+    },
+    "Target_Quantity": {
+      "type": "number",
+      "description": "Target quantity to be produced"
+    },
+    "Current_Quantity": {
+      "type": "number",
+      "description": "Current quantity achieved"
+    },
+    "Unit_of_Measure": {
+      "type": "string",
+      "description": "Unit of measurement (e.g., documents, trainings, systems)"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Verified",
+        "Not Achieved"
+      ],
+      "default": "Not Started",
+      "description": "Output implementation status (canonical)"
+    },
+    "Target_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Target completion date"
+    },
+    "Due_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Due date (legacy)"
+    },
+    "Evidence_Attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Uploaded evidence/MOV file URLs"
+    },
+    "Linked_Evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related DQAMP Activity IDs contributing to this output"
+    },
+    "Linked_Objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Functional Division Objective IDs"
+    },
+    "Output_Verification_Status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Verified",
+        "Not Achieved"
+      ],
+      "default": "Pending",
+      "description": "Verification status (legacy \u2014 prefer Status)"
+    },
+    "Verified_By": {
+      "type": "string",
+      "description": "User who verified the output"
+    },
+    "Verification_Date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of verification"
+    },
+    "means_of_verification_url": {
+      "type": "string",
+      "description": "URL link to means of verification document or folder (e.g., Google Drive)"
+    },
+    "Linked_Project": {
+      "type": "string",
+      "description": "Related Project ID (required)"
+    }
+  },
+  "required": [
+    "Linked_Project"
+  ]
+}
