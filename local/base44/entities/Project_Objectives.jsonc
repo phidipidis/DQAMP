@@ -1,0 +1,56 @@
+{
+  "name": "Project_Objectives",
+  "type": "object",
+  "properties": {
+    "Linked_Project": {
+      "type": "string",
+      "description": "Related Project ID"
+    },
+    "Objective_Statement": {
+      "type": "string",
+      "description": "Objective statement"
+    },
+    "Objective_Type": {
+      "type": "string",
+      "enum": [
+        "Outcome",
+        "Intermediate Outcome"
+      ],
+      "description": "Type of objective"
+    },
+    "Target_Indicator": {
+      "type": "string",
+      "description": "Target indicator"
+    },
+    "Target_Value": {
+      "type": "string",
+      "description": "Target value"
+    },
+    "Verification_Method": {
+      "type": "string",
+      "description": "Method of verification"
+    },
+    "Objective_Status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Achieved",
+        "Not Achieved"
+      ],
+      "default": "Not Started",
+      "description": "Current objective status"
+    },
+    "Linked_Outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Project Output IDs"
+    }
+  },
+  "required": [
+    "Linked_Project",
+    "Objective_Statement"
+  ]
+}

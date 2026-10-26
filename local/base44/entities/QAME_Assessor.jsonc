@@ -1,0 +1,36 @@
+{
+  "name": "QAME_Assessor",
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "Assessor full name"
+    },
+    "Functional_Divisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CID",
+          "SGOD",
+          "OSDS"
+        ]
+      },
+      "description": "Assigned functional divisions (can be multiple)"
+    },
+    "Role": {
+      "type": "string",
+      "description": "Assessor role/designation (free text)"
+    },
+    "Is_Active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether assessor is active"
+    }
+  },
+  "required": [
+    "Name",
+    "Functional_Divisions",
+    "Is_Active"
+  ]
+}

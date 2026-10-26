@@ -1,0 +1,36 @@
+{
+  "name": "SystemSetting",
+  "type": "object",
+  "properties": {
+    "Setting_Key": {
+      "type": "string",
+      "description": "Unique setting identifier"
+    },
+    "Setting_Value": {
+      "type": "string",
+      "description": "Setting value"
+    },
+    "Setting_Category": {
+      "type": "string",
+      "enum": [
+        "Fiscal",
+        "Theme",
+        "Messaging",
+        "General"
+      ],
+      "default": "General",
+      "description": "Setting group"
+    },
+    "Description": {
+      "type": "string",
+      "description": "What this setting controls"
+    },
+    "Last_Updated_By": {
+      "type": "string",
+      "description": "Email of last user to update this setting"
+    }
+  },
+  "required": [
+    "Setting_Key"
+  ]
+}

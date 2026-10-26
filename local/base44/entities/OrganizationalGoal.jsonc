@@ -1,0 +1,115 @@
+{
+  "name": "OrganizationalGoal",
+  "type": "object",
+  "properties": {
+    "Goal_Title": {
+      "type": "string",
+      "description": "Title of the organizational goal (canonical)"
+    },
+    "Title": {
+      "type": "string",
+      "description": "Title alias (legacy field \u2014 mirrors Goal_Title)"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Detailed description of the goal"
+    },
+    "Target_Year": {
+      "type": "integer",
+      "description": "Target year for achieving the goal"
+    },
+    "Quarter": {
+      "type": "string",
+      "enum": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "description": "Target quarter"
+    },
+    "Strategic_Priority": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "description": "Strategic priority level (canonical)"
+    },
+    "Priority_Level": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium",
+      "description": "Priority level alias (legacy \u2014 mirrors Strategic_Priority)"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "On Track",
+        "At Risk",
+        "Completed"
+      ],
+      "default": "Not Started",
+      "description": "Current status of the goal"
+    },
+    "Is_Active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the goal is currently active"
+    },
+    "Owner": {
+      "type": "string",
+      "description": "Person responsible for the goal"
+    },
+    "Target_Value": {
+      "type": "string",
+      "description": "Target metric or outcome"
+    },
+    "Current_Progress": {
+      "type": "number",
+      "description": "Progress percentage (0-100)"
+    },
+    "Executive_Goal_Order": {
+      "type": "number",
+      "description": "Display order (from ExecutiveGoal entity)"
+    },
+    "Linked_Division_Objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Division Objective IDs (many-to-many)"
+    },
+    "Linked_Projects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Project IDs (many-to-many)"
+    },
+    "Linked_Outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Output IDs (many-to-many)"
+    },
+    "Linked_Objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Objective IDs (alias for Linked_Division_Objectives)"
+    }
+  },
+  "required": [
+    "Goal_Title"
+  ]
+}

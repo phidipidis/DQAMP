@@ -1,0 +1,3 @@
+Save the DepEd Lucena logo here as:  deped-lucena-logo.jpg
+(Right-click the logo on the online DQAMP site and choose "Save image as".)
+The sidebar hides the logo until this file exists.

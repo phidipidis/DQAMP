@@ -1,0 +1,332 @@
+{
+  "name": "DQAMPActivity",
+  "type": "object",
+  "properties": {
+    "Activity_ID": {
+      "type": "string",
+      "description": "Activity code/identifier"
+    },
+    "Title": {
+      "type": "string",
+      "description": "Activity title (legacy field)"
+    },
+    "Activity_Title": {
+      "type": "string",
+      "description": "Activity title (canonical)"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Activity description"
+    },
+    "Activity_Type": {
+      "type": "string",
+      "enum": [
+        "Workshop",
+        "Training",
+        "Research",
+        "PIR",
+        "Conferences",
+        "Meetings",
+        "Orientation",
+        "Capability Building NEAP/PRC Accredited",
+        "Contest",
+        "Others"
+      ],
+      "description": "Activity type"
+    },
+    "Functional_Division": {
+      "type": "string",
+      "enum": [
+        "CID",
+        "SGOD",
+        "OSDS"
+      ],
+      "description": "Implementing division"
+    },
+    "Unit_Section": {
+      "type": "string",
+      "description": "Unit or section within the division"
+    },
+    "Operating_Unit": {
+      "type": "string",
+      "description": "Operating unit responsible for the activity"
+    },
+    "Responsible_Person": {
+      "type": "string",
+      "description": "Person responsible for the activity"
+    },
+    "Category": {
+      "type": "string",
+      "enum": [
+        "Training",
+        "Program LRM",
+        "PIR",
+        "Research",
+        "Conference"
+      ],
+      "description": "Activity category (legacy)"
+    },
+    "Funding_Source": {
+      "type": "string",
+      "enum": [
+        "MOOE",
+        "SARO",
+        "SEF",
+        "Others"
+      ],
+      "description": "Funding source"
+    },
+    "saro_number": {
+      "type": "string",
+      "description": "SARO Number (only applicable when Funding_Source is SARO)"
+    },
+    "Planned_Start_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Planned/scheduled start date"
+    },
+    "Start_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Actual start date"
+    },
+    "End_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Activity end date"
+    },
+    "Date_Conducted": {
+      "type": "string",
+      "format": "date",
+      "description": "Actual end date (date when activity was conducted)"
+    },
+    "Venue": {
+      "type": "string",
+      "description": "Location or venue of the activity"
+    },
+    "Schedule_Start_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Scheduled start date (legacy)"
+    },
+    "Schedule_End_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Scheduled end date (legacy)"
+    },
+    "Planned_Completion_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Planned completion date"
+    },
+    "Planned_Disbursement_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Planned disbursement date"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Cancelled",
+        "Delayed"
+      ],
+      "default": "Not Started",
+      "description": "Activity implementation status"
+    },
+    "Workflow_Status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Returned for Revision",
+        "Under Review",
+        "Published"
+      ],
+      "default": "Draft",
+      "description": "Record status driving field permissions"
+    },
+    "Remarks": {
+      "type": "string",
+      "description": "General remarks about the activity"
+    },
+    "Reschedule_Reason": {
+      "type": "string",
+      "description": "Reason for rescheduling if applicable"
+    },
+    "Implementer_Remarks": {
+      "type": "string",
+      "description": "Implementer remarks (editable in Draft and Submitted)"
+    },
+    "Evidence_Notes": {
+      "type": "string",
+      "description": "Evidence and MOV notes"
+    },
+    "Financial_Allocation": {
+      "type": "number",
+      "description": "Budget Allocated (approved budget)"
+    },
+    "Financial_Utilization": {
+      "type": "number",
+      "description": "Budget Utilized (actual amount spent)"
+    },
+    "Variance": {
+      "type": "number",
+      "description": "Financial variance: Allocation \u2212 Utilization"
+    },
+    "Physical_Progress": {
+      "type": "number",
+      "description": "Physical progress percentage (0-100)"
+    },
+    "Financial_Progress": {
+      "type": "number",
+      "description": "Financial progress percentage (0-100)"
+    },
+    "Photo_1": {
+      "type": "string",
+      "description": "Photo 1 URL (JPG/JPEG/PNG)"
+    },
+    "Photo_2": {
+      "type": "string",
+      "description": "Photo 2 URL (JPG/JPEG/PNG)"
+    },
+    "Evidence_Attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "MOV / evidence file URLs"
+    },
+    "needs_qame_eval_form": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this activity requires a QAME Evaluation Form URL"
+    },
+    "QAME_Evaluation_Form_URL": {
+      "type": "string",
+      "description": "Document/Folder link for evidence (Google Drive or similar)"
+    },
+    "QAME_Report_File": {
+      "type": "string",
+      "description": "Uploaded QAME report file URL (PDF/Word)"
+    },
+    "QAME_Rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "QAME numeric rating score (1.00\u20134.00)"
+    },
+    "QAME_Rating_Score": {
+      "type": "number",
+      "description": "QAME numeric score (mirrors QAME_Rating)"
+    },
+    "QAME_Venue_Rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "Rating of Venue (1.00\u20134.00)"
+    },
+    "QAME_Assessor": {
+      "type": "string",
+      "description": "QAME Assessor name or ID"
+    },
+    "QAME_Remarks": {
+      "type": "string",
+      "description": "QAME reviewer remarks: strengths, gaps, recommendations"
+    },
+    "Remarks_For_Improvement": {
+      "type": "string",
+      "description": "Recommendations for improvement"
+    },
+    "Return_For_Revision_Note": {
+      "type": "string",
+      "description": "Note from reviewer when returning for revision"
+    },
+    "Reviewed_By": {
+      "type": "string",
+      "description": "Email of reviewer who started the QA review"
+    },
+    "Reviewed_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when review started"
+    },
+    "Published_Date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when record was published"
+    },
+    "ARTA_CSM_Submitted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether ARTA customer satisfaction feedback has been submitted"
+    },
+    "Activity_Order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "Linked_Project": {
+      "type": "string",
+      "description": "Related Project ID (single, legacy)"
+    },
+    "Linked_Projects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Project IDs"
+    },
+    "Linked_Outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Output IDs"
+    },
+    "Contributes_To_Output": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Project Output IDs"
+    },
+    "Linked_Objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Related Project Objective IDs"
+    },
+    "Assigned_Assessors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Auto-assigned QAME Assessor IDs on submission"
+    },
+    "has_partnership": {
+      "type": "boolean",
+      "description": "Whether activity was conducted in partnership with another agency"
+    },
+    "partner_agency_name": {
+      "type": "string",
+      "description": "Name of the partner agency"
+    },
+    "partnership_type": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Types of partnership conducted (multi-select)"
+    },
+    "partnership_type_other": {
+      "type": "string",
+      "description": "Free-text description when 'Others' is selected in partnership type"
+    }
+  },
+  "required": [
+    "Functional_Division"
+  ]
+}
