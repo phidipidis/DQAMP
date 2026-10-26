@@ -72,7 +72,7 @@ function NewActivityFields({ formData, onChange, projects, onSubmit, isSubmittin
     <div className="max-w-xl mx-auto">
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
-          <CardTitle className="text-[#1e3a5f] flex items-center gap-2 text-base">
+          <CardTitle className="text-[#1B2A8F] flex items-center gap-2 text-base">
             <FileText className="h-4 w-4" />
             Activity Details
           </CardTitle>
@@ -122,7 +122,7 @@ function NewActivityFields({ formData, onChange, projects, onSubmit, isSubmittin
           <Button
             onClick={onSubmit}
             disabled={!formData.Activity_Title || !formData.Functional_Division || isSubmitting}
-            className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+            className="w-full bg-[#1B2A8F] hover:bg-[#1B2A8F]/90"
           >
             {isSubmitting ? 'Creating...' : 'Create Activity'}
           </Button>
@@ -501,7 +501,7 @@ export default function ActivityForm() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmitWorkflow} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+            <AlertDialogAction onClick={handleSubmitWorkflow} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
               Confirm & Submit
             </AlertDialogAction>
           </AlertDialogFooter>

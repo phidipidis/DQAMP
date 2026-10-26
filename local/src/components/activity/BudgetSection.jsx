@@ -16,7 +16,7 @@ export default function BudgetSection({ formData, onChange, locked }) {
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />Budget Monitoring
           </span>

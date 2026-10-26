@@ -48,7 +48,7 @@ export default function QAMESection({
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2"><ClipboardCheck className="h-4 w-4" />QAME Evaluation</span>
           {!canEditQAME && (
             <Badge variant="outline" className="text-amber-600 border-amber-300 gap-1 text-xs">
@@ -155,7 +155,7 @@ export default function QAMESection({
                   checked={(formData.needs_qame_eval_form ?? true) === value}
                   onChange={() => onChange('needs_qame_eval_form', value)}
                   disabled={!canEditQAME}
-                  className="accent-[#1e3a5f] w-4 h-4"
+                  className="accent-[#1B2A8F] w-4 h-4"
                 />
                 <span className="text-sm font-medium">{label}</span>
               </label>

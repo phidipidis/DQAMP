@@ -22,7 +22,7 @@ export default function CoreInfoSection({ formData, onChange, locked }) {
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2"><Building2 className="h-4 w-4" />Activity Information</span>
           {locked && <Badge variant="outline" className="text-amber-600 border-amber-300 gap-1 text-xs"><Lock className="h-3 w-3" />Locked</Badge>}
         </CardTitle>

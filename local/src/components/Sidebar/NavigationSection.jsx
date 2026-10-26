@@ -39,7 +39,7 @@ export default function NavigationSection({
     <div style={{ marginBottom: 2 }}>
       <button
         onClick={onToggle}
-        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] min-h-[44px] lg:min-h-0"
+        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A8F] min-h-[44px] lg:min-h-0"
         style={{
           width: '100%',
           display: 'flex', alignItems: 'center', gap: 10,

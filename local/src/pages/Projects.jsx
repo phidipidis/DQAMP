@@ -259,7 +259,7 @@ export default function Projects() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">Projects</h1>
+          <h1 className="text-2xl font-bold text-[#1B2A8F]">Projects</h1>
           <p className="text-slate-600">Manage projects with objectives and outputs</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -269,7 +269,7 @@ export default function Projects() {
               Export Names & Codes
             </Button>
           )}
-          <Button onClick={openCreateDialog} className="gap-2 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+          <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
             <Plus className="h-4 w-4" />
             New Project
           </Button>

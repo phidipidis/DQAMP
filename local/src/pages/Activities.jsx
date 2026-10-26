@@ -295,7 +295,7 @@ export default function Activities() {
           <Button variant="outline" onClick={() => setIsImportOpen(true)}>
             <FileUp className="h-4 w-4 mr-2" />Import CSV
           </Button>
-          <Button onClick={() => setIsFormOpen(true)} className="bg-[#1e3a5f] hover:bg-[#152a47]">
+          <Button onClick={() => setIsFormOpen(true)} className="bg-[#1B2A8F] hover:bg-[#152a47]">
             <Plus className="h-4 w-4 mr-2" />New Activity
           </Button>
         </div>

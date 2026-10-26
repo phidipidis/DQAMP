@@ -111,7 +111,7 @@ export default function PIRPAReport() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-[#1e3a5f]">PIRPA Report</h1>
+        <h1 className="text-3xl font-bold text-[#1B2A8F]">PIRPA Report</h1>
         <p className="text-slate-600 mt-2">Program Implementation Review and Plan Adjustment</p>
       </div>
 
@@ -141,7 +141,7 @@ export default function PIRPAReport() {
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
               </Button>
-              <Button onClick={exportToPDF} className="flex-1 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+              <Button onClick={exportToPDF} className="flex-1 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
                 <FileText className="h-4 w-4 mr-2" />
                 Export PDF
               </Button>
@@ -155,13 +155,13 @@ export default function PIRPAReport() {
         <Card>
           <CardContent className="pt-6">
             <p className="text-sm text-slate-600">Total Allocation</p>
-            <p className="text-2xl font-bold text-[#1e3a5f]">₱{totals.allocation.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-[#1B2A8F]">₱{totals.allocation.toLocaleString()}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6">
             <p className="text-sm text-slate-600">Total Utilization</p>
-            <p className="text-2xl font-bold text-[#1E3A5F]">₱{totals.utilization.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-[#1B2A8F]">₱{totals.utilization.toLocaleString()}</p>
           </CardContent>
         </Card>
         <Card>

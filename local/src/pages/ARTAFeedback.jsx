@@ -180,10 +180,10 @@ export default function ARTAFeedback() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">ARTA Feedback (CSM)</h1>
+          <h1 className="text-2xl font-bold text-[#1B2A8F]">ARTA Feedback (CSM)</h1>
           <p className="text-slate-600">Customer Satisfaction Measurement feedback collection</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+        <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
           <Plus className="h-4 w-4" />
           New Feedback
         </Button>
@@ -318,7 +318,7 @@ export default function ARTAFeedback() {
 
             {/* Respondent Profile */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-[#1e3a5f]">Respondent Profile</h3>
+              <h3 className="font-semibold text-[#1B2A8F]">Respondent Profile</h3>
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <Label>Age</Label>
@@ -378,7 +378,7 @@ export default function ARTAFeedback() {
 
             {/* Citizen's Charter */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-[#1e3a5f]">Citizen's Charter Questions</h3>
+              <h3 className="font-semibold text-[#1B2A8F]">Citizen's Charter Questions</h3>
               <div>
                 <Label>CC1: Awareness <span className="text-red-500">*</span></Label>
                 <Select
@@ -446,7 +446,7 @@ export default function ARTAFeedback() {
 
             {/* SQD */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-[#1e3a5f]">Service Quality Dimensions (1-5)</h3>
+              <h3 className="font-semibold text-[#1B2A8F]">Service Quality Dimensions (1-5)</h3>
               <div className="grid grid-cols-4 gap-4">
                 <RatingSelect label="SQD1: Responsiveness" field="SQD1_Responsiveness" />
                 <RatingSelect label="SQD2: Reliability" field="SQD2_Reliability" />
@@ -473,7 +473,7 @@ export default function ARTAFeedback() {
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
             <Button 
               onClick={handleSave} 
-              className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+              className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90"
               disabled={createMutation.isPending}
             >
               Submit Feedback

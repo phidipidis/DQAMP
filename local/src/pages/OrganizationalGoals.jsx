@@ -218,12 +218,12 @@ export default function OrganizationalGoals() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1E3A5F]">
+          <h1 className="text-2xl font-bold text-[#1B2A8F]">
             Organizational Goals
           </h1>
           <p className="text-slate-600">Manage strategic goals with project, objective, and output linkages</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+        <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
           <Plus className="h-4 w-4" />
           New Goal
         </Button>
@@ -371,7 +371,7 @@ export default function OrganizationalGoals() {
                     checked={formData.Linked_Projects.includes(p.id)}
                     onCheckedChange={() => toggleProject(p.id)}
                   />
-                  <FolderKanban className="h-4 w-4 text-[#1E3A5F]" />
+                  <FolderKanban className="h-4 w-4 text-[#1B2A8F]" />
                   <span className="text-sm flex-1">{p.Project_Code} - {p.Project_Title}</span>
                   <Badge variant="outline">{p.Functional_Division}</Badge>
                 </div>
@@ -409,7 +409,7 @@ export default function OrganizationalGoals() {
                     checked={formData.Linked_Objectives.includes(o.id)}
                     onCheckedChange={() => toggleObjective(o.id)}
                   />
-                  <Target className="h-4 w-4 text-[#1E3A5F] flex-shrink-0" />
+                  <Target className="h-4 w-4 text-[#1B2A8F] flex-shrink-0" />
                   <span className="text-sm flex-1 truncate">
                     {o.Objective_Code ? <span className="font-mono text-xs text-slate-500 mr-1">[{o.Objective_Code}]</span> : null}
                     {o.Objective_Title || o.Objective_Description || o.Objective_Statement || o.id}
@@ -438,7 +438,7 @@ export default function OrganizationalGoals() {
 
           <DialogFooter className="mt-4">
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
-            <Button onClick={handleSave} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90" disabled={createMutation.isPending || updateMutation.isPending}>
+            <Button onClick={handleSave} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90" disabled={createMutation.isPending || updateMutation.isPending}>
               {editingGoal ? 'Update' : 'Create'}
             </Button>
           </DialogFooter>

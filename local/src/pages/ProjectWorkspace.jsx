@@ -183,7 +183,7 @@ export default function ProjectWorkspace() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[#1B2A8F] flex items-center gap-2">
             <FolderKanban className="h-6 w-6" />
             Project Workspace
           </h1>
@@ -223,7 +223,7 @@ export default function ProjectWorkspace() {
                   <Button variant="outline" size="sm" onClick={() => setEditingProject(false)}>
                     <X className="h-4 w-4 mr-1" /> Cancel
                   </Button>
-                  <Button size="sm" onClick={handleSaveProject} className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+                  <Button size="sm" onClick={handleSaveProject} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
                     <Save className="h-4 w-4 mr-1" /> Save
                   </Button>
                 </div>
@@ -293,7 +293,7 @@ export default function ProjectWorkspace() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card className="shadow-sm">
               <CardContent className="p-4 flex items-center gap-3">
-                <Package className="h-8 w-8 text-[#1E3A5F]" />
+                <Package className="h-8 w-8 text-[#1B2A8F]" />
                 <div>
                   <p className="text-2xl font-bold">{projectOutputs.length}</p>
                   <p className="text-xs text-slate-500">Total Outputs</p>
@@ -302,7 +302,7 @@ export default function ProjectWorkspace() {
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-4 flex items-center gap-3">
-                <ClipboardList className="h-8 w-8 text-[#1e3a5f]" />
+                <ClipboardList className="h-8 w-8 text-[#1B2A8F]" />
                 <div>
                   <p className="text-2xl font-bold">{projectActivities.length}</p>
                   <p className="text-xs text-slate-500">Total Activities</p>
@@ -333,10 +333,10 @@ export default function ProjectWorkspace() {
           <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Package className="h-5 w-5 text-[#1E3A5F]" />
+                <Package className="h-5 w-5 text-[#1B2A8F]" />
                 Outputs
               </CardTitle>
-              <Button size="sm" onClick={openAddOutput} className="gap-1 bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+              <Button size="sm" onClick={openAddOutput} className="gap-1 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
                 <Plus className="h-4 w-4" /> Add Output
               </Button>
             </CardHeader>
@@ -449,7 +449,7 @@ export default function ProjectWorkspace() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setOutputDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreateOutput} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">Create Output</Button>
+            <Button onClick={handleCreateOutput} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">Create Output</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -494,7 +494,7 @@ export default function ProjectWorkspace() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setActivityDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreateActivity} className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">Create Activity</Button>
+            <Button onClick={handleCreateActivity} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">Create Activity</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -516,7 +516,7 @@ export default function ProjectWorkspace() {
                       <span className="text-xs text-slate-500">₱{(act.Financial_Allocation || 0).toLocaleString()}</span>
                     </div>
                   </div>
-                  <Button size="sm" onClick={() => handleLinkActivity(act.id)} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+                  <Button size="sm" onClick={() => handleLinkActivity(act.id)} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
                     <Link2 className="h-4 w-4 mr-1" /> Link
                   </Button>
                 </div>

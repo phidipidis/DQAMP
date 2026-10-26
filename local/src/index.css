@@ -10,8 +10,8 @@
 @layer base {
   :root {
     /* ── DQAMP Brand Tokens ── */
-    --color-primary: #1E3A5F;
-    --color-primary-hover: #08278F;
+    --color-primary: #1B2A8F;
+    --color-primary-hover: #16237A;
     --color-secondary: #2F80ED;
     --color-secondary-soft: #EAF3FF;
     --color-success: #1E8E3E;

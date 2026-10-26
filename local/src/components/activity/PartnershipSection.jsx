@@ -42,7 +42,7 @@ export default function PartnershipSection({ formData, onChange, locked }) {
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2"><Handshake className="h-4 w-4" />Partnership</span>
           {locked && <Badge variant="outline" className="text-amber-600 border-amber-300 gap-1 text-xs"><Lock className="h-3 w-3" />Locked</Badge>}
         </CardTitle>
@@ -61,7 +61,7 @@ export default function PartnershipSection({ formData, onChange, locked }) {
                   name="has_partnership"
                   checked={formData.has_partnership === value}
                   onChange={() => setPartnership(value)}
-                  className="h-4 w-4 accent-[#1E3A5F]"
+                  className="h-4 w-4 accent-[#1B2A8F]"
                   disabled={locked}
                 />
                 <span className="text-sm font-medium text-slate-700">{label}</span>
@@ -99,7 +99,7 @@ export default function PartnershipSection({ formData, onChange, locked }) {
                       type="checkbox"
                       checked={partnershipTypes.includes(option)}
                       onChange={() => toggleType(option)}
-                      className="h-4 w-4 mt-0.5 accent-[#1E3A5F] flex-shrink-0"
+                      className="h-4 w-4 mt-0.5 accent-[#1B2A8F] flex-shrink-0"
                       disabled={locked}
                     />
                     <span className="text-sm text-slate-700">{option}</span>

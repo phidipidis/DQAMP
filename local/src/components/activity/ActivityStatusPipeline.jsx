@@ -35,7 +35,7 @@ export default function ActivityStatusPipeline({ status }) {
             <React.Fragment key={key}>
               <div className={cn(
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border',
-                isCurrent && key !== 'Returned for Revision' && 'bg-[#1e3a5f] text-white border-[#1e3a5f] shadow-sm',
+                isCurrent && key !== 'Returned for Revision' && 'bg-[#1B2A8F] text-white border-[#1B2A8F] shadow-sm',
                 isCurrent && key === 'Returned for Revision' && 'bg-amber-100 text-amber-700 border-amber-300 shadow-sm',
                 isPast && 'bg-emerald-50 text-emerald-700 border-emerald-200',
                 !isCurrent && !isPast && 'bg-slate-50 text-slate-400 border-slate-200'

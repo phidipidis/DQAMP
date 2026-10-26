@@ -56,7 +56,7 @@ export default function ReportCenter() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#1e3a5f]">Report Center</h1>
+        <h1 className="text-3xl font-bold text-[#1B2A8F]">Report Center</h1>
         <p className="text-slate-600 mt-2">Access comprehensive reports with CSV and PDF export capabilities</p>
       </div>
 
@@ -66,7 +66,7 @@ export default function ReportCenter() {
           return (
             <Card key={report.page} className="hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-[#1E3A5F] flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-lg bg-[#1B2A8F] flex items-center justify-center mb-3">
                   <Icon className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl">{report.title}</CardTitle>
@@ -76,7 +76,7 @@ export default function ReportCenter() {
               </CardHeader>
               <CardContent>
                 <Link to={createPageUrl(report.page)}>
-                  <Button className="w-full bg-[#1e3a5f] hover:bg-[#2d4a6f]">
+                  <Button className="w-full bg-[#1B2A8F] hover:bg-[#16237A]">
                     View Report
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>

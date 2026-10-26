@@ -192,7 +192,7 @@ export default function ActivityView() {
           </Button>
           <div>
             {/* CRITICAL-1: Activity entity uses Activity_Title */}
-            <h1 className="text-2xl font-bold text-[#1e3a5f]">{activity.Activity_Title}</h1>
+            <h1 className="text-2xl font-bold text-[#1B2A8F]">{activity.Activity_Title}</h1>
             <div className="flex items-center gap-2 mt-1">
               <WorkflowBadge status={activity.Workflow_Status} />
               {activity.Functional_Division && <Badge variant="outline">{activity.Functional_Division}</Badge>}
@@ -208,7 +208,7 @@ export default function ActivityView() {
           )}
           {nextStatus && (
             <Button onClick={() => { setTargetStatus(nextStatus); setTransitionDialogOpen(true); }}
-              className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+              className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
               {nextStatus === 'Under Review' && <CheckCircle className="h-4 w-4 mr-2" />}
               {nextStatus === 'Published' && <Send className="h-4 w-4 mr-2" />}
               Move to {nextStatus}
@@ -255,7 +255,7 @@ export default function ActivityView() {
         {/* Basic Information */}
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <Building2 className="h-5 w-5" />Basic Information
             </CardTitle>
           </CardHeader>
@@ -289,7 +289,7 @@ export default function ActivityView() {
         {/* Schedule & Financial */}
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <Calendar className="h-5 w-5" />Schedule & Financial
             </CardTitle>
           </CardHeader>
@@ -317,7 +317,7 @@ export default function ActivityView() {
               <p className="text-sm text-slate-500 flex items-center gap-1">
                 <DollarSign className="h-4 w-4" />Financial Allocation
               </p>
-              <p className="mt-1 text-xl font-bold text-[#1e3a5f]">
+              <p className="mt-1 text-xl font-bold text-[#1B2A8F]">
                 ₱{(activity.Financial_Allocation || 0).toLocaleString()}
               </p>
               {activity.Financial_Utilization != null && (
@@ -337,7 +337,7 @@ export default function ActivityView() {
         {/* Project Linkage */}
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <FolderKanban className="h-5 w-5" />Project Linkage
             </CardTitle>
           </CardHeader>
@@ -362,7 +362,7 @@ export default function ActivityView() {
         {/* Assigned Assessors */}
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <Users className="h-5 w-5" />Assigned QAME Assessors
             </CardTitle>
           </CardHeader>
@@ -382,7 +382,7 @@ export default function ActivityView() {
         {/* Evidence / MOV Attachments */}
         <Card className="shadow-md lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <Paperclip className="h-5 w-5" />Evidence / MOV Attachments
             </CardTitle>
           </CardHeader>
@@ -405,7 +405,7 @@ export default function ActivityView() {
               <Button
                 onClick={handleSaveMOV}
                 disabled={movSaving || movUrl === (activity.Evidence_Attachments?.[0] || '')}
-                className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+                className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90"
               >
                 {movSaving ? 'Saving...' : 'Save'}
               </Button>
@@ -417,7 +417,7 @@ export default function ActivityView() {
         {/* ARTA Feedback */}
         <Card className="shadow-md lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <ClipboardCheck className="h-5 w-5" />ARTA Customer Satisfaction Feedback
             </CardTitle>
           </CardHeader>
@@ -443,7 +443,7 @@ export default function ActivityView() {
         {/* QAME Evaluation */}
         <Card className="shadow-md lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
               <ClipboardCheck className="h-5 w-5" />QAME Evaluation
             </CardTitle>
           </CardHeader>
@@ -558,7 +558,7 @@ export default function ActivityView() {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => transitionMutation.mutate({ newStatus: targetStatus })}
-              className={targetStatus === 'Returned for Revision' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1E3A5F] hover:bg-[#1E3A5F]/90'}>
+              className={targetStatus === 'Returned for Revision' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1B2A8F] hover:bg-[#1B2A8F]/90'}>
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>

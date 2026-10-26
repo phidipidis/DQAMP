@@ -260,7 +260,7 @@ export default function CSVImporter({
           <Button
             onClick={handleImport}
             disabled={errors.length > 0 || parsedData.length === 0 || isImporting}
-            className="bg-[#1e3a5f] hover:bg-[#152a47]"
+            className="bg-[#1B2A8F] hover:bg-[#152a47]"
           >
             {isImporting ? 'Importing...' : `Import ${parsedData.length} Records`}
           </Button>

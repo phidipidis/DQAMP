@@ -110,7 +110,7 @@ export default function OutputDetail() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[#1B2A8F] flex items-center gap-2">
             <Package className="h-6 w-6" />
             Output Detail
           </h1>
@@ -132,7 +132,7 @@ export default function OutputDetail() {
               <Button variant="outline" size="sm" onClick={() => setEditing(false)}>
                 <X className="h-4 w-4 mr-1" /> Cancel
               </Button>
-              <Button size="sm" onClick={handleSave} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+              <Button size="sm" onClick={handleSave} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
                 <Save className="h-4 w-4 mr-1" /> Save
               </Button>
             </div>
@@ -244,7 +244,7 @@ export default function OutputDetail() {
       <Card className="shadow-md">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
-            <ClipboardList className="h-5 w-5 text-[#1e3a5f]" />
+            <ClipboardList className="h-5 w-5 text-[#1B2A8F]" />
             Linked Activities ({linkedActivities.length})
           </CardTitle>
         </CardHeader>

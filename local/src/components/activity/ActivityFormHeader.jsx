@@ -59,7 +59,7 @@ export default function ActivityFormHeader({
             <ArrowLeft className="h-4 w-4 mr-1" />Back
           </Button>
           <div>
-            <h1 className="text-xl font-bold text-[#1e3a5f] leading-tight">
+            <h1 className="text-xl font-bold text-[#1B2A8F] leading-tight">
               {isEditMode ? (activityTitle || 'Edit Activity') : 'New Activity'}
             </h1>
             {isEditMode && (
@@ -77,7 +77,7 @@ export default function ActivityFormHeader({
         {/* Action Buttons */}
         <div className="flex gap-2 flex-wrap">
           {canSave && (
-            <Button onClick={onSave} disabled={isSaving} className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+            <Button onClick={onSave} disabled={isSaving} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
               <Save className="h-4 w-4 mr-1" />{isSaving ? 'Saving...' : 'Save'}
             </Button>
           )}
@@ -87,7 +87,7 @@ export default function ActivityFormHeader({
             </Button>
           )}
           {canSubmit && (
-            <Button onClick={onSubmitClick} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
+            <Button onClick={onSubmitClick} className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
               <Send className="h-4 w-4 mr-1" />Submit for Review
             </Button>
           )}

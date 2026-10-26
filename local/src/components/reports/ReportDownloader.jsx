@@ -178,7 +178,7 @@ export default function ReportDownloader({
           <Button
             onClick={handleDownload}
             disabled={!canDownload || isGenerating}
-            className="bg-[#1e3a5f] hover:bg-[#152a47]"
+            className="bg-[#1B2A8F] hover:bg-[#152a47]"
           >
             {isGenerating ? (
               'Generating...'

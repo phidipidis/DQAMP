@@ -236,10 +236,10 @@ export default function Outputs() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">Outputs</h1>
+          <h1 className="text-2xl font-bold text-[#1B2A8F]">Outputs</h1>
           <p className="text-slate-600">Manage deliverables and outputs with verification tracking</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
+        <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
           <Plus className="h-4 w-4" />
           New Output
         </Button>
@@ -480,7 +480,7 @@ export default function Outputs() {
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
             <Button 
               onClick={handleSave} 
-              className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90"
+              className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90"
               disabled={createMutation.isPending || updateMutation.isPending}
             >
               {editingOutput ? 'Update' : 'Create'}

@@ -149,7 +149,7 @@ export default function ActivityImport() {
           Back
         </Button>
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">CSV Import</h1>
+          <h1 className="text-2xl font-bold text-[#1B2A8F]">CSV Import</h1>
           <p className="text-slate-600">Bulk import activities from CSV file</p>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default function ActivityImport() {
       {/* Upload Section */}
       <Card className="shadow-md">
         <CardHeader>
-          <CardTitle className="text-[#1e3a5f] flex items-center gap-2">
+          <CardTitle className="text-[#1B2A8F] flex items-center gap-2">
             <Upload className="h-5 w-5" />
             Upload CSV File
           </CardTitle>
@@ -228,7 +228,7 @@ export default function ActivityImport() {
       {parsedData.length > 0 && importStatus !== 'complete' && (
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-[#1e3a5f]">Preview (First 10 Records)</CardTitle>
+            <CardTitle className="text-[#1B2A8F]">Preview (First 10 Records)</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -267,7 +267,7 @@ export default function ActivityImport() {
         <div className="flex justify-end">
           <Button 
             onClick={handleImport} 
-            className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90"
+            className="bg-[#1B2A8F] hover:bg-[#1B2A8F]/90"
             disabled={importMutation.isPending}
           >
             <CheckCircle className="h-4 w-4 mr-2" />

@@ -10,7 +10,7 @@ export default function ARTAFeedbackCard({ activityId, feedbackCount, hasQameRep
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center gap-2 text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center gap-2 text-base">
           <ClipboardCheck className="h-4 w-4" />ARTA Customer Satisfaction Feedback
         </CardTitle>
       </CardHeader>

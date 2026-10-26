@@ -15,7 +15,7 @@ export default function SystemSettings() {
   const queryClient = useQueryClient();
   const { data: settings = [] } = useQuery({ queryKey: ['systemSettings'], queryFn: () => base44.entities.SystemSetting.list() });
   const [fiscal, setFiscal] = useState({ startMonth: 'January', endMonth: 'December', currentYear: '2026' });
-  const [theme, setTheme] = useState({ primaryColor: '#1E3A5F', fontScale: 'Standard' });
+  const [theme, setTheme] = useState({ primaryColor: '#1B2A8F', fontScale: 'Standard' });
   const [messaging, setMessaging] = useState({ bannerText: '', bannerEnabled: false, supportEmail: 'dqamp.support@depedlucena.ph' });
   const [saved, setSaved] = useState(null);
 

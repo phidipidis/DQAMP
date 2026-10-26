@@ -24,7 +24,7 @@ export default function AttachmentsSection({
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2"><Paperclip className="h-4 w-4" />Evidence / MOV Attachments</span>
           {!locked
             ? <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 font-normal text-xs">Editable</Badge>

@@ -31,7 +31,7 @@ export default function ImplementationSection({ formData }) {
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-[#1e3a5f] flex items-center justify-between text-base">
+        <CardTitle className="text-[#1B2A8F] flex items-center justify-between text-base">
           <span className="flex items-center gap-2"><BarChart2 className="h-4 w-4" />Implementation Monitoring</span>
           <Badge variant="outline" className="text-blue-600 border-blue-300 gap-1 text-xs">Auto-filled from Schedule</Badge>
         </CardTitle>

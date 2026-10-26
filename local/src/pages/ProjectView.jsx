@@ -137,7 +137,7 @@ export default function ProjectView() {
           </Button>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-[#1e3a5f]">{project.Project_Code}</h1>
+              <h1 className="text-2xl font-bold text-[#1B2A8F]">{project.Project_Code}</h1>
               <Badge className={statusColors[project.Project_Status]}>{project.Project_Status}</Badge>
             </div>
             <p className="text-slate-600">{project.Project_Title}</p>
@@ -148,8 +148,8 @@ export default function ProjectView() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Objectives', value: objectives.length, icon: Target, color: '#1e3a5f', bg: 'bg-[#1e3a5f]/10' },
-          { label: 'Outputs', value: outputs.length, icon: Package, color: '#1E3A5F', bg: 'bg-[#1E3A5F]/10' },
+          { label: 'Objectives', value: objectives.length, icon: Target, color: '#1B2A8F', bg: 'bg-[#1B2A8F]/10' },
+          { label: 'Outputs', value: outputs.length, icon: Package, color: '#1B2A8F', bg: 'bg-[#1B2A8F]/10' },
           { label: 'Activities', value: linkedActivities.length, icon: ClipboardList, color: '#d97706', bg: 'bg-amber-100' },
           { label: 'Total Budget', value: `₱${totalBudget.toLocaleString()}`, icon: DollarSign, color: '#059669', bg: 'bg-emerald-100' },
         ].map(({ label, value, icon: Icon, color, bg }) => (
@@ -166,7 +166,7 @@ export default function ProjectView() {
 
       {/* Project Details */}
       <Card className="shadow-md">
-        <CardHeader><CardTitle className="text-[#1e3a5f] flex items-center gap-2"><Building2 className="h-5 w-5" />Project Details</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-[#1B2A8F] flex items-center gap-2"><Building2 className="h-5 w-5" />Project Details</CardTitle></CardHeader>
         <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div><p className="text-sm text-slate-500">Division</p><p className="font-medium">{project.Functional_Division}</p></div>
           <div><p className="text-sm text-slate-500">Start Date</p><p className="font-medium">{project.Project_Start_Date || '-'}</p></div>
@@ -182,7 +182,7 @@ export default function ProjectView() {
       <Card className="shadow-md">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2"><Target className="h-5 w-5" />Linked Objectives ({objectives.length})</CardTitle>
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2"><Target className="h-5 w-5" />Linked Objectives ({objectives.length})</CardTitle>
             <Button size="sm" variant="primary" onClick={openAddObjective}><Plus className="h-4 w-4 mr-1" />Add Objective</Button>
           </div>
         </CardHeader>
@@ -224,7 +224,7 @@ export default function ProjectView() {
       <Card className="shadow-md">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-[#1e3a5f] flex items-center gap-2"><Package className="h-5 w-5" />Linked Outputs ({outputs.length})</CardTitle>
+            <CardTitle className="text-[#1B2A8F] flex items-center gap-2"><Package className="h-5 w-5" />Linked Outputs ({outputs.length})</CardTitle>
             <Button size="sm" variant="primary" onClick={openAddOutput}><Plus className="h-4 w-4 mr-1" />Add Output</Button>
           </div>
         </CardHeader>
@@ -272,7 +272,7 @@ export default function ProjectView() {
       {/* Linked Activities */}
       <Card className="shadow-md">
         <CardHeader>
-          <CardTitle className="text-[#1e3a5f] flex items-center gap-2"><ClipboardList className="h-5 w-5" />Linked Activities ({linkedActivities.length})</CardTitle>
+          <CardTitle className="text-[#1B2A8F] flex items-center gap-2"><ClipboardList className="h-5 w-5" />Linked Activities ({linkedActivities.length})</CardTitle>
         </CardHeader>
         <CardContent>
           {linkedActivities.length === 0 ? (

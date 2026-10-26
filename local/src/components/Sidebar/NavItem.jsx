@@ -21,7 +21,7 @@ const iconMap = {
   Library, LifeBuoy, ListTodo, Settings, CheckCheck, FileBarChart
 };
 
-const BRAND = '#1E3A5F';
+const BRAND = '#1B2A8F';
 const BRAND_SOFT = '#EAF0FF';
 const MUTED = '#6B7280';
 const TEXT = '#374151';
@@ -66,7 +66,7 @@ export default function NavItem({ item, isActive, badgeCount }) {
   return (
     <Link
       to={createPageUrl(item.path)}
-      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] min-h-[44px] lg:min-h-0"
+      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A8F] min-h-[44px] lg:min-h-0"
       style={{
         display: 'flex', alignItems: 'center', gap: 10,
         padding: '7px 12px', margin: '1px 12px',

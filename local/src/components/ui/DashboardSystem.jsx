@@ -2,7 +2,7 @@ import React from 'react';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 export const C = {
-  brand:       '#1E3A5F',
+  brand:       '#1B2A8F',
   accent:      '#1D4ED8',
   accentSoft:  '#EAF0FF',
   success:     '#166534',

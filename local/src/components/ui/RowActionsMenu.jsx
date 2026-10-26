@@ -9,7 +9,7 @@ export default function RowActionsMenu({ label, items }) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
         aria-label={label}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F]"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A8F]"
       >
         <MoreHorizontal className="h-4 w-4" />
       </DropdownMenu.Trigger>

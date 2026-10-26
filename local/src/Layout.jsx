@@ -104,11 +104,11 @@ export default function Layout({ children, currentPageName }) {
             aria-label="Open navigation menu"
             aria-expanded={navOpen}
             onClick={() => setNavOpen(true)}
-            className="flex h-11 w-11 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F]"
+            className="flex h-11 w-11 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A8F]"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="font-semibold text-[#1E3A5F]">DQAMP 2026</span>
+          <span className="font-semibold text-[#1B2A8F]">DQAMP 2026</span>
         </div>
         <FilterProvider>
           {currentPageName !== 'MainDashboard' && <GlobalFilterBar />}
