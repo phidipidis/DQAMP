@@ -20,7 +20,7 @@ export default function SidebarHeader() {
             DQAMP
           </h1>
           <p style={{ fontSize: 11, fontWeight: 400, color: MUTED, margin: '2px 0 0', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            Division Quality Assurance Portal
+            Division Quality Assurance and Monitoring Portal
           </p>
         </div>
       </div>
