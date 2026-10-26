@@ -1,12 +1,12 @@
 # DQAMP 2026 — local version
 
-Runs on your own Windows PC. Data stays in `data\dqamp.db` on this computer.
+Runs on your own Windows PC at http://127.0.0.1:3002. Data stays in `data\dqamp.db` on this computer.
 
 ## One-time setup
 
-1. Install **Node.js 22.13 or newer** (LTS) from https://nodejs.org.
+1. Install **Node.js 24 LTS** from https://nodejs.org.
 2. Put the DepEd Lucena logo in `public\deped-lucena-logo.jpg` (see `public\PUT-LOGO-HERE.txt`).
-3. Double-click **start.bat**. The first run installs components and builds the app (a few minutes).
+3. Double-click **start-dqamp.cmd**. The first run installs components and builds the app (a few minutes).
 4. Create the first administrator, in a second window opened in this folder:
 
    ```
@@ -14,7 +14,7 @@ Runs on your own Windows PC. Data stays in `data\dqamp.db` on this computer.
    ```
 
    Copy the temporary password it prints.
-5. Sign in at http://localhost:3000 with that email and password.
+5. Sign in at http://127.0.0.1:3002 with that email and password.
 6. Change the password:
 
    ```
@@ -23,7 +23,7 @@ Runs on your own Windows PC. Data stays in `data\dqamp.db` on this computer.
 
 ## Daily use
 
-Double-click **start.bat**, then use the browser window it opens. Close the black window to stop DQAMP.
+Double-click **start-dqamp.cmd**. It opens http://127.0.0.1:3002 in your browser. To stop DQAMP, press Ctrl+C in its window or double-click **stop-dqamp.cmd**.
 
 ## Adding users
 
