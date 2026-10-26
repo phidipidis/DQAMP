@@ -44,7 +44,9 @@ export default function MainDashboard() {
   const totalActivities = filteredActivities.length;
   const notStartedCount = filteredActivities.filter(a => a.Status === 'Not Started').length;
   const inProgressCount = filteredActivities.filter(a => a.Status === 'In Progress').length;
-  const completedCount  = filteredActivities.filter(a => a.Status === 'Completed').length;
+  // Complete means published: reviewed by QA and approved by an administrator.
+  const completedCount  = filteredActivities.filter(a => a.Workflow_Status === 'Published').length;
+  const implementedCount = filteredActivities.filter(a => a.Status === 'Completed').length;
   const delayedCount    = filteredActivities.filter(a => a.Status === 'Delayed').length;
   const totalAllocation = filteredActivities.reduce((sum, a) => sum + (a.Financial_Allocation || a.Budget || 0), 0);
   const activeAssessors = assessors.filter(a => a.Is_Active).length;
@@ -52,7 +54,7 @@ export default function MainDashboard() {
 
   const divisionData = DIVISIONS.map(div => {
     const divActs = filteredActivities.filter(a => a.Functional_Division === div);
-    const divCompleted = divActs.filter(a => a.Status === 'Completed').length;
+    const divCompleted = divActs.filter(a => a.Workflow_Status === 'Published').length;
     const divAlloc = divActs.reduce((sum, a) => sum + (a.Financial_Allocation || 0), 0);
     const rate = divActs.length > 0 ? Math.round((divCompleted / divActs.length) * 100) : 0;
     return { div, total: divActs.length, completed: divCompleted, rate, allocation: divAlloc };
@@ -117,7 +119,7 @@ export default function MainDashboard() {
         <KPITile label="Active projects"   value={filteredProjects.length}                 icon={FolderKanban}   borderLeft={C.accent}     />
         <KPITile label="Active assessors"  value={activeAssessors}                         icon={ShieldCheck}    borderLeft={C.successBar} />
         <KPITile label="Total allocation"  value={formatPeso(totalAllocation, { compact: true })} title={formatPeso(totalAllocation)} icon={PhilippinePeso} borderLeft={C.warningBar} />
-        <KPITile label="Completion rate"   value={formatPercent(completedCount, totalActivities)}                    icon={TrendingUp}     borderLeft={C.successBar} sub={`${completedCount} of ${totalActivities} activities`} />
+        <KPITile label="Completion rate"   value={formatPercent(completedCount, totalActivities)}                    icon={TrendingUp}     borderLeft={C.successBar} sub={`${completedCount} of ${totalActivities} activities published`} />
       </KPIBand>
 
       {/* 4. Division performance */}
@@ -142,7 +144,7 @@ export default function MainDashboard() {
             <span style={{ width: 10, height: 10, borderRadius: 2, background: C.accentSoft, display: 'inline-block' }} />Total activities
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: 2, background: C.brand, display: 'inline-block' }} />Completed
+            <span style={{ width: 10, height: 10, borderRadius: 2, background: C.brand, display: 'inline-block' }} />Published
           </span>
         </div>
         {totalActivities === 0 ? (
@@ -156,9 +158,9 @@ export default function MainDashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
                 <XAxis dataKey="div" tick={chartTickStyle} axisLine={false} tickLine={false} />
                 <YAxis tick={chartTickSmall} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={chartTooltipStyle} formatter={(val, name) => [val, name === 'total' ? 'Total' : 'Completed']} />
+                <Tooltip contentStyle={chartTooltipStyle} formatter={(val, name) => [val, name === 'total' ? 'Total' : 'Published']} />
                 <Bar dataKey="total"     name="Total"     fill={C.accentSoft} radius={[4,4,0,0]} />
-                <Bar dataKey="completed" name="Completed" fill={C.brand}      radius={[4,4,0,0]} />
+                <Bar dataKey="completed" name="Published" fill={C.brand}      radius={[4,4,0,0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -185,11 +187,11 @@ export default function MainDashboard() {
       </Panel>
 
       {/* 5. Activity status */}
-      <DashboardPanel title="Activity status" noPad>
+      <DashboardPanel title="Implementation status" noPad>
         <StatusStrip>
           <StatusSegment label="Not started" count={notStartedCount} total={totalActivities} color={C.neutral} softBg={C.neutralSoft} />
           <StatusSegment label="In progress" count={inProgressCount} total={totalActivities} color={C.accent}  softBg={C.accentSoft}  />
-          <StatusSegment label="Completed"   count={completedCount}  total={totalActivities} color={C.success} softBg={C.successSoft} />
+          <StatusSegment label="Completed"   count={implementedCount}  total={totalActivities} color={C.success} softBg={C.successSoft} />
           <StatusSegment label="Delayed"     count={delayedCount}    total={totalActivities} color={C.danger}  softBg={C.dangerSoft}  />
         </StatusStrip>
       </DashboardPanel>
