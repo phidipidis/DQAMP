@@ -208,7 +208,7 @@ export default function ActivityView() {
           )}
           {nextStatus && (
             <Button onClick={() => { setTargetStatus(nextStatus); setTransitionDialogOpen(true); }}
-              className="bg-[#0d9488] hover:bg-[#0d9488]/90">
+              className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
               {nextStatus === 'Under Review' && <CheckCircle className="h-4 w-4 mr-2" />}
               {nextStatus === 'Published' && <Send className="h-4 w-4 mr-2" />}
               Move to {nextStatus}

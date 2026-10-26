@@ -5,7 +5,7 @@
 import jsPDF from 'jspdf';
 
 const BRAND_BLUE = [30, 58, 95];   // #1e3a5f
-const BRAND_TEAL = [13, 148, 136]; // #0d9488
+const BRAND_TEAL = [13, 148, 136]; // #1E3A5F
 const LIGHT_GRAY = [248, 250, 252];
 const MID_GRAY   = [100, 116, 139];
 const DARK_TEXT  = [15, 23, 42];

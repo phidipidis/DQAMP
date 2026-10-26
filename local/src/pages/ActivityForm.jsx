@@ -501,7 +501,7 @@ export default function ActivityForm() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmitWorkflow} className="bg-[#0d9488] hover:bg-[#0d9488]/90">
+            <AlertDialogAction onClick={handleSubmitWorkflow} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
               Confirm & Submit
             </AlertDialogAction>
           </AlertDialogFooter>

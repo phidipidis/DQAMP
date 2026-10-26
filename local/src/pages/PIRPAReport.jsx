@@ -161,7 +161,7 @@ export default function PIRPAReport() {
         <Card>
           <CardContent className="pt-6">
             <p className="text-sm text-slate-600">Total Utilization</p>
-            <p className="text-2xl font-bold text-[#0d9488]">₱{totals.utilization.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-[#1E3A5F]">₱{totals.utilization.toLocaleString()}</p>
           </CardContent>
         </Card>
         <Card>

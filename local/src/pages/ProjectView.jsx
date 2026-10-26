@@ -149,7 +149,7 @@ export default function ProjectView() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: 'Objectives', value: objectives.length, icon: Target, color: '#1e3a5f', bg: 'bg-[#1e3a5f]/10' },
-          { label: 'Outputs', value: outputs.length, icon: Package, color: '#0d9488', bg: 'bg-[#0d9488]/10' },
+          { label: 'Outputs', value: outputs.length, icon: Package, color: '#1E3A5F', bg: 'bg-[#1E3A5F]/10' },
           { label: 'Activities', value: linkedActivities.length, icon: ClipboardList, color: '#d97706', bg: 'bg-amber-100' },
           { label: 'Total Budget', value: `₱${totalBudget.toLocaleString()}`, icon: DollarSign, color: '#059669', bg: 'bg-emerald-100' },
         ].map(({ label, value, icon: Icon, color, bg }) => (

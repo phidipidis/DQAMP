@@ -87,7 +87,7 @@ export default function ActivityFormHeader({
             </Button>
           )}
           {canSubmit && (
-            <Button onClick={onSubmitClick} className="bg-[#0d9488] hover:bg-[#0d9488]/90">
+            <Button onClick={onSubmitClick} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
               <Send className="h-4 w-4 mr-1" />Submit for Review
             </Button>
           )}

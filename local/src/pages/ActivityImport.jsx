@@ -267,7 +267,7 @@ export default function ActivityImport() {
         <div className="flex justify-end">
           <Button 
             onClick={handleImport} 
-            className="bg-[#0d9488] hover:bg-[#0d9488]/90"
+            className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90"
             disabled={importMutation.isPending}
           >
             <CheckCircle className="h-4 w-4 mr-2" />

@@ -132,7 +132,7 @@ export default function OutputDetail() {
               <Button variant="outline" size="sm" onClick={() => setEditing(false)}>
                 <X className="h-4 w-4 mr-1" /> Cancel
               </Button>
-              <Button size="sm" onClick={handleSave} className="bg-[#0d9488] hover:bg-[#0d9488]/90">
+              <Button size="sm" onClick={handleSave} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
                 <Save className="h-4 w-4 mr-1" /> Save
               </Button>
             </div>

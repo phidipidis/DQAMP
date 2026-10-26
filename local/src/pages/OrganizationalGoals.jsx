@@ -410,7 +410,7 @@ export default function OrganizationalGoals() {
                     checked={formData.Linked_Objectives.includes(o.id)}
                     onCheckedChange={() => toggleObjective(o.id)}
                   />
-                  <Target className="h-4 w-4 text-[#0d9488] flex-shrink-0" />
+                  <Target className="h-4 w-4 text-[#1E3A5F] flex-shrink-0" />
                   <span className="text-sm flex-1 truncate">
                     {o.Objective_Code ? <span className="font-mono text-xs text-slate-500 mr-1">[{o.Objective_Code}]</span> : null}
                     {o.Objective_Title || o.Objective_Description || o.Objective_Statement || o.id}
