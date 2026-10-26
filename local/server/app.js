@@ -10,14 +10,21 @@ import {
 import {
   listRecords, getRecord, createRecord, updateRecord, deleteRecord, createMany,
 } from './records.js';
+import {
+  DIVISIONS, canRead, canCreate, canUpdate, canDelete,
+} from './policy.js';
 
 const ROLES = ['admin', 'Implementer', 'Planning_Admin', 'QA_Assessor'];
+const NEEDS_DIVISION = ['Implementer', 'Planning_Admin'];
 const COOKIE = 'dqamp_session';
+const FORBIDDEN = { message: 'Your role cannot make this change' };
 
 export function createApp({ dataDir, distDir }) {
   const db = openDb(dataDir);
   const app = express();
   app.use(express.json({ limit: '5mb' }));
+
+  const lookup = (entity, id) => getRecord(db, entity, id);
 
   const requireUser = (req, res, next) => {
     const user = userForToken(db, readCookie(req, COOKIE));
@@ -27,7 +34,7 @@ export function createApp({ dataDir, distDir }) {
   };
 
   const requireAdmin = (req, res, next) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Admins only' });
+    if (req.user.role !== 'admin') return res.status(403).json(FORBIDDEN);
     next();
   };
 
@@ -37,6 +44,7 @@ export function createApp({ dataDir, distDir }) {
   };
 
   const sanitize = (entity, record) => (entity === 'User' ? publicUser(record) : record);
+  const visible = (req, entity, rows) => rows.filter((r) => canRead(req.user, entity, r));
 
   // ---- auth ----
   app.post('/api/auth/login', (req, res) => {
@@ -63,68 +71,85 @@ export function createApp({ dataDir, distDir }) {
   app.post('/api/users/invite', requireUser, requireAdmin, (req, res) => {
     const email = String(req.body?.email || '').trim().toLowerCase();
     const role = ROLES.includes(req.body?.role) ? req.body.role : 'Implementer';
+    const division = req.body?.division || null;
     if (!email.includes('@')) return res.status(400).json({ message: 'A valid email is required' });
+    if (NEEDS_DIVISION.includes(role) && !DIVISIONS.includes(division)) {
+      return res.status(400).json({ message: 'Choose a division (CID, SGOD or OSDS) for this role' });
+    }
     const exists = listRecords(db, 'User').some((u) => (u.email || '').toLowerCase() === email);
     if (exists) return res.status(409).json({ message: 'That email already has an account' });
     const temporaryPassword = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
     const user = createRecord(db, 'User', {
-      email, role, full_name: email.split('@')[0], password_hash: hashPassword(temporaryPassword),
+      email,
+      role,
+      division: NEEDS_DIVISION.includes(role) ? division : null,
+      full_name: email.split('@')[0],
+      password_hash: hashPassword(temporaryPassword),
     }, req.user.email);
     res.status(201).json({ user: publicUser(user), temporaryPassword });
   });
 
   // ---- entities ----
   app.get('/api/entities/:entity', requireUser, knownEntity, (req, res) => {
-    const rows = listRecords(db, req.params.entity, { sort: req.query.sort, limit: req.query.limit });
-    res.json(rows.map((r) => sanitize(req.params.entity, r)));
+    const { entity } = req.params;
+    const rows = listRecords(db, entity, { sort: req.query.sort, limit: req.query.limit });
+    res.json(visible(req, entity, rows).map((r) => sanitize(entity, r)));
   });
 
   app.post('/api/entities/:entity/filter', requireUser, knownEntity, (req, res) => {
-    const rows = listRecords(db, req.params.entity, {
+    const { entity } = req.params;
+    const rows = listRecords(db, entity, {
       query: req.body?.query, sort: req.body?.sort, limit: req.body?.limit,
     });
-    res.json(rows.map((r) => sanitize(req.params.entity, r)));
+    res.json(visible(req, entity, rows).map((r) => sanitize(entity, r)));
   });
 
   app.post('/api/entities/:entity/bulk', requireUser, knownEntity, (req, res) => {
-    if (req.params.entity === 'User') return res.status(403).json({ message: 'Use the invite form to add users' });
+    const { entity } = req.params;
     const rows = Array.isArray(req.body) ? req.body : [];
-    res.status(201).json(createMany(db, req.params.entity, rows, req.user.email));
+    if (entity === 'User') return res.status(403).json({ message: 'Use the invite form to add users' });
+    if (!rows.every((row) => canCreate(req.user, entity, row, lookup))) return res.status(403).json(FORBIDDEN);
+    res.status(201).json(createMany(db, entity, rows, req.user.email));
   });
 
   app.post('/api/entities/:entity', requireUser, knownEntity, (req, res) => {
-    const entity = req.params.entity;
+    const { entity } = req.params;
+    const data = req.body || {};
     if (entity === 'User') return res.status(403).json({ message: 'Use the invite form to add users' });
-    res.status(201).json(createRecord(db, entity, req.body || {}, req.user.email));
+    if (!canCreate(req.user, entity, data, lookup)) return res.status(403).json(FORBIDDEN);
+    res.status(201).json(createRecord(db, entity, data, req.user.email));
+  });
+
+  app.get('/api/entities/:entity/:id', requireUser, knownEntity, (req, res) => {
+    const { entity, id } = req.params;
+    const record = getRecord(db, entity, id);
+    if (!record || !canRead(req.user, entity, record)) return res.status(404).json({ message: 'Record not found' });
+    res.json(sanitize(entity, record));
   });
 
   app.put('/api/entities/:entity/:id', requireUser, knownEntity, (req, res) => {
     const { entity, id } = req.params;
+    const existing = getRecord(db, entity, id);
+    if (!existing || !canRead(req.user, entity, existing)) return res.status(404).json({ message: 'Record not found' });
     const changes = { ...(req.body || {}) };
-    if (entity === 'User') {
-      if (req.user.role !== 'admin' && req.user.id !== id) return res.status(403).json({ message: 'Admins only' });
-      if (req.user.role !== 'admin') delete changes.role;
-      if (changes.password) {
-        changes.password_hash = hashPassword(String(changes.password));
-        delete changes.password;
-      }
+    if (entity === 'User' && changes.password) {
+      changes.password_hash = hashPassword(String(changes.password));
+      delete changes.password;
     }
+    if (!canUpdate(req.user, entity, existing, changes, lookup)) return res.status(403).json(FORBIDDEN);
     const updated = updateRecord(db, entity, id, changes);
-    if (!updated) return res.status(404).json({ message: 'Record not found' });
     res.json(sanitize(entity, updated));
   });
 
   app.delete('/api/entities/:entity/:id', requireUser, knownEntity, (req, res) => {
     const { entity, id } = req.params;
+    const existing = getRecord(db, entity, id);
+    if (!existing) return res.status(204).end();
+    if (!canRead(req.user, entity, existing)) return res.status(404).json({ message: 'Record not found' });
     if (entity === 'User') return res.status(403).json({ message: 'Users cannot be deleted here' });
+    if (!canDelete(req.user, entity, existing, lookup)) return res.status(403).json(FORBIDDEN);
     deleteRecord(db, entity, id);
     res.status(204).end();
-  });
-
-  app.get('/api/entities/:entity/:id', requireUser, knownEntity, (req, res) => {
-    const record = getRecord(db, req.params.entity, req.params.id);
-    if (!record) return res.status(404).json({ message: 'Record not found' });
-    res.json(sanitize(req.params.entity, record));
   });
 
   // ---- static frontend ----

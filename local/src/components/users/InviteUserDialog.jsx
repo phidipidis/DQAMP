@@ -13,9 +13,13 @@ const ROLES = [
   { value: 'admin', label: 'Administrator', desc: 'Full system access & user management' },
 ];
 
+const DIVISIONS = ['CID', 'SGOD', 'OSDS'];
+const NEEDS_DIVISION = ['Implementer', 'Planning_Admin'];
+
 export default function InviteUserDialog({ open, onOpenChange, onInvited }) {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('Implementer');
+  const [division, setDivision] = useState('CID');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [issued, setIssued] = useState(null);
@@ -23,6 +27,7 @@ export default function InviteUserDialog({ open, onOpenChange, onInvited }) {
   const reset = () => {
     setEmail('');
     setRole('Implementer');
+    setDivision('CID');
     setError('');
     setIssued(null);
   };
@@ -46,7 +51,7 @@ export default function InviteUserDialog({ open, onOpenChange, onInvited }) {
     setLoading(true);
     setError('');
     try {
-      const result = await base44.users.inviteUser(trimmed, role);
+      const result = await base44.users.inviteUser(trimmed, role, division);
       setIssued({ email: trimmed, temporaryPassword: result.temporaryPassword });
     } catch (err) {
       setError(err?.message || 'Could not create the account. Please try again.');
@@ -123,6 +128,22 @@ export default function InviteUserDialog({ open, onOpenChange, onInvited }) {
               </SelectContent>
             </Select>
           </div>
+          {NEEDS_DIVISION.includes(role) && (
+            <div className="space-y-2">
+              <Label>Division</Label>
+              <Select value={division} onValueChange={setDivision}>
+                <SelectTrigger aria-label="Division">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {DIVISIONS.map((d) => (
+                    <SelectItem key={d} value={d}>{d}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-slate-500">This user can change records only in this division.</p>
+            </div>
+          )}
           {error && (
             <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-2">
               {error}

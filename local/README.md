@@ -27,9 +27,25 @@ Double-click **start-dqamp.cmd**. It opens http://127.0.0.1:3002 in your browser
 
 ## Adding users
 
-Sign in as an administrator, open **User Management → Add User**, choose the role, and give the temporary password the dialog shows (it is shown only once). The new user signs in and can change it with `npm run set-password`.
+Sign in as an administrator, open **User Management → Add User**, choose the role and division, and give the temporary password the dialog shows (it is shown only once). The user signs in and can change it with `npm run set-password`.
 
-Roles: Implementer, Planning Admin, QA Assessor, Administrator.
+To fix an existing account, for example to give an Implementer their division:
+
+```
+npm run set-user -- name@deped.gov.ph --division CID
+npm run set-user -- name@deped.gov.ph --role QA_Assessor
+```
+
+## Who can do what
+
+| Role | Activities | Planning records (goals, objectives, projects, outputs) | Reviews and publishing | Users and settings |
+|---|---|---|---|---|
+| **Administrator** | All | All | Can publish and change any status | Full access |
+| **Planning Admin** | Read all, no edits | Create and edit in their division | No | No |
+| **QA Assessor** | Read all | Read all | Starts review, fills in QAME fields, returns for revision. Cannot publish. | No |
+| **Implementer** | Read and edit in their division | Read all; create and edit in their division | Submits activities. No review or publishing. | No |
+
+Rules are enforced by the server, not only by the menus. Records outside a user's division are hidden from them. Implementers can edit an activity only while it is Draft, Submitted or Returned for Revision. Under review, activities are locked for everyone except the reviewing assessor, who may fill in QAME fields.
 
 ## Attachments
 

@@ -67,7 +67,7 @@ export const base44 = {
     },
   },
   users: {
-    inviteUser: (email, role) => request('POST', '/api/users/invite', { email, role }),
+    inviteUser: (email, role, division) => request('POST', '/api/users/invite', { email, role, division }),
   },
   appLogs: {
     logUserInApp: () => Promise.resolve(),
