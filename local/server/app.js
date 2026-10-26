@@ -136,6 +136,12 @@ export function createApp({ dataDir, distDir }) {
       changes.password_hash = hashPassword(String(changes.password));
       delete changes.password;
     }
+    if (entity === 'User') {
+      if (changes.role !== undefined && !ROLES.includes(changes.role)) return res.status(400).json({ message: 'Unknown role' });
+      if (changes.division !== undefined && changes.division !== null && !DIVISIONS.includes(changes.division)) {
+        return res.status(400).json({ message: 'Division must be CID, SGOD or OSDS' });
+      }
+    }
     if (!canUpdate(req.user, entity, existing, changes, lookup)) return res.status(403).json(FORBIDDEN);
     const updated = updateRecord(db, entity, id, changes);
     res.json(sanitize(entity, updated));

@@ -43,6 +43,9 @@ const ROLE_CONFIG = {
 };
 
 const ROLE_VALUES = Object.keys(ROLE_CONFIG);
+const DIVISIONS = ['CID', 'SGOD', 'OSDS'];
+// Roles that work inside one division. Admins and QA assessors see all divisions.
+const DIVISION_ROLES = ['Implementer', 'Planning_Admin'];
 
 function RoleBadge({ role }) {
   const cfg = ROLE_CONFIG[role] || { label: role || 'Unknown', color: C.muted, bg: C.neutralSoft };
@@ -61,6 +64,34 @@ function RoleBadge({ role }) {
     >
       {cfg.label}
     </span>
+  );
+}
+
+function DivisionSelect({ value, onChange, disabled, label }) {
+  return (
+    <select
+      aria-label={label}
+      value={value || ''}
+      onChange={(e) => onChange(e.target.value)}
+      disabled={disabled}
+      style={{
+        fontFamily: FONT,
+        fontSize: 12,
+        fontWeight: 600,
+        color: C.text,
+        padding: '5px 10px',
+        borderRadius: 6,
+        border: `1px solid ${C.border}`,
+        background: C.surface,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.6 : 1,
+      }}
+    >
+      {!value && <option value="">Not set</option>}
+      {DIVISIONS.map((d) => (
+        <option key={d} value={d}>{d}</option>
+      ))}
+    </select>
   );
 }
 
@@ -136,23 +167,49 @@ export default function UserManagement() {
 
   const isSelf = (u) => currentUser && u.id === currentUser.id;
 
-  const handleRoleChange = async (userId, newRole, prevRole) => {
+  const handleRoleChange = async (user, newRole) => {
+    const prevRole = user.role;
     if (newRole === prevRole) return;
+    const userId = user.id;
+    // Division follows the role: division roles keep or get one, others lose it.
+    const newDivision = DIVISION_ROLES.includes(newRole) ? (user.division || 'CID') : null;
     setUpdatingId(userId);
     setActionError('');
     try {
-      await base44.entities.User.update(userId, { role: newRole });
+      await base44.entities.User.update(userId, { role: newRole, division: newDivision });
       await logAuditEvent({
         actionType: 'Role_Change',
         entity: 'User',
         recordId: userId,
         remarks: `Changed role from ${ROLE_CONFIG[prevRole]?.label || prevRole} to ${ROLE_CONFIG[newRole]?.label || newRole}`,
-        previousValues: { role: prevRole },
-        newValues: { role: newRole },
+        previousValues: { role: prevRole, division: user.division || null },
+        newValues: { role: newRole, division: newDivision },
       });
       refresh();
     } catch (err) {
       setActionError(err?.message || 'Failed to update user role.');
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleDivisionChange = async (user, newDivision) => {
+    if (newDivision === (user.division || '')) return;
+    setUpdatingId(user.id);
+    setActionError('');
+    try {
+      await base44.entities.User.update(user.id, { division: newDivision });
+      await logAuditEvent({
+        actionType: 'Division_Change',
+        entity: 'User',
+        recordId: user.id,
+        remarks: `Changed division of ${user.email} from ${user.division || 'Not set'} to ${newDivision}`,
+        previousValues: { division: user.division || null },
+        newValues: { division: newDivision },
+      });
+      refresh();
+    } catch (err) {
+      setActionError(err?.message || 'Failed to update division.');
     } finally {
       setUpdatingId(null);
     }
@@ -206,6 +263,7 @@ export default function UserManagement() {
     { label: 'Name' },
     { label: 'Email' },
     { label: 'Role' },
+    { label: 'Division' },
     { label: 'Joined', align: 'right' },
     { label: 'Actions', align: 'right' },
   ];
@@ -257,8 +315,27 @@ export default function UserManagement() {
             <RoleSelect
               value={u.role || 'Implementer'}
               disabled={updatingId === u.id}
-              onChange={(newRole) => handleRoleChange(u.id, newRole, u.role)}
+              onChange={(newRole) => handleRoleChange(u, newRole)}
             />
+          )}
+        </td>
+        <td style={{ padding: '12px 16px', fontFamily: FONT, fontSize: 13 }}>
+          {!DIVISION_ROLES.includes(u.role || 'Implementer') ? (
+            <span style={{ color: C.muted }}>All divisions</span>
+          ) : self ? (
+            <span style={{ color: C.text, fontWeight: 600 }}>{u.division || 'Not set'}</span>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-start' }}>
+              <DivisionSelect
+                label={`Division for ${u.email}`}
+                value={u.division}
+                disabled={updatingId === u.id}
+                onChange={(d) => handleDivisionChange(u, d)}
+              />
+              {!u.division && (
+                <span style={{ fontSize: 11, color: '#92400E' }}>Set a division, or this user sees no records</span>
+              )}
+            </div>
           )}
         </td>
         <td style={{ padding: '12px 16px', textAlign: 'right', fontFamily: FONT, fontSize: 13, color: C.muted, whiteSpace: 'nowrap' }}>

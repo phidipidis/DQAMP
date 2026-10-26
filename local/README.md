@@ -29,7 +29,9 @@ Double-click **start-dqamp.cmd**. It opens http://127.0.0.1:3002 in your browser
 
 Sign in as an administrator, open **User Management → Add User**, choose the role and division, and give the temporary password the dialog shows (it is shown only once). The user signs in and can change it with `npm run set-password`.
 
-To fix an existing account, for example to give an Implementer their division:
+In **User Management**, every user has a **Division** column. Set it there for Implementers and Planning Admins (QA Assessors and administrators see all divisions). The page warns you when an Implementer or Planning Admin has no division.
+
+The command line does the same thing:
 
 ```
 npm run set-user -- name@deped.gov.ph --division CID
