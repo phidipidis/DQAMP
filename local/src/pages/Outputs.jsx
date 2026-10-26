@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { canEditPlanning } from '@/lib/permissions';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { logAuditEvent } from '../components/audit/AuditLogger';
@@ -239,10 +240,12 @@ export default function Outputs() {
           <h1 className="text-2xl font-bold text-[#1B2A8F]">Outputs</h1>
           <p className="text-slate-600">Manage deliverables and outputs with verification tracking</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
-          <Plus className="h-4 w-4" />
-          New Output
-        </Button>
+        {canEditPlanning(currentUser) && (
+          <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
+            <Plus className="h-4 w-4" />
+            New Output
+          </Button>
+        )}
       </div>
 
       {/* Filters */}
@@ -349,6 +352,8 @@ export default function Outputs() {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-center gap-1">
+                          {canEditPlanning(currentUser, projects.find((p) => p.id === output.Linked_Project)?.Functional_Division ?? null) && (
+                          <>
                           {output.Output_Verification_Status === 'Pending' && (
                             <Button aria-label="Mark verified" 
                               variant="ghost" 
@@ -371,6 +376,8 @@ export default function Outputs() {
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
+                          </>
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>

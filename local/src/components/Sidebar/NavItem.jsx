@@ -52,14 +52,6 @@ export default function NavItem({ item, isActive, badgeCount }) {
           {badgeCount}
         </span>
       )}
-      {item.badge && !badgeCount && item.badge !== 'count' && item.badge !== 'pending_count' && (
-        <span style={{
-          fontSize: 12, fontWeight: 600, color: BRAND, background: BRAND_SOFT,
-          padding: '1px 7px', borderRadius: 999, minWidth: 18, textAlign: 'center',
-        }}>
-          {item.badge}
-        </span>
-      )}
     </>
   );
 

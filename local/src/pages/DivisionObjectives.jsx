@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { canEditPlanning } from '@/lib/permissions';
+import { useAuth } from '@/lib/AuthContext';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { logAuditEvent } from '../components/audit/AuditLogger';
@@ -40,6 +42,7 @@ const statusColors = {
 };
 
 export default function DivisionObjectives() {
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
   const [divisionFilter, setDivisionFilter] = useState('All');
@@ -143,9 +146,11 @@ export default function DivisionObjectives() {
           </h1>
           <p className="text-slate-600">Manage functional division objectives ({objectives.length} total)</p>
         </div>
-        <Button onClick={openCreate} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
-          <Plus className="h-4 w-4" />New Objective
-        </Button>
+        {canEditPlanning(user) && (
+          <Button onClick={openCreate} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
+            <Plus className="h-4 w-4" />New Objective
+          </Button>
+        )}
       </div>
 
       {/* Filters */}
@@ -200,6 +205,7 @@ export default function DivisionObjectives() {
                         <Badge className={statusColors[obj.Status] || statusColors['Not Started']}>{obj.Status || 'Not Started'}</Badge>
                       </TableCell>
                       <TableCell>
+                        {canEditPlanning(user, obj.Functional_Division ?? null) && (
                         <div className="flex items-center justify-center gap-1">
                           <Button aria-label="Edit" variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(obj)}>
                             <Edit className="h-4 w-4" />
@@ -212,6 +218,7 @@ export default function DivisionObjectives() {
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))

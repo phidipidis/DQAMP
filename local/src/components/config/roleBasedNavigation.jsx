@@ -121,7 +121,7 @@ export const navigationConfig = {
         access: "full",
         collapsed: true,
         items: [
-          { name: "Report Center", icon: "FileText", path: "ReportCenter", badge: "5" }
+          { name: "Report Center", icon: "FileText", path: "ReportCenter" }
         ]
       },
       {
@@ -286,7 +286,7 @@ export const navigationConfig = {
         access: "full",
         collapsed: true,
         items: [
-          { name: "Report Center", icon: "FileText", path: "ReportCenter", badge: "5" },
+          { name: "Report Center", icon: "FileText", path: "ReportCenter" },
           { name: "Report Generator", icon: "FileBarChart", path: "report-generator" }
         ]
       },

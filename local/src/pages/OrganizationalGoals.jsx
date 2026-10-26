@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { canEditGoals } from '@/lib/permissions';
+import { useAuth } from '@/lib/AuthContext';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { logAuditEvent } from '../components/audit/AuditLogger';
@@ -25,6 +27,7 @@ import {
 import { Plus, Search, Edit, FolderKanban, Target, Package } from 'lucide-react';
 
 export default function OrganizationalGoals() {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState(null);
@@ -223,10 +226,12 @@ export default function OrganizationalGoals() {
           </h1>
           <p className="text-slate-600">Manage strategic goals with project, objective, and output linkages</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
-          <Plus className="h-4 w-4" />
-          New Goal
-        </Button>
+        {canEditGoals(user) && (
+          <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
+            <Plus className="h-4 w-4" />
+            New Goal
+          </Button>
+        )}
       </div>
 
       {/* Filters */}
@@ -287,9 +292,11 @@ export default function OrganizationalGoals() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Button aria-label="Edit" variant="ghost" size="icon" onClick={() => openEditDialog(goal)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
+                        {canEditGoals(user) && (
+                          <Button aria-label="Edit" variant="ghost" size="icon" onClick={() => openEditDialog(goal)}>
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))

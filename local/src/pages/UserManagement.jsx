@@ -13,22 +13,13 @@ import {
 } from '@/components/ui/DashboardSystem';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+
+
 import {
   UserPlus,
   Search,
   Users,
   ShieldCheck,
-  Trash2,
   AlertCircle,
 } from 'lucide-react';
 import InviteUserDialog from '@/components/users/InviteUserDialog';
@@ -127,7 +118,6 @@ export default function UserManagement() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('All');
   const [inviteOpen, setInviteOpen] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
   const [actionError, setActionError] = useState('');
 
@@ -215,23 +205,6 @@ export default function UserManagement() {
     }
   };
 
-  const handleDelete = async () => {
-    if (!deleteTarget) return;
-    setActionError('');
-    try {
-      await base44.entities.User.delete(deleteTarget.id);
-      await logAuditEvent({
-        actionType: 'Delete',
-        entity: 'User',
-        recordId: deleteTarget.id,
-        remarks: `Removed user ${deleteTarget.email}`,
-      });
-      refresh();
-    } catch (err) {
-      setActionError(err?.message || 'Failed to remove user.');
-    }
-    setDeleteTarget(null);
-  };
 
   const formatDate = (d) => {
     if (!d) return '—';
@@ -265,7 +238,6 @@ export default function UserManagement() {
     { label: 'Role' },
     { label: 'Division' },
     { label: 'Joined', align: 'right' },
-    { label: 'Actions', align: 'right' },
   ];
 
   const renderRow = (u, i) => {
@@ -340,30 +312,6 @@ export default function UserManagement() {
         </td>
         <td style={{ padding: '12px 16px', textAlign: 'right', fontFamily: FONT, fontSize: 13, color: C.muted, whiteSpace: 'nowrap' }}>
           {formatDate(u.created_date)}
-        </td>
-        <td style={{ padding: '12px 16px', textAlign: 'right' }}>
-          {self ? (
-            <span style={{ fontFamily: FONT, fontSize: 11, color: C.muted, fontStyle: 'italic' }}>
-              Cannot remove self
-            </span>
-          ) : (
-            <button
-              onClick={() => setDeleteTarget(u)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 6,
-                borderRadius: 5,
-                color: C.danger,
-                display: 'inline-flex',
-                alignItems: 'center',
-              }}
-              title="Remove user"
-            >
-              <Trash2 size={15} />
-            </button>
-          )}
         </td>
       </tr>
     );
@@ -471,31 +419,6 @@ export default function UserManagement() {
         onOpenChange={setInviteOpen}
         onInvited={refresh}
       />
-
-      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Remove User Access?</AlertDialogTitle>
-            <AlertDialogDescription>
-              {deleteTarget && (
-                <>
-                  You are about to remove <strong>{deleteTarget.full_name || deleteTarget.email}</strong> from the system.
-                  This will revoke their access immediately. This action cannot be undone.
-                </>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              style={{ background: C.danger, color: '#fff' }}
-            >
-              Remove User
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </SharedPageContainer>
   );
 }

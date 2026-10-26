@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { canEditPlanning } from '@/lib/permissions';
+import { useAuth } from '@/lib/AuthContext';
 import { formatPeso } from '@/lib/format';
 import { useFilters } from '@/lib/FilterContext';
 import { base44 } from '@/api/base44Client';
@@ -52,6 +54,7 @@ export default function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const { divisions } = useFilters();
+  const { user } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [deleteConfirmProject, setDeleteConfirmProject] = useState(null);
@@ -269,10 +272,12 @@ export default function Projects() {
               Export Names & Codes
             </Button>
           )}
-          <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
-            <Plus className="h-4 w-4" />
-            New Project
-          </Button>
+          {canEditPlanning(user) && (
+            <Button onClick={openCreateDialog} className="gap-2 bg-[#1B2A8F] hover:bg-[#1B2A8F]/90">
+              <Plus className="h-4 w-4" />
+              New Project
+            </Button>
+          )}
         </div>
       </div>
 
@@ -359,12 +364,16 @@ export default function Projects() {
                               <Eye className="h-4 w-4" />
                             </Button>
                           </Link>
-                          <Button aria-label="Edit" variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditDialog(project)}>
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button aria-label="Delete" variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteConfirmProject(project)}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          {canEditPlanning(user, project.Functional_Division ?? null) && (
+                            <>
+                              <Button aria-label="Edit" variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditDialog(project)}>
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button aria-label="Delete" variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteConfirmProject(project)}>
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </>
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>

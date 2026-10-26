@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import OneDriveLinkInput from '@/components/ui/OneDriveLinkInput';
+import { canMoveTo } from '@/lib/workflow';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -15,6 +16,8 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import WorkflowBadge from '../components/ui/WorkflowBadge';
 import {
   ArrowLeft, Edit, Send, CheckCircle, FileDown, AlertCircle,
@@ -40,6 +43,7 @@ export default function ActivityView() {
 
   const [transitionDialogOpen, setTransitionDialogOpen] = useState(false);
   const [targetStatus, setTargetStatus] = useState('');
+  const [returnNote, setReturnNote] = useState('');
 
   // CRITICAL-1: Unified to Activity entity
   const { data: activityData, isLoading } = useQuery({
@@ -85,11 +89,12 @@ export default function ActivityView() {
 
   // CRITICAL-1: Unified to Activity entity
   const transitionMutation = useMutation({
-    mutationFn: async ({ newStatus }) => {
+    mutationFn: async ({ newStatus, note }) => {
       const today = new Date().toISOString().split('T')[0];
       const extra = {};
       if (newStatus === 'Under Review') { extra.Reviewed_By = currentUser?.email; extra.Reviewed_Date = today; }
       if (newStatus === 'Published') { extra.Published_Date = today; }
+      if (newStatus === 'Returned for Revision') { extra.Return_For_Revision_Note = note; }
       return base44.entities.DQAMPActivity.update(activityId, { Workflow_Status: newStatus, ...extra });
     },
     onSuccess: async (_, { newStatus }) => {
@@ -100,6 +105,7 @@ export default function ActivityView() {
       });
       queryClient.invalidateQueries(['activity', activityId]);
       setTransitionDialogOpen(false);
+      setReturnNote('');
     }
   });
 
@@ -179,7 +185,8 @@ export default function ActivityView() {
   // CRITICAL-1: Linked_Projects is now an array
   const project = getProject(activity.Linked_Projects?.[0]);
   const assignedAssessorNames = getAssessorNames(activity.Assigned_Assessors);
-  const nextStatus = getNextStatus();
+  const proposedStatus = getNextStatus();
+  const nextStatus = proposedStatus && canMoveTo(currentUser?.role, proposedStatus) ? proposedStatus : null;
   const canReturnRevision = (isAdmin || isReviewer) && activity.Workflow_Status === 'Under Review';
 
   return (
@@ -247,6 +254,15 @@ export default function ActivityView() {
               submit your ARTA CSM feedback
             </a>{' '}
             to unlock the report download.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {activity.Workflow_Status === 'Returned for Revision' && activity.Return_For_Revision_Note && (
+        <Alert className="border-amber-300 bg-amber-50">
+          <AlertCircle className="h-4 w-4 text-amber-700" />
+          <AlertDescription className="text-amber-900">
+            <strong>Returned for revision:</strong> {activity.Return_For_Revision_Note}
           </AlertDescription>
         </Alert>
       )}
@@ -554,10 +570,24 @@ export default function ActivityView() {
               This action will be audit-logged.
             </AlertDialogDescription>
           </AlertDialogHeader>
+          {targetStatus === 'Returned for Revision' && (
+            <div className="space-y-2">
+              <Label htmlFor="return-note">What needs to change? <span className="text-red-500">*</span></Label>
+              <Textarea
+                id="return-note"
+                value={returnNote}
+                onChange={(e) => setReturnNote(e.target.value)}
+                placeholder="For example: attach the signed attendance sheet."
+                rows={3}
+              />
+              <p className="text-xs text-slate-500">The Implementer sees this note on the activity.</p>
+            </div>
+          )}
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => transitionMutation.mutate({ newStatus: targetStatus })}
+              disabled={targetStatus === 'Returned for Revision' && !returnNote.trim()}
+              onClick={() => transitionMutation.mutate({ newStatus: targetStatus, note: returnNote.trim() })}
               className={targetStatus === 'Returned for Revision' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1B2A8F] hover:bg-[#1B2A8F]/90'}>
               Confirm
             </AlertDialogAction>

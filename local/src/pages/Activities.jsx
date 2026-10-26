@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { canCreateActivity } from '@/lib/permissions';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,7 @@ import toast from 'react-hot-toast';
 import { Card, CardContent } from "@/components/ui/card";
 import OneDriveLinkInput from '@/components/ui/OneDriveLinkInput';
 import RowActionsMenu from '@/components/ui/RowActionsMenu';
+import { canMoveTo } from '@/lib/workflow';
 import { MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -292,12 +294,16 @@ export default function Activities() {
               <Download className="h-4 w-4" />Export Names & Codes
             </Button>
           )}
-          <Button variant="outline" onClick={() => setIsImportOpen(true)}>
-            <FileUp className="h-4 w-4 mr-2" />Import CSV
-          </Button>
-          <Button onClick={() => setIsFormOpen(true)} className="bg-[#1B2A8F] hover:bg-[#152a47]">
-            <Plus className="h-4 w-4 mr-2" />New Activity
-          </Button>
+          {canCreateActivity(currentUser) && (
+            <>
+              <Button variant="outline" onClick={() => setIsImportOpen(true)}>
+                <FileUp className="h-4 w-4 mr-2" />Import CSV
+              </Button>
+              <Button onClick={() => setIsFormOpen(true)} className="bg-[#1B2A8F] hover:bg-[#16237A]">
+                <Plus className="h-4 w-4 mr-2" />New Activity
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -350,7 +356,8 @@ export default function Activities() {
                   <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-500">No activities found.</TableCell></TableRow>
                 ) : (
                   filteredActivities.map(activity => {
-                    const nextState = NEXT_STATE[activity.Workflow_Status];
+                    const proposed = NEXT_STATE[activity.Workflow_Status];
+                    const nextState = proposed && canMoveTo(currentUser?.role, proposed) ? proposed : null;
                     return (
                       <TableRow key={activity.id}>
                         <TableCell className="font-medium max-w-[200px] truncate">{activity.Activity_Title}</TableCell>
