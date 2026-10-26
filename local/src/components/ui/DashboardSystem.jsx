@@ -2,8 +2,8 @@ import React from 'react';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 export const C = {
-  brand:       '#0B2EA9',
-  accent:      '#2F80ED',
+  brand:       '#1E3A5F',
+  accent:      '#1D4ED8',
   accentSoft:  '#EAF0FF',
   success:     '#166534',
   successSoft: '#F0FDF4',
@@ -16,7 +16,7 @@ export const C = {
   dangerBar:   '#EF4444',
   neutral:     '#374151',
   neutralSoft: '#F8FAFC',
-  muted:       '#6B7280',
+  muted:       '#4B5563',
   border:      '#E5E9F0',
   surface:     '#FFFFFF',
   bg:          '#F7F9FC',
@@ -173,7 +173,7 @@ export function FilterDivider() {
 }
 
 // ── KPI tile ──────────────────────────────────────────────────────────────────
-export function KPITile({ label, value, sub = null, icon: Icon = null, borderLeft = C.brand }) {
+export function KPITile({ label, value, title, sub = null, icon: Icon = null, borderLeft = C.brand }) {
   return (
     <div style={{
       ...fontFam,
@@ -187,7 +187,7 @@ export function KPITile({ label, value, sub = null, icon: Icon = null, borderLef
           {label}
         </span>
       </div>
-      <span style={{ fontSize: 28, fontWeight: 700, color: C.text, letterSpacing: '-0.03em', lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <span title={title} style={{ fontSize: 28, fontWeight: 700, color: C.text, letterSpacing: '-0.03em', lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
         {value}
       </span>
       {sub && <span style={{ fontSize: 12, fontWeight: 400, color: C.muted }}>{sub}</span>}

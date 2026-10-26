@@ -188,7 +188,7 @@ export default function OutputDetail() {
                         <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate flex-1">
                           Attachment {idx + 1}
                         </a>
-                        <Button variant="ghost" size="sm" onClick={() => handleRemoveEvidence(idx)}>
+                        <Button aria-label="Delete" variant="ghost" size="sm" onClick={() => handleRemoveEvidence(idx)}>
                           <Trash2 className="h-3 w-3 text-red-500" />
                         </Button>
                       </div>
@@ -271,7 +271,7 @@ export default function OutputDetail() {
                     <TableCell>₱{(act.Financial_Allocation || 0).toLocaleString()}</TableCell>
                     <TableCell>
                       <Link to={createPageUrl(`Activities?id=${act.id}`)}>
-                        <Button variant="ghost" size="icon"><ExternalLink className="h-4 w-4" /></Button>
+                        <Button aria-label="Open link" variant="ghost" size="icon"><ExternalLink className="h-4 w-4" /></Button>
                       </Link>
                     </TableCell>
                   </TableRow>

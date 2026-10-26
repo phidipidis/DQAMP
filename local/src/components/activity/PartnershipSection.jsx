@@ -61,7 +61,7 @@ export default function PartnershipSection({ formData, onChange, locked }) {
                   name="has_partnership"
                   checked={formData.has_partnership === value}
                   onChange={() => setPartnership(value)}
-                  className="h-4 w-4 accent-[#003DA5]"
+                  className="h-4 w-4 accent-[#1E3A5F]"
                   disabled={locked}
                 />
                 <span className="text-sm font-medium text-slate-700">{label}</span>
@@ -99,7 +99,7 @@ export default function PartnershipSection({ formData, onChange, locked }) {
                       type="checkbox"
                       checked={partnershipTypes.includes(option)}
                       onChange={() => toggleType(option)}
-                      className="h-4 w-4 mt-0.5 accent-[#003DA5] flex-shrink-0"
+                      className="h-4 w-4 mt-0.5 accent-[#1E3A5F] flex-shrink-0"
                       disabled={locked}
                     />
                     <span className="text-sm text-slate-700">{option}</span>

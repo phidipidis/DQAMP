@@ -360,7 +360,7 @@ export default function ProjectWorkspace() {
                           <div className="flex items-center gap-2">
                             <span className="text-sm text-slate-500">{outputActivities.length} activities</span>
                             <Link to={createPageUrl(`OutputDetail?id=${output.id}`)}>
-                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => e.stopPropagation()}>
+                              <Button aria-label="Open link" variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => e.stopPropagation()}>
                                 <ExternalLink className="h-4 w-4" />
                               </Button>
                             </Link>
@@ -401,7 +401,7 @@ export default function ProjectWorkspace() {
                                       <TableCell>₱{(act.Financial_Allocation || 0).toLocaleString()}</TableCell>
                                       <TableCell>
                                         <Link to={createPageUrl(`Activities?id=${act.id}`)}>
-                                          <Button variant="ghost" size="icon"><ExternalLink className="h-4 w-4" /></Button>
+                                          <Button aria-label="Open link" variant="ghost" size="icon"><ExternalLink className="h-4 w-4" /></Button>
                                         </Link>
                                       </TableCell>
                                     </TableRow>

@@ -33,6 +33,13 @@ const ACTIVITY_TYPES = ['Training', 'Program LRM', 'PIR', 'Research', 'Conferenc
 const FUNDING_SOURCES = ['MOOE', 'SARO', 'SEF', 'Others'];
 
 // CRITICAL-3: "Returned for Revision" added to the state list
+const ACTION_LABELS = {
+  'Draft': 'Submit for review',
+  'Returned for Revision': 'Resubmit for review',
+  'Submitted': 'Start review',
+  'Under Review': 'Publish',
+};
+
 const WORKFLOW_STATES = ['Draft', 'Submitted', 'Returned for Revision', 'Under Review', 'Published'];
 
 // Map of valid next states (handles non-linear "Returned for Revision" correctly)
@@ -301,14 +308,14 @@ export default function Activities() {
               <Input placeholder="Search activities..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-10" />
             </div>
             <Select value={filterDivision} onValueChange={setFilterDivision}>
-              <SelectTrigger className="w-[150px]"><SelectValue placeholder="Division" /></SelectTrigger>
+              <SelectTrigger aria-label="Filter by division" className="w-[150px]"><SelectValue placeholder="Division" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Divisions</SelectItem>
                 {DIVISIONS.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}
               </SelectContent>
             </Select>
             <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-[190px]"><SelectValue placeholder="Workflow Status" /></SelectTrigger>
+              <SelectTrigger aria-label="Filter by workflow status" className="w-[190px]"><SelectValue placeholder="Workflow Status" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Statuses</SelectItem>
                 {WORKFLOW_STATES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
@@ -359,25 +366,31 @@ export default function Activities() {
                         <TableCell>{activity.Financial_Allocation ? `₱${activity.Financial_Allocation.toLocaleString()}` : '-'}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">
-                            <Button variant="ghost" size="sm" onClick={() => { setSelectedActivity(activity); setIsViewOpen(true); }}>
+                            <Button aria-label="View" variant="ghost" size="sm" onClick={() => { setSelectedActivity(activity); setIsViewOpen(true); }}>
                               <Eye className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" onClick={() => { setReportActivity(activity); setIsReportOpen(true); }}>
+                            <Button aria-label="Download" variant="ghost" size="sm" onClick={() => { setReportActivity(activity); setIsReportOpen(true); }}>
                               <Download className="h-4 w-4" />
                             </Button>
                             {activity.Workflow_Status !== 'Published' && (
-                              <Button variant="ghost" size="sm" onClick={() => handleEdit(activity)}>
+                              <Button aria-label="Edit" variant="ghost" size="sm" onClick={() => handleEdit(activity)}>
                                 <Edit2 className="h-4 w-4" />
                               </Button>
                             )}
                             {nextState && activity.Workflow_Status !== 'Published' && (
-                              <Button variant="outline" size="sm" onClick={() => handleWorkflowTransition(activity, nextState)}>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                title={`${ACTION_LABELS[activity.Workflow_Status] || nextState} (moves to ${nextState})`}
+                                aria-label={ACTION_LABELS[activity.Workflow_Status] || nextState}
+                                onClick={() => handleWorkflowTransition(activity, nextState)}
+                              >
                                 <ChevronRight className="h-4 w-4 mr-1" />
-                                <span className="hidden sm:inline">{nextState}</span>
+                                <span className="hidden sm:inline">{ACTION_LABELS[activity.Workflow_Status] || nextState}</span>
                               </Button>
                             )}
                             {currentUser?.role === 'admin' && !['Draft', 'Returned for Revision'].includes(activity.Workflow_Status) && (
-                              <Button variant="outline" size="sm" className="text-amber-600 border-amber-300 hover:bg-amber-50" onClick={() => handleRevertStatus(activity)}>
+                              <Button variant="outline" size="sm" className="text-amber-800 border-amber-300 hover:bg-amber-50" onClick={() => handleRevertStatus(activity)}>
                                 <ChevronLeft className="h-4 w-4 mr-1" />Revert
                               </Button>
                             )}
@@ -475,7 +488,7 @@ export default function Activities() {
                         <FileText className="h-4 w-4 text-slate-500 flex-shrink-0" />
                         <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate flex-1">{fmtFilename(url)}</a>
                         {isFieldEditable() && (
-                          <Button variant="ghost" size="sm" type="button" onClick={() => handleRemoveEvidence(idx)}>
+                          <Button aria-label="Delete" variant="ghost" size="sm" type="button" onClick={() => handleRemoveEvidence(idx)}>
                             <Trash2 className="h-3 w-3 text-red-500" />
                           </Button>
                         )}
@@ -624,7 +637,7 @@ export default function Activities() {
                   {feedback.filter(f => f.Linked_Activity === selectedActivity.id).length} feedback record(s) collected.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <Button variant="outline" size="sm" className="gap-2"
+                  <Button aria-label="Open link" variant="outline" size="sm" className="gap-2"
                     onClick={() => { setIsViewOpen(false); navigate(createPageUrl(`ARTAFeedback?activity=${selectedActivity.id}`)); }}>
                     <ExternalLink className="h-4 w-4" />
                     {feedback.some(f => f.Linked_Activity === selectedActivity.id) ? 'View / Add Feedback' : 'Submit ARTA Feedback'}

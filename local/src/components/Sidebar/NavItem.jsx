@@ -21,7 +21,7 @@ const iconMap = {
   Library, LifeBuoy, ListTodo, Settings, CheckCheck, FileBarChart
 };
 
-const BRAND = '#0B2EA9';
+const BRAND = '#1E3A5F';
 const BRAND_SOFT = '#EAF0FF';
 const MUTED = '#6B7280';
 const TEXT = '#374151';
@@ -46,7 +46,7 @@ export default function NavItem({ item, isActive, badgeCount }) {
       {item.access && <AccessLevelIcon accessLevel={item.access} />}
       {badgeCount !== undefined && badgeCount > 0 && (
         <span style={{
-          fontSize: 10, fontWeight: 600, color: BRAND, background: BRAND_SOFT,
+          fontSize: 12, fontWeight: 600, color: BRAND, background: BRAND_SOFT,
           padding: '1px 7px', borderRadius: 999, minWidth: 18, textAlign: 'center',
         }}>
           {badgeCount}
@@ -54,7 +54,7 @@ export default function NavItem({ item, isActive, badgeCount }) {
       )}
       {item.badge && !badgeCount && item.badge !== 'count' && item.badge !== 'pending_count' && (
         <span style={{
-          fontSize: 10, fontWeight: 600, color: BRAND, background: BRAND_SOFT,
+          fontSize: 12, fontWeight: 600, color: BRAND, background: BRAND_SOFT,
           padding: '1px 7px', borderRadius: 999, minWidth: 18, textAlign: 'center',
         }}>
           {item.badge}
@@ -66,6 +66,7 @@ export default function NavItem({ item, isActive, badgeCount }) {
   return (
     <Link
       to={createPageUrl(item.path)}
+      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] min-h-[44px] lg:min-h-0"
       style={{
         display: 'flex', alignItems: 'center', gap: 10,
         padding: '7px 12px', margin: '1px 12px',

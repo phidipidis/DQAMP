@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { logAuditEvent } from './components/audit/AuditLogger';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -10,6 +12,16 @@ import GlobalFilterBar from './components/ui/GlobalFilterBar';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
+  const [navOpen, setNavOpen] = useState(false);
+  const location = useLocation();
+
+  // Close the drawer after navigating, and on Escape.
+  useEffect(() => setNavOpen(false), [location.pathname]);
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setNavOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   useEffect(() => {
     const initUser = async () => {
@@ -71,14 +83,36 @@ export default function Layout({ children, currentPageName }) {
           }
         `}</style>
 
-      {/* Premium Sidebar */}
-      <Sidebar user={user} onLogout={handleLogout} currentPageName={currentPageName} />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:shadow"
+      >
+        Skip to content
+      </a>
+
+      {navOpen && (
+        <div className="fixed inset-0 z-30 bg-slate-900/40 lg:hidden" onClick={() => setNavOpen(false)} aria-hidden="true" />
+      )}
+
+      <Sidebar user={user} onLogout={handleLogout} currentPageName={currentPageName} open={navOpen} />
 
       {/* Main Content */}
-      <main className="ml-64 min-h-screen" style={{ background: '#F7F9FC' }}>
+      <main id="main-content" tabIndex={-1} className="min-h-screen lg:ml-64" style={{ background: '#F7F9FC' }}>
+        <div className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-slate-200 bg-white px-4 lg:hidden">
+          <button
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen(true)}
+            className="flex h-11 w-11 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F]"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <span className="font-semibold text-[#1E3A5F]">DQAMP 2026</span>
+        </div>
         <FilterProvider>
           {currentPageName !== 'MainDashboard' && <GlobalFilterBar />}
-          <div className="p-8">
+          <div className="p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto">
               {children}
             </div>

@@ -4,7 +4,7 @@ import { LogOut, ChevronDown } from 'lucide-react';
 const MUTED = '#6B7280';
 const TEXT = '#0F172A';
 const BORDER = '#E5E9F0';
-const BRAND = '#0B2EA9';
+const BRAND = '#1E3A5F';
 
 export default function UserProfile({ user, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);

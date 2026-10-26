@@ -1,7 +1,7 @@
 import { Eye, Filter } from 'lucide-react';
 
-const MUTED = '#9CA3AF';
-const BRAND = '#0B2EA9';
+const MUTED = '#6B7280';
+const BRAND = '#1E3A5F';
 
 export default function AccessLevelIcon({ accessLevel }) {
   if (accessLevel === 'read-only') {

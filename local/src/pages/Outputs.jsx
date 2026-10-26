@@ -32,6 +32,10 @@ import {
 } from "@/components/ui/dialog";
 import { Plus, Search, Edit, Trash2, CheckCircle } from 'lucide-react';
 import { useFilters } from '@/lib/FilterContext';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 export default function Outputs() {
   const { divisions } = useFilters();
@@ -40,6 +44,7 @@ export default function Outputs() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingOutput, setEditingOutput] = useState(null);
+  const [deleteConfirmOutput, setDeleteConfirmOutput] = useState(null);
   
   const [formData, setFormData] = useState({
     Linked_Project: '',
@@ -345,7 +350,7 @@ export default function Outputs() {
                       <TableCell>
                         <div className="flex items-center justify-center gap-1">
                           {output.Output_Verification_Status === 'Pending' && (
-                            <Button 
+                            <Button aria-label="Mark verified" 
                               variant="ghost" 
                               size="icon" 
                               className="h-8 w-8 text-emerald-600"
@@ -355,14 +360,14 @@ export default function Outputs() {
                               <CheckCircle className="h-4 w-4" />
                             </Button>
                           )}
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditDialog(output)}>
+                          <Button aria-label="Edit" variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditDialog(output)}>
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button 
+                          <Button aria-label="Delete" 
                             variant="ghost" 
                             size="icon" 
                             className="h-8 w-8 text-red-500 hover:text-red-700"
-                            onClick={() => deleteMutation.mutate(output.id)}
+                            onClick={() => setDeleteConfirmOutput(output)}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -483,6 +488,26 @@ export default function Outputs() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <AlertDialog open={!!deleteConfirmOutput} onOpenChange={(open) => !open && setDeleteConfirmOutput(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Output</AlertDialogTitle>
+            <AlertDialogDescription>
+              Delete <strong>{deleteConfirmOutput?.Description}</strong>? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700"
+              disabled={deleteMutation.isPending}
+              onClick={() => deleteMutation.mutate(deleteConfirmOutput.id, { onSuccess: () => setDeleteConfirmOutput(null) })}
+            >
+              {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

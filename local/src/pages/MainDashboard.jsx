@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { StatusBadge } from '@/components/ui/StatusBadge';
+import { formatPeso, formatPercent } from '@/lib/format';
 import { useFilters } from '@/lib/FilterContext';
 import {
   C, FONT, QUARTERS, DIVISIONS, PageHeader, FilterToolbar, FilterLabel, FilterDivider,
@@ -97,7 +98,7 @@ export default function MainDashboard() {
         <FilterDivider />
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <FilterLabel>Project</FilterLabel>
-          <select value={projectId} onChange={e => setProjectId(e.target.value)} style={selectStyle}>
+          <select aria-label="Filter by project" value={projectId} onChange={e => setProjectId(e.target.value)} style={selectStyle}>
             <option value="All">All projects</option>
             {projects.map(p => <option key={p.id} value={p.id}>{p.Project_Code} – {p.Project_Title}</option>)}
           </select>
@@ -115,8 +116,8 @@ export default function MainDashboard() {
         <KPITile label="Total activities"  value={totalActivities}                         icon={ClipboardList}  borderLeft={C.brand}      />
         <KPITile label="Active projects"   value={filteredProjects.length}                 icon={FolderKanban}   borderLeft={C.accent}     />
         <KPITile label="Active assessors"  value={activeAssessors}                         icon={ShieldCheck}    borderLeft={C.successBar} />
-        <KPITile label="Total allocation"  value={`₱${totalAllocation.toLocaleString()}`} icon={PhilippinePeso} borderLeft={C.warningBar} />
-        <KPITile label="Completion rate"   value={`${completionRate}%`}                    icon={TrendingUp}     borderLeft={C.successBar} sub={`${completedCount} of ${totalActivities} activities`} />
+        <KPITile label="Total allocation"  value={formatPeso(totalAllocation, { compact: true })} title={formatPeso(totalAllocation)} icon={PhilippinePeso} borderLeft={C.warningBar} />
+        <KPITile label="Completion rate"   value={formatPercent(completedCount, totalActivities)}                    icon={TrendingUp}     borderLeft={C.successBar} sub={`${completedCount} of ${totalActivities} activities`} />
       </KPIBand>
 
       {/* 4. Division performance */}
@@ -131,7 +132,7 @@ export default function MainDashboard() {
             <div style={{ height: '100%', width: `${completionRate}%`, background: `linear-gradient(90deg, ${C.brand}, ${C.accent})`, borderRadius: 99, transition: 'width 0.6s ease' }} />
           </div>
           <span style={{ fontSize: 13, fontWeight: 600, color: C.brand, minWidth: 80, textAlign: 'right' }}>
-            {completionRate}% overall
+            {formatPercent(completedCount, totalActivities)} overall
           </span>
         </div>
 
@@ -161,8 +162,8 @@ export default function MainDashboard() {
                 <div style={{ height: '100%', width: `${d.rate}%`, background: d.rate >= 70 ? C.successBar : d.rate >= 40 ? C.warningBar : C.dangerBar, borderRadius: 99 }} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                <span style={{ color: C.muted }}>Completion <strong style={{ color: C.text, fontWeight: 600 }}>{d.rate}%</strong></span>
-                <span style={{ color: C.muted }}>₱{(d.allocation / 1000).toFixed(0)}k allocated</span>
+                <span style={{ color: C.muted }}>Completion <strong style={{ color: C.text, fontWeight: 600 }}>{formatPercent(d.completed, d.total)}</strong></span>
+                <span style={{ color: C.muted }}>{formatPeso(d.allocation, { compact: true })} allocated</span>
               </div>
             </div>
           ))}
@@ -232,7 +233,7 @@ export default function MainDashboard() {
                 <td style={{ padding: '10px 16px', fontSize: 13, fontWeight: 400, color: C.muted }}>{a.Activity_Type}</td>
                 <td style={{ padding: '10px 16px' }}><StatusBadge status={a.Status} /></td>
                 <td style={{ padding: '10px 16px', fontSize: 13, fontWeight: 600, color: C.brand, textAlign: 'right' }}>
-                  ₱{(a.Financial_Allocation || 0).toLocaleString()}
+                  {formatPeso(a.Financial_Allocation)}
                 </td>
               </tr>
             )}

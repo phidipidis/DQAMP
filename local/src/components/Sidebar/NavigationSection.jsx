@@ -39,13 +39,14 @@ export default function NavigationSection({
     <div style={{ marginBottom: 2 }}>
       <button
         onClick={onToggle}
+        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] min-h-[44px] lg:min-h-0"
         style={{
           width: '100%',
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '8px 20px',
           border: 'none', background: 'transparent', cursor: 'pointer',
           fontFamily: "'Public Sans', system-ui, sans-serif",
-          fontSize: 11, fontWeight: 600, color: MUTED,
+          fontSize: 12, fontWeight: 600, color: MUTED,
           letterSpacing: '0.08em', textTransform: 'uppercase',
           transition: 'color 0.13s',
         }}

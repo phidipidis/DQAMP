@@ -69,7 +69,7 @@ export default function AttachmentsSection({
                   </a>
                 </Button>
                 {!locked && (
-                  <Button
+                  <Button aria-label="Delete"
                     variant="ghost"
                     size="icon"
                     type="button"

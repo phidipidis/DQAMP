@@ -205,10 +205,10 @@ export default function ProjectView() {
                       <Badge className={objectiveStatusColors[obj.Objective_Status] || objectiveStatusColors['Not Started']}>
                         {obj.Objective_Status || 'Not Started'}
                       </Badge>
-                      <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEditObjective(obj)}>
+                      <Button aria-label="Edit" size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEditObjective(obj)}>
                         <Pencil className="h-4 w-4 text-slate-500" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setDeleteObjective(obj)}>
+                      <Button aria-label="Delete" size="icon" variant="ghost" className="h-8 w-8" onClick={() => setDeleteObjective(obj)}>
                         <Trash2 className="h-4 w-4 text-red-500" />
                       </Button>
                     </div>
@@ -254,10 +254,10 @@ export default function ProjectView() {
                       <Badge className={outputStatusColors[output.Output_Verification_Status] || outputStatusColors['Pending']}>
                         {output.Output_Verification_Status || 'Pending'}
                       </Badge>
-                      <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEditOutput(output)}>
+                      <Button aria-label="Edit" size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEditOutput(output)}>
                         <Pencil className="h-4 w-4 text-slate-500" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setDeleteOutput(output)}>
+                      <Button aria-label="Delete" size="icon" variant="ghost" className="h-8 w-8" onClick={() => setDeleteOutput(output)}>
                         <Trash2 className="h-4 w-4 text-red-500" />
                       </Button>
                     </div>

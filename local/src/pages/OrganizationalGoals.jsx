@@ -218,13 +218,13 @@ export default function OrganizationalGoals() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#003DA5] flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
             <Flag className="h-6 w-6" />
             Organizational Goals
           </h1>
           <p className="text-slate-600">Manage strategic goals with project, objective, and output linkages</p>
         </div>
-        <Button onClick={openCreateDialog} className="gap-2 bg-[#003DA5] hover:bg-[#003DA5]/90">
+        <Button onClick={openCreateDialog} className="gap-2 bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
           <Plus className="h-4 w-4" />
           New Goal
         </Button>
@@ -288,7 +288,7 @@ export default function OrganizationalGoals() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="icon" onClick={() => openEditDialog(goal)}>
+                        <Button aria-label="Edit" variant="ghost" size="icon" onClick={() => openEditDialog(goal)}>
                           <Edit className="h-4 w-4" />
                         </Button>
                       </TableCell>
@@ -372,7 +372,7 @@ export default function OrganizationalGoals() {
                     checked={formData.Linked_Projects.includes(p.id)}
                     onCheckedChange={() => toggleProject(p.id)}
                   />
-                  <FolderKanban className="h-4 w-4 text-[#003DA5]" />
+                  <FolderKanban className="h-4 w-4 text-[#1E3A5F]" />
                   <span className="text-sm flex-1">{p.Project_Code} - {p.Project_Title}</span>
                   <Badge variant="outline">{p.Functional_Division}</Badge>
                 </div>
@@ -439,7 +439,7 @@ export default function OrganizationalGoals() {
 
           <DialogFooter className="mt-4">
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
-            <Button onClick={handleSave} className="bg-[#003DA5] hover:bg-[#003DA5]/90" disabled={createMutation.isPending || updateMutation.isPending}>
+            <Button onClick={handleSave} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90" disabled={createMutation.isPending || updateMutation.isPending}>
               {editingGoal ? 'Update' : 'Create'}
             </Button>
           </DialogFooter>

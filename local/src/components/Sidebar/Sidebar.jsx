@@ -9,7 +9,7 @@ import UserProfile from './UserProfile';
 
 const BORDER = '#E5E9F0';
 
-export default function Sidebar({ user, onLogout, currentPageName }) {
+export default function Sidebar({ user, onLogout, currentPageName, open = false }) {
   const [collapsedSections, setCollapsedSections] = useState({});
   const { data: notificationCounts = {} } = useNotificationCounts(user);
 
@@ -35,12 +35,14 @@ export default function Sidebar({ user, onLogout, currentPageName }) {
   };
 
   return (
-    <aside style={{
-      position: 'fixed', left: 0, top: 0, width: 256, height: '100vh',
-      display: 'flex', flexDirection: 'column',
-      background: '#fff', borderRight: `1px solid ${BORDER}`,
-      fontFamily: "'Public Sans', system-ui, sans-serif",
-    }}>
+    <aside
+      aria-label="Main navigation"
+      className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col transition-transform duration-200 lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+      style={{
+        background: '#fff', borderRight: `1px solid ${BORDER}`,
+        fontFamily: "'Public Sans', system-ui, sans-serif",
+      }}
+    >
       <SidebarHeader />
       <QuickActions actions={config.quick_actions} />
       <nav className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300" style={{ padding: '8px 0' }}>

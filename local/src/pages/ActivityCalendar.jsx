@@ -92,7 +92,7 @@ export default function ActivityCalendar() {
                 className={`min-h-[110px] border-r border-b p-1.5 ${!inMonth ? 'bg-slate-50' : 'bg-white'}`}
               >
                 <div className={`text-xs font-medium w-6 h-6 flex items-center justify-center rounded-full mb-1 ${
-                  isToday ? 'bg-[#003DA5] text-white' : inMonth ? 'text-slate-700' : 'text-slate-300'
+                  isToday ? 'bg-[#1E3A5F] text-white' : inMonth ? 'text-slate-700' : 'text-slate-300'
                 }`}>
                   {format(day, 'd')}
                 </div>
@@ -133,7 +133,7 @@ export default function ActivityCalendar() {
               <div key={i} className="py-3 text-center border-r">
                 <div className="text-xs text-slate-500 uppercase">{format(day, 'EEE')}</div>
                 <div className={`text-lg font-semibold mx-auto w-9 h-9 flex items-center justify-center rounded-full ${
-                  isToday ? 'bg-[#003DA5] text-white' : 'text-slate-700'
+                  isToday ? 'bg-[#1E3A5F] text-white' : 'text-slate-700'
                 }`}>
                   {format(day, 'd')}
                 </div>
@@ -190,13 +190,13 @@ export default function ActivityCalendar() {
         <div className="flex rounded-lg border overflow-hidden">
           <button
             onClick={() => setView('monthly')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'monthly' ? 'bg-[#003DA5] text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'monthly' ? 'bg-[#1E3A5F] text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
           >
             Monthly
           </button>
           <button
             onClick={() => setView('weekly')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'weekly' ? 'bg-[#003DA5] text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'weekly' ? 'bg-[#1E3A5F] text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
           >
             Weekly
           </button>
@@ -210,7 +210,7 @@ export default function ActivityCalendar() {
         </div>
 
         <span className="text-base font-semibold text-slate-700 flex items-center gap-2">
-          <CalendarDays className="h-4 w-4 text-[#003DA5]" />{headerLabel}
+          <CalendarDays className="h-4 w-4 text-[#1E3A5F]" />{headerLabel}
         </span>
 
         {/* Division filter */}
@@ -303,7 +303,7 @@ export default function ActivityCalendar() {
                 to={`/ActivityForm?id=${selectedActivity.id}`}
                 onClick={() => setSelectedActivity(null)}
               >
-                <Button className="w-full bg-[#003DA5] hover:bg-[#003DA5]/90 gap-2">
+                <Button className="w-full bg-[#1E3A5F] hover:bg-[#1E3A5F]/90 gap-2">
                   <ExternalLink className="h-4 w-4" />
                   Edit Activity
                 </Button>

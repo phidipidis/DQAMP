@@ -10,7 +10,7 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			'deped-blue': '#003DA5',
+  			'deped-blue': '#1E3A5F',
   			'deped-blue-100': '#dce8fa',
   			'deped-green': '#006B3F',
   			background: 'hsl(var(--background))',

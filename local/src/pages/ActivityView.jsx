@@ -425,7 +425,7 @@ export default function ActivityView() {
             <p className="text-slate-600">{feedback.length} feedback record(s) collected for this activity.</p>
             <div className="flex flex-wrap gap-3">
               {/* Always show the ARTA feedback link */}
-              <Button variant="outline" className="gap-2"
+              <Button aria-label="Open link" variant="outline" className="gap-2"
                 onClick={() => navigate(createPageUrl(`ARTAFeedback?activity=${activityId}`))}>
                 <ExternalLink className="h-4 w-4" />
                 {feedback.length > 0 ? 'View / Add Feedback' : 'Submit ARTA Feedback'}

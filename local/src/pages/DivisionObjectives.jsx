@@ -138,13 +138,13 @@ export default function DivisionObjectives() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#003DA5] flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
             <Target className="h-6 w-6" />
             Division Objectives
           </h1>
           <p className="text-slate-600">Manage functional division objectives ({objectives.length} total)</p>
         </div>
-        <Button onClick={openCreate} className="gap-2 bg-[#003DA5] hover:bg-[#003DA5]/90">
+        <Button onClick={openCreate} className="gap-2 bg-[#1E3A5F] hover:bg-[#1E3A5F]/90">
           <Plus className="h-4 w-4" />New Objective
         </Button>
       </div>
@@ -192,7 +192,7 @@ export default function DivisionObjectives() {
                 ) : (
                   filtered.map((obj) => (
                     <TableRow key={obj.id} className="hover:bg-slate-50">
-                      <TableCell className="font-mono text-sm font-medium text-[#003DA5]">{obj.Objective_Code || '-'}</TableCell>
+                      <TableCell className="font-mono text-sm font-medium text-[#1E3A5F]">{obj.Objective_Code || '-'}</TableCell>
                       <TableCell className="max-w-sm truncate font-medium">{obj.Objective_Title}</TableCell>
                       <TableCell><Badge variant="outline">{obj.Functional_Division}</Badge></TableCell>
                       <TableCell>{obj.Target_Year || '-'}</TableCell>
@@ -202,10 +202,10 @@ export default function DivisionObjectives() {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-center gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(obj)}>
+                          <Button aria-label="Edit" variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(obj)}>
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button
+                          <Button aria-label="Delete"
                             variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-700"
                             onClick={() => window.confirm('Delete this objective?') && deleteMutation.mutate(obj.id)}
                             disabled={deleteMutation.isPending}
@@ -292,7 +292,7 @@ export default function DivisionObjectives() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
-            <Button onClick={handleSave} className="bg-[#003DA5] hover:bg-[#003DA5]/90" disabled={createMutation.isPending || updateMutation.isPending}>
+            <Button onClick={handleSave} className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90" disabled={createMutation.isPending || updateMutation.isPending}>
               {createMutation.isPending || updateMutation.isPending ? 'Saving...' : editingObjective ? 'Update' : 'Create'}
             </Button>
           </DialogFooter>
