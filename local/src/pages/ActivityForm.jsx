@@ -193,7 +193,7 @@ export default function ActivityForm() {
   // ─── Role & permission flags ──────────────────────────────────────────
   const status = formData.Workflow_Status;
   const isAdmin = currentUser?.role === 'admin';
-  const isReviewer = ['reviewer', 'assessor'].includes(currentUser?.role);
+  const isReviewer = currentUser?.role === 'QA_Assessor';
 
   const canEditCore        = isAdmin || ['Draft', 'Returned for Revision'].includes(status);
   const canEditBudget      = isAdmin || ['Draft', 'Returned for Revision'].includes(status);

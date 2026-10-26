@@ -287,9 +287,11 @@ export default function Activities() {
           <p className="text-slate-600 mt-1">Manage DQAMP activities with workflow tracking</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" onClick={() => exportActivitiesNaming(filteredActivities)} className="gap-2">
-            <Download className="h-4 w-4" />Export Names & Codes
-          </Button>
+          {filteredActivities.length > 0 && (
+            <Button variant="outline" onClick={() => exportActivitiesNaming(filteredActivities)} className="gap-2">
+              <Download className="h-4 w-4" />Export Names & Codes
+            </Button>
+          )}
           <Button variant="outline" onClick={() => setIsImportOpen(true)}>
             <FileUp className="h-4 w-4 mr-2" />Import CSV
           </Button>

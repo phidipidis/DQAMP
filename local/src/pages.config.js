@@ -28,7 +28,26 @@
  *
  *   import Home from './pages/Home';
  *   import Settings from './pages/Settings';
- *   import __Layout from './Layout.jsx';
+ *   import { lazy } from 'react';
+import __Layout from './Layout.jsx';
+
+const MainDashboard = lazy(() => import('./pages/MainDashboard'));
+const OrganizationalGoals = lazy(() => import('./pages/OrganizationalGoals'));
+const DivisionObjectives = lazy(() => import('./pages/DivisionObjectives'));
+const Projects = lazy(() => import('./pages/Projects'));
+const ProjectView = lazy(() => import('./pages/ProjectView'));
+const ProjectWorkspace = lazy(() => import('./pages/ProjectWorkspace'));
+const Outputs = lazy(() => import('./pages/Outputs'));
+const OutputDetail = lazy(() => import('./pages/OutputDetail'));
+const Activities = lazy(() => import('./pages/Activities'));
+const ActivityView = lazy(() => import('./pages/ActivityView'));
+const ActivityForm = lazy(() => import('./pages/ActivityForm'));
+const ActivityCalendar = lazy(() => import('./pages/ActivityCalendar'));
+const ActivityImport = lazy(() => import('./pages/ActivityImport'));
+const UserManagement = lazy(() => import('./pages/UserManagement'));
+const SystemSettings = lazy(() => import('./pages/SystemSettings'));
+const ReportCenter = lazy(() => import('./pages/ReportCenter'));
+const PIRPAReport = lazy(() => import('./pages/PIRPAReport'));
  *
  *   export const PAGES = {
  *       "Home": Home,
@@ -47,24 +66,26 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import MainDashboard from './pages/MainDashboard';
-import OrganizationalGoals from './pages/OrganizationalGoals';
-import DivisionObjectives from './pages/DivisionObjectives';
-import Projects from './pages/Projects';
-import ProjectView from './pages/ProjectView';
-import ProjectWorkspace from './pages/ProjectWorkspace';
-import Outputs from './pages/Outputs';
-import OutputDetail from './pages/OutputDetail';
-import Activities from './pages/Activities';
-import ActivityView from './pages/ActivityView';
-import ActivityForm from './pages/ActivityForm';
-import ActivityCalendar from './pages/ActivityCalendar';
-import ActivityImport from './pages/ActivityImport';
-import UserManagement from './pages/UserManagement';
-import SystemSettings from './pages/SystemSettings';
-import ReportCenter from './pages/ReportCenter';
-import PIRPAReport from './pages/PIRPAReport';
+import { lazy } from 'react';
 import __Layout from './Layout.jsx';
+
+const MainDashboard = lazy(() => import('./pages/MainDashboard'));
+const OrganizationalGoals = lazy(() => import('./pages/OrganizationalGoals'));
+const DivisionObjectives = lazy(() => import('./pages/DivisionObjectives'));
+const Projects = lazy(() => import('./pages/Projects'));
+const ProjectView = lazy(() => import('./pages/ProjectView'));
+const ProjectWorkspace = lazy(() => import('./pages/ProjectWorkspace'));
+const Outputs = lazy(() => import('./pages/Outputs'));
+const OutputDetail = lazy(() => import('./pages/OutputDetail'));
+const Activities = lazy(() => import('./pages/Activities'));
+const ActivityView = lazy(() => import('./pages/ActivityView'));
+const ActivityForm = lazy(() => import('./pages/ActivityForm'));
+const ActivityCalendar = lazy(() => import('./pages/ActivityCalendar'));
+const ActivityImport = lazy(() => import('./pages/ActivityImport'));
+const UserManagement = lazy(() => import('./pages/UserManagement'));
+const SystemSettings = lazy(() => import('./pages/SystemSettings'));
+const ReportCenter = lazy(() => import('./pages/ReportCenter'));
+const PIRPAReport = lazy(() => import('./pages/PIRPAReport'));
 
 
 export const PAGES = {

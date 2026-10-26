@@ -136,19 +136,33 @@ export default function MainDashboard() {
           </span>
         </div>
 
-        {/* Bar chart */}
-        <div style={{ height: 190 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={divisionData} barCategoryGap="35%" barGap={4}>
-              <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
-              <XAxis dataKey="div" tick={chartTickStyle} axisLine={false} tickLine={false} />
-              <YAxis tick={chartTickSmall} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={chartTooltipStyle} formatter={(val, name) => [val, name === 'total' ? 'Total' : 'Completed']} />
-              <Bar dataKey="total"     name="Total"     fill={C.accentSoft} radius={[4,4,0,0]} />
-              <Bar dataKey="completed" name="Completed" fill={C.brand}      radius={[4,4,0,0]} />
-            </BarChart>
-          </ResponsiveContainer>
+        {/* Bar chart with a legend; empty state instead of empty bars */}
+        <div style={{ display: 'flex', gap: 16, fontSize: 12, color: C.muted, marginBottom: 8 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: 2, background: C.accentSoft, display: 'inline-block' }} />Total activities
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: 2, background: C.brand, display: 'inline-block' }} />Completed
+          </span>
         </div>
+        {totalActivities === 0 ? (
+          <div style={{ height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center', color: C.muted, fontSize: 14, textAlign: 'center' }}>
+            No activities match these filters yet.
+          </div>
+        ) : (
+          <div style={{ height: 190 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={divisionData} barCategoryGap="35%" barGap={4}>
+                <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
+                <XAxis dataKey="div" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                <YAxis tick={chartTickSmall} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={chartTooltipStyle} formatter={(val, name) => [val, name === 'total' ? 'Total' : 'Completed']} />
+                <Bar dataKey="total"     name="Total"     fill={C.accentSoft} radius={[4,4,0,0]} />
+                <Bar dataKey="completed" name="Completed" fill={C.brand}      radius={[4,4,0,0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
 
         {/* Division detail strip */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: C.border, border: `1px solid ${C.border}`, borderRadius: 8, overflow: 'hidden', marginTop: 16 }}>

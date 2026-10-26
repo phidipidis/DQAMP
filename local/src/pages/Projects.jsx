@@ -259,10 +259,12 @@ export default function Projects() {
           <p className="text-slate-600">Manage projects with objectives and outputs</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" onClick={() => exportProjectsNaming(filteredProjects)} className="gap-2">
-            <Download className="h-4 w-4" />
-            Export Names & Codes
-          </Button>
+          {filteredProjects.length > 0 && (
+            <Button variant="outline" onClick={() => exportProjectsNaming(filteredProjects)} className="gap-2">
+              <Download className="h-4 w-4" />
+              Export Names & Codes
+            </Button>
+          )}
           <Button onClick={openCreateDialog} className="gap-2 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
             <Plus className="h-4 w-4" />
             New Project
