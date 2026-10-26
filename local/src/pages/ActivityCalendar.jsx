@@ -14,9 +14,9 @@ import {
 } from 'date-fns';
 
 const DIVISION_COLORS = {
-  'CID':  { bg: 'bg-red-500',    light: 'bg-red-100 text-red-800',      dot: 'bg-red-500' },
-  'SGOD': { bg: 'bg-blue-500',   light: 'bg-blue-100 text-blue-800',    dot: 'bg-blue-500' },
-  'OSDS': { bg: 'bg-yellow-500', light: 'bg-yellow-100 text-yellow-800', dot: 'bg-yellow-500' },
+  'CID':  { bg: 'bg-[#1E3A5F]',  light: 'bg-slate-100 text-slate-800',  dot: 'bg-[#1E3A5F]' },
+  'SGOD': { bg: 'bg-sky-700',    light: 'bg-sky-100 text-sky-900',      dot: 'bg-sky-700' },
+  'OSDS': { bg: 'bg-slate-600',  light: 'bg-slate-200 text-slate-800',  dot: 'bg-slate-600' },
 };
 
 const getColor = (division) => DIVISION_COLORS[division] || { bg: 'bg-slate-500', light: 'bg-slate-100 text-slate-800', dot: 'bg-slate-500' };

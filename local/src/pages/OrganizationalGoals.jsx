@@ -22,7 +22,7 @@ import {
 import {
   Tabs, TabsContent, TabsList, TabsTrigger
 } from "@/components/ui/tabs";
-import { Plus, Search, Edit, Flag, FolderKanban, Target, Package } from 'lucide-react';
+import { Plus, Search, Edit, FolderKanban, Target, Package } from 'lucide-react';
 
 export default function OrganizationalGoals() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -206,7 +206,7 @@ export default function OrganizationalGoals() {
     }));
   };
 
-  const getProjectCode = (id) => projects.find(p => p.id === id)?.Project_Code || '-';
+  const getProjectCode = (id) => projects.find(p => p.id === id)?.Project_Code || '—';
 
   const priorityColors = {
     'High': 'bg-red-100 text-red-800',
@@ -218,8 +218,7 @@ export default function OrganizationalGoals() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
-            <Flag className="h-6 w-6" />
+          <h1 className="text-2xl font-bold text-[#1E3A5F]">
             Organizational Goals
           </h1>
           <p className="text-slate-600">Manage strategic goals with project, objective, and output linkages</p>
@@ -269,13 +268,13 @@ export default function OrganizationalGoals() {
                   </TableRow>
                 ) : filteredGoals.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="text-center py-8 text-slate-500">No goals found.</TableCell>
+                    <TableCell colSpan={8} className="text-center py-8 text-slate-500">No goals yet. Goals set by an administrator appear here and link down to division objectives.</TableCell>
                   </TableRow>
                 ) : (
                   filteredGoals.map(goal => (
                     <TableRow key={goal.id} className="hover:bg-slate-50">
                       <TableCell className="font-medium max-w-xs truncate">{goal.Goal_Title}</TableCell>
-                      <TableCell>{goal.Target_Year || '-'}</TableCell>
+                      <TableCell>{goal.Target_Year || '—'}</TableCell>
                       <TableCell>
                         <Badge className={priorityColors[goal.Priority_Level]}>{goal.Priority_Level}</Badge>
                       </TableCell>
@@ -415,7 +414,7 @@ export default function OrganizationalGoals() {
                     {o.Objective_Code ? <span className="font-mono text-xs text-slate-500 mr-1">[{o.Objective_Code}]</span> : null}
                     {o.Objective_Title || o.Objective_Description || o.Objective_Statement || o.id}
                   </span>
-                  <Badge variant="outline">{o.Functional_Division || '-'}</Badge>
+                  <Badge variant="outline">{o.Functional_Division || '—'}</Badge>
                 </div>
               ))}
               </div>

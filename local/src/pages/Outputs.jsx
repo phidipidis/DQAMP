@@ -162,7 +162,7 @@ export default function Outputs() {
 
   const getProjectCode = (projectId) => {
     const project = projects.find(p => p.id === projectId);
-    return project?.Project_Code || '-';
+    return project?.Project_Code || '—';
   };
 
   const openCreateDialog = () => {
@@ -236,7 +236,7 @@ export default function Outputs() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">Project Outputs</h1>
+          <h1 className="text-2xl font-bold text-[#1e3a5f]">Outputs</h1>
           <p className="text-slate-600">Manage deliverables and outputs with verification tracking</p>
         </div>
         <Button onClick={openCreateDialog} className="gap-2 bg-[#1e3a5f] hover:bg-[#1e3a5f]/90">
@@ -327,7 +327,7 @@ export default function Outputs() {
                           </Badge>
                         )}
                       </TableCell>
-                      <TableCell>{output.Due_Date || '-'}</TableCell>
+                      <TableCell>{output.Due_Date || '—'}</TableCell>
                       <TableCell>
                        <Badge className={statusColors[output.Output_Verification_Status] || statusColors['Pending']}>
                          {output.Output_Verification_Status || 'Pending'}

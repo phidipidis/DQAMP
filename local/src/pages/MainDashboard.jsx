@@ -11,7 +11,7 @@ import {
   chartTickStyle, chartTickSmall, chartTooltipStyle, chartGridStroke
 } from '@/components/ui/DashboardSystem';
 import {
-  ClipboardList, FolderKanban, ShieldCheck, PhilippinePeso,
+  ClipboardList, FolderKanban, PhilippinePeso,
   AlertTriangle, TrendingUp
 } from 'lucide-react';
 import {
@@ -26,7 +26,6 @@ export default function MainDashboard() {
   // Data (unchanged)
   const { data: activities = [] } = useQuery({ queryKey: ['activities'], queryFn: () => base44.entities.DQAMPActivity.list() });
   const { data: projects   = [] } = useQuery({ queryKey: ['projects'],   queryFn: () => base44.entities.Project.list() });
-  const { data: assessors  = [] } = useQuery({ queryKey: ['assessors'],  queryFn: () => base44.entities.QAME_Assessor.list() });
 
   // Filtering (unchanged)
   const filteredActivities = activities.filter(activity => {
@@ -49,7 +48,6 @@ export default function MainDashboard() {
   const implementedCount = filteredActivities.filter(a => a.Status === 'Completed').length;
   const delayedCount    = filteredActivities.filter(a => a.Status === 'Delayed').length;
   const totalAllocation = filteredActivities.reduce((sum, a) => sum + (a.Financial_Allocation || a.Budget || 0), 0);
-  const activeAssessors = assessors.filter(a => a.Is_Active).length;
   const completionRate  = totalActivities > 0 ? Math.round((completedCount / totalActivities) * 100) : 0;
 
   const divisionData = DIVISIONS.map(div => {
@@ -70,6 +68,7 @@ export default function MainDashboard() {
     padding: '5px 10px', fontSize: 13, fontWeight: 500,
     color: C.neutral, background: C.surface,
     outline: 'none', cursor: 'pointer', fontFamily: FONT,
+    maxWidth: '100%', minWidth: 0, flex: '1 1 auto', textOverflow: 'ellipsis',
   };
 
   return (
@@ -98,7 +97,7 @@ export default function MainDashboard() {
           </div>
         </div>
         <FilterDivider />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0, maxWidth: '100%' }}>
           <FilterLabel>Project</FilterLabel>
           <select aria-label="Filter by project" value={projectId} onChange={e => setProjectId(e.target.value)} style={selectStyle}>
             <option value="All">All projects</option>
@@ -117,7 +116,6 @@ export default function MainDashboard() {
       <KPIBand>
         <KPITile label="Total activities"  value={totalActivities}                         icon={ClipboardList}  borderLeft={C.brand}      />
         <KPITile label="Active projects"   value={filteredProjects.length}                 icon={FolderKanban}   borderLeft={C.accent}     />
-        <KPITile label="Active assessors"  value={activeAssessors}                         icon={ShieldCheck}    borderLeft={C.successBar} />
         <KPITile label="Total allocation"  value={formatPeso(totalAllocation, { compact: true })} title={formatPeso(totalAllocation)} icon={PhilippinePeso} borderLeft={C.warningBar} />
         <KPITile label="Completion rate"   value={formatPercent(completedCount, totalActivities)}                    icon={TrendingUp}     borderLeft={C.successBar} sub={`${completedCount} of ${totalActivities} activities published`} />
       </KPIBand>
@@ -167,7 +165,7 @@ export default function MainDashboard() {
         )}
 
         {/* Division detail strip */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: C.border, border: `1px solid ${C.border}`, borderRadius: 8, overflow: 'hidden', marginTop: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 1, background: C.border, border: `1px solid ${C.border}`, borderRadius: 8, overflow: 'hidden', marginTop: 16 }}>
           {divisionData.map(d => (
             <div key={d.div} style={{ background: C.surface, padding: '14px 18px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>

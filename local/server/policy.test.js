@@ -116,6 +116,15 @@ test('people only see their own account, and audit history is admin-only', async
   assert.equal((await call('impl', 'GET', '/api/entities/Audit_Log')).data.length, 0);
 });
 
+test('client feedback: implementers record it for their division only', async () => {
+  const cid = (await call('admin', 'POST', '/api/entities/DQAMPActivity', { Activity_Title: 'CID event', Functional_Division: 'CID' })).data.id;
+  const sgod = (await call('admin', 'POST', '/api/entities/DQAMPActivity', { Activity_Title: 'SGOD event', Functional_Division: 'SGOD' })).data.id;
+  assert.equal((await call('impl', 'POST', '/api/entities/ARTAFeedback', { Linked_Activity: cid, Average_SQD_Score: 4.5 })).status, 201);
+  assert.equal((await call('impl', 'POST', '/api/entities/ARTAFeedback', { Linked_Activity: sgod, Average_SQD_Score: 4.5 })).status, 403);
+  assert.equal((await call('planning', 'POST', '/api/entities/ARTAFeedback', { Linked_Activity: cid })).status, 403);
+  assert.equal((await call('qa', 'POST', '/api/entities/ARTAFeedback', { Linked_Activity: sgod })).status, 201);
+});
+
 test('invites need a division for implementers and planning admins', async () => {
   assert.equal((await call('admin', 'POST', '/api/users/invite', { email: 'n@t.test', role: 'Implementer' })).status, 400);
   assert.equal((await call('admin', 'POST', '/api/users/invite', { email: 'n@t.test', role: 'Implementer', division: 'CID' })).status, 201);

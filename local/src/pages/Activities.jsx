@@ -7,6 +7,8 @@ import { logAuditEvent } from '../components/audit/AuditLogger';
 import toast from 'react-hot-toast';
 import { Card, CardContent } from "@/components/ui/card";
 import OneDriveLinkInput from '@/components/ui/OneDriveLinkInput';
+import RowActionsMenu from '@/components/ui/RowActionsMenu';
+import { MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,7 +22,7 @@ import WorkflowBadge from '../components/ui/WorkflowBadge';
 import {
   Plus, Search, Edit2, Eye, AlertTriangle,
   ChevronRight, ChevronLeft, Download, FileUp,
-  Paperclip, Link as LinkIcon, FileText, Trash2, ExternalLink
+  Paperclip, Link as LinkIcon, FileText, Trash2
 } from 'lucide-react';
 import CSVImporter from '../components/import/CSVImporter';
 import ReportDownloader from '../components/reports/ReportDownloader';
@@ -77,7 +79,6 @@ export default function Activities() {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterDivision, setFilterDivision] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
   const [error, setError] = useState(null);
   const [isImportOpen, setIsImportOpen] = useState(false);
@@ -207,7 +208,7 @@ export default function Activities() {
       const assignedIds = divisionAssessors.map(a => a.id);
       await base44.entities.DQAMPActivity.update(activity.id, { Workflow_Status: newStatus, Assigned_Assessors: assignedIds });
       await logAuditEvent({ actionType: 'Submit', entity: 'DQAMPActivity', recordId: activity.id, remarks: `Submitted. ${assignedIds.length} assessors assigned for ${activity.Functional_Division}` });
-      toast.success(`Submitted! ${assignedIds.length} assessors auto-assigned.`);
+      toast.success('Submitted for review.');
     } else {
       await base44.entities.DQAMPActivity.update(activity.id, { Workflow_Status: newStatus });
       const actionType = newStatus === 'Under Review' ? 'Review' : newStatus === 'Published' ? 'Publish' : 'Update';
@@ -252,7 +253,6 @@ export default function Activities() {
 
   const filteredActivities = activities.filter(activity => {
     const matchesSearch = activity.Activity_Title?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDivision = filterDivision === 'All' || activity.Functional_Division === filterDivision;
     const matchesStatus = filterStatus === 'All' || activity.Workflow_Status === filterStatus;
     // Global division filter
     if (divisions.length > 0 && !divisions.includes(activity.Functional_Division)) return false;
@@ -264,7 +264,7 @@ export default function Activities() {
       const q = `Q${Math.floor(month / 3) + 1}`;
       if (!quarters.includes(q)) return false;
     }
-    return matchesSearch && matchesDivision && matchesStatus;
+    return matchesSearch && matchesStatus;
   });
 
   const isFieldEditable = () => {
@@ -309,13 +309,6 @@ export default function Activities() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <Input placeholder="Search activities..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-10" />
             </div>
-            <Select value={filterDivision} onValueChange={setFilterDivision}>
-              <SelectTrigger aria-label="Filter by division" className="w-[150px]"><SelectValue placeholder="Division" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Divisions</SelectItem>
-                {DIVISIONS.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}
-              </SelectContent>
-            </Select>
             <Select value={filterStatus} onValueChange={setFilterStatus}>
               <SelectTrigger aria-label="Filter by workflow status" className="w-[190px]"><SelectValue placeholder="Workflow Status" /></SelectTrigger>
               <SelectContent>
@@ -362,23 +355,12 @@ export default function Activities() {
                       <TableRow key={activity.id}>
                         <TableCell className="font-medium max-w-[200px] truncate">{activity.Activity_Title}</TableCell>
                         <TableCell>{activity.Functional_Division}</TableCell>
-                        <TableCell>{activity.Activity_Type || '-'}</TableCell>
+                        <TableCell>{activity.Activity_Type || '—'}</TableCell>
                         <TableCell><WorkflowBadge status={activity.Workflow_Status} /></TableCell>
                         <TableCell>{formatDate(activity.Planned_Start_Date)}</TableCell>
-                        <TableCell>{activity.Financial_Allocation ? `₱${activity.Financial_Allocation.toLocaleString()}` : '-'}</TableCell>
+                        <TableCell>{activity.Financial_Allocation ? `₱${activity.Financial_Allocation.toLocaleString()}` : '—'}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">
-                            <Button aria-label="View" variant="ghost" size="sm" onClick={() => { setSelectedActivity(activity); setIsViewOpen(true); }}>
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                            <Button aria-label="Download" variant="ghost" size="sm" onClick={() => { setReportActivity(activity); setIsReportOpen(true); }}>
-                              <Download className="h-4 w-4" />
-                            </Button>
-                            {activity.Workflow_Status !== 'Published' && (
-                              <Button aria-label="Edit" variant="ghost" size="sm" onClick={() => handleEdit(activity)}>
-                                <Edit2 className="h-4 w-4" />
-                              </Button>
-                            )}
                             {nextState && activity.Workflow_Status !== 'Published' && (
                               <Button
                                 variant="outline"
@@ -391,11 +373,16 @@ export default function Activities() {
                                 <span className="hidden sm:inline">{ACTION_LABELS[activity.Workflow_Status] || nextState}</span>
                               </Button>
                             )}
-                            {currentUser?.role === 'admin' && !['Draft', 'Returned for Revision'].includes(activity.Workflow_Status) && (
-                              <Button variant="outline" size="sm" className="text-amber-800 border-amber-300 hover:bg-amber-50" onClick={() => handleRevertStatus(activity)}>
-                                <ChevronLeft className="h-4 w-4 mr-1" />Revert
-                              </Button>
-                            )}
+                            <RowActionsMenu
+                              label={`More actions for ${activity.Activity_Title || 'activity'}`}
+                              items={[
+                                { label: 'View details', icon: Eye, onSelect: () => { setSelectedActivity(activity); setIsViewOpen(true); } },
+                                { label: 'Download report', icon: Download, onSelect: () => { setReportActivity(activity); setIsReportOpen(true); } },
+                                activity.Workflow_Status !== 'Published' && { label: 'Edit', icon: Edit2, onSelect: () => handleEdit(activity) },
+                                currentUser?.role === 'admin' && !['Draft', 'Returned for Revision'].includes(activity.Workflow_Status)
+                                  && { label: 'Revert status', icon: ChevronLeft, tone: 'warning', onSelect: () => handleRevertStatus(activity) },
+                              ]}
+                            />
                           </div>
                         </TableCell>
                       </TableRow>
@@ -584,8 +571,8 @@ export default function Activities() {
                 <p className="text-slate-600 mt-1">{selectedActivity.Description || 'No description'}</p>
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
-                <div><span className="text-slate-500">Funding Source:</span><span className="ml-2 font-medium">{selectedActivity.Funding_Source || '-'}</span></div>
-                <div><span className="text-slate-500">Allocation:</span><span className="ml-2 font-medium">{selectedActivity.Financial_Allocation ? `₱${selectedActivity.Financial_Allocation.toLocaleString()}` : '-'}</span></div>
+                <div><span className="text-slate-500">Funding Source:</span><span className="ml-2 font-medium">{selectedActivity.Funding_Source || '—'}</span></div>
+                <div><span className="text-slate-500">Allocation:</span><span className="ml-2 font-medium">{selectedActivity.Financial_Allocation ? `₱${selectedActivity.Financial_Allocation.toLocaleString()}` : '—'}</span></div>
                 <div><span className="text-slate-500">Start Date:</span><span className="ml-2 font-medium">{formatDate(selectedActivity.Planned_Start_Date)}</span></div>
                 <div><span className="text-slate-500">End Date:</span><span className="ml-2 font-medium">{formatDate(selectedActivity.End_Date)}</span></div>
               </div>
@@ -639,9 +626,9 @@ export default function Activities() {
                   {feedback.filter(f => f.Linked_Activity === selectedActivity.id).length} feedback record(s) collected.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <Button aria-label="Open link" variant="outline" size="sm" className="gap-2"
+                  <Button variant="outline" size="sm" className="gap-2"
                     onClick={() => { setIsViewOpen(false); navigate(createPageUrl(`ARTAFeedback?activity=${selectedActivity.id}`)); }}>
-                    <ExternalLink className="h-4 w-4" />
+                    <MessageSquare className="h-4 w-4" />
                     {feedback.some(f => f.Linked_Activity === selectedActivity.id) ? 'View / Add Feedback' : 'Submit ARTA Feedback'}
                   </Button>
                   <Button variant="outline" size="sm" className="gap-2"

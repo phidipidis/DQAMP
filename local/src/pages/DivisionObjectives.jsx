@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Plus, Search, Edit, Trash2, Target } from 'lucide-react';
+import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 
 const DIVISIONS = ['CID', 'SGOD', 'OSDS'];
 const STATUSES = ['Not Started', 'In Progress', 'On Track', 'At Risk', 'Achieved', 'Not Achieved'];
@@ -138,8 +138,7 @@ export default function DivisionObjectives() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
-            <Target className="h-6 w-6" />
+          <h1 className="text-2xl font-bold text-[#1E3A5F]">
             Division Objectives
           </h1>
           <p className="text-slate-600">Manage functional division objectives ({objectives.length} total)</p>
@@ -188,15 +187,15 @@ export default function DivisionObjectives() {
                 {isLoading ? (
                   <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-500">Loading...</TableCell></TableRow>
                 ) : filtered.length === 0 ? (
-                  <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-500">No division objectives found.</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-500">No division objectives yet. Select New Objective to add one for your division.</TableCell></TableRow>
                 ) : (
                   filtered.map((obj) => (
                     <TableRow key={obj.id} className="hover:bg-slate-50">
-                      <TableCell className="font-mono text-sm font-medium text-[#1E3A5F]">{obj.Objective_Code || '-'}</TableCell>
+                      <TableCell className="font-mono text-sm font-medium text-[#1E3A5F]">{obj.Objective_Code || '—'}</TableCell>
                       <TableCell className="max-w-sm truncate font-medium">{obj.Objective_Title}</TableCell>
                       <TableCell><Badge variant="outline">{obj.Functional_Division}</Badge></TableCell>
-                      <TableCell>{obj.Target_Year || '-'}</TableCell>
-                      <TableCell className="text-slate-600 text-sm">{obj.Owner || '-'}</TableCell>
+                      <TableCell>{obj.Target_Year || '—'}</TableCell>
+                      <TableCell className="text-slate-600 text-sm">{obj.Owner || '—'}</TableCell>
                       <TableCell>
                         <Badge className={statusColors[obj.Status] || statusColors['Not Started']}>{obj.Status || 'Not Started'}</Badge>
                       </TableCell>

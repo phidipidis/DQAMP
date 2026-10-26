@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { formatPeso } from '@/lib/format';
+import { useFilters } from '@/lib/FilterContext';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -50,7 +51,7 @@ import { exportProjectsNaming } from '../utils/namingStandardsExport';
 export default function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [divisionFilter, setDivisionFilter] = useState('All');
+  const { divisions } = useFilters();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [deleteConfirmProject, setDeleteConfirmProject] = useState(null);
@@ -166,7 +167,7 @@ export default function Projects() {
       const matchesSearch = project.Project_Code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            project.Project_Title?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === 'All' || project.Project_Status === statusFilter;
-      const matchesDivision = divisionFilter === 'All' || project.Functional_Division === divisionFilter;
+      const matchesDivision = divisions.length === 0 || divisions.includes(project.Functional_Division);
       return matchesSearch && matchesStatus && matchesDivision;
     })
     .sort((a, b) => {
@@ -246,9 +247,12 @@ export default function Projects() {
   };
 
   const statusColors = {
-    'Planning': 'bg-gray-100 text-gray-800',
+    'Planning': 'bg-slate-100 text-slate-800',
     'Ongoing': 'bg-blue-100 text-blue-800',
-    'Completed': 'bg-emerald-100 text-emerald-800'
+    'On Track': 'bg-emerald-100 text-emerald-800',
+    'Completed': 'bg-emerald-100 text-emerald-800',
+    'At Risk': 'bg-amber-100 text-amber-900',
+    'Delayed': 'bg-red-100 text-red-800',
   };
 
   return (
@@ -288,7 +292,7 @@ export default function Projects() {
               </div>
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger aria-label="Filter by status" className="w-[160px]">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -296,17 +300,6 @@ export default function Projects() {
                 <SelectItem value="Planning">Planning</SelectItem>
                 <SelectItem value="Ongoing">Ongoing</SelectItem>
                 <SelectItem value="Completed">Completed</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={divisionFilter} onValueChange={setDivisionFilter}>
-              <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="Division" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Divisions</SelectItem>
-                <SelectItem value="CID">CID</SelectItem>
-                <SelectItem value="SGOD">SGOD</SelectItem>
-                <SelectItem value="OSDS">OSDS</SelectItem>
               </SelectContent>
             </Select>
           </div>

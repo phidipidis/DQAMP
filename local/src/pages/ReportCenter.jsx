@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import { pagesConfig } from '../pages.config';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -18,42 +19,36 @@ const reports = [
     description: 'Program Implementation Review and Plan Adjustment - Track activity execution, remarks, and financial performance by quarter',
     icon: ClipboardCheck,
     page: 'PIRPAReport',
-    color: 'bg-blue-500'
   },
   {
     title: 'QAME Tools Report',
     description: 'Quality Assurance Monitoring and Evaluation Tools - View activities with QAME evaluation forms and reports',
     icon: FileText,
     page: 'QAMEToolsReport',
-    color: 'bg-purple-500'
   },
   {
     title: 'Consolidated QAME Report',
     description: 'Consolidated QAME ratings and assessments across all activities with performance statistics',
     icon: TrendingUp,
     page: 'ConsolidatedQAMEReport',
-    color: 'bg-emerald-500'
   },
   {
     title: 'Financial Utilization Report',
     description: 'Budget allocation, utilization, and variance analysis with overspending alerts',
     icon: DollarSign,
     page: 'FinancialUtilizationReport',
-    color: 'bg-amber-500'
   },
   {
     title: 'ARTA CSM Summary',
     description: 'Client Satisfaction Measurement based on ARTA MC 2022-05 with Service Quality Dimension scores',
     icon: MessageSquareText,
     page: 'ARTACSMSummary',
-    color: 'bg-teal-500'
   },
   {
     title: 'Partnership Report',
     description: 'Activities conducted in partnership with another agency — grouped by project and functional division with partner details and types',
     icon: Handshake,
     page: 'PartnershipReport',
-    color: 'bg-indigo-500'
   }
 ];
 
@@ -66,12 +61,12 @@ export default function ReportCenter() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {reports.map((report) => {
+        {reports.filter((report) => report.page in pagesConfig.Pages).map((report) => {
           const Icon = report.icon;
           return (
             <Card key={report.page} className="hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className={`w-12 h-12 rounded-lg ${report.color} flex items-center justify-center mb-3`}>
+                <div className="w-12 h-12 rounded-lg bg-[#1E3A5F] flex items-center justify-center mb-3">
                   <Icon className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl">{report.title}</CardTitle>

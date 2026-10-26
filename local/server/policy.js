@@ -78,7 +78,12 @@ export function canCreate(user, entity, data, lookup) {
       const parent = parentProjectOf(entity, data, lookup);
       return Boolean(parent) && inDivision(user, parent.Functional_Division);
     }
-    case 'ARTAFeedback':
+    case 'ARTAFeedback': {
+      if (user.role === 'QA_Assessor') return true;
+      if (user.role !== 'Implementer') return false;
+      const activity = data.Linked_Activity ? lookup('DQAMPActivity', data.Linked_Activity) : null;
+      return Boolean(activity) && inDivision(user, activity.Functional_Division);
+    }
     case 'AuditTask':
       return user.role === 'QA_Assessor';
     case 'Document_Library':

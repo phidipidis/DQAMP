@@ -59,4 +59,4 @@ Copy the `data` folder to another drive or cloud folder while DQAMP is closed. T
 
 ## Scope of this version
 
-Core pages only: Dashboard, Organizational Goals, Division Objectives, Projects, Outputs, Activities (including the calendar and import), User Management, System Settings, Report Center and the PIRPA report.
+Core pages only: Dashboard, Organizational Goals, Division Objectives, Projects, Outputs, Activities (including the calendar and import), ARTA client feedback, User Management, System Settings, Report Center and the PIRPA report. Report Center lists only the reports this build includes.

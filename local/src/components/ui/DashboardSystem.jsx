@@ -108,6 +108,8 @@ export function SegBtn({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
+      aria-pressed={active}
+      className="min-h-[44px] lg:min-h-0"
       style={{
         ...fontFam,
         padding: '6px 14px',
@@ -183,7 +185,7 @@ export function KPITile({ label, value, title, sub = null, icon: Icon = null, bo
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
         {Icon && <Icon size={13} color={borderLeft} strokeWidth={2} />}
-        <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: C.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: C.muted, lineHeight: 1.3 }}>
           {label}
         </span>
       </div>
@@ -199,11 +201,14 @@ export function KPITile({ label, value, title, sub = null, icon: Icon = null, bo
 export function KPIBand({ children }) {
   const items = React.Children.toArray(children);
   return (
-    <div style={{ ...fontFam, display: 'flex', background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 2px rgba(15,23,42,0.04)' }}>
-      {items.map((child, i) => [
-        child,
-        i < items.length - 1 ? <div key={`div-${i}`} style={{ width: 1, background: C.border, flexShrink: 0 }} /> : null,
-      ])}
+    // Two columns on phones, one row from 640px. The 1px gap shows the border colour.
+    <div
+      className="grid grid-cols-2 gap-px sm:flex"
+      style={{ ...fontFam, background: C.border, border: `1px solid ${C.border}`, borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 2px rgba(15,23,42,0.04)' }}
+    >
+      {items.map((child, i) => (
+        <div key={i} className="flex min-w-0 flex-1" style={{ background: C.surface }}>{child}</div>
+      ))}
     </div>
   );
 }
