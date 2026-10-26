@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronDown, Compass, Layers, Activity, TrendingUp, FileText, Settings2, ShieldCheck, BarChart2, Map } from 'lucide-react';
 import NavItem from './NavItem';
 import AccessLevelIcon from './AccessLevelIcon';
@@ -22,7 +21,7 @@ export default function NavigationSection({
 
   const getBadgeCount = (item) => {
     if (item.badge === 'count') {
-      return notificationCounts[`my_${item.name.toLowerCase().replace(/\s+/g, '_')}_count`] || 0;
+      return notificationCounts[item.badgeKey] || 0;
     }
     if (item.badge === 'pending_count') {
       return notificationCounts.pending_activities_count || 0;

@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * StatusBadge – Phase 1 shared semantic status badge.

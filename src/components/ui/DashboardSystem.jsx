@@ -130,27 +130,6 @@ export function SegBtn({ label, active, onClick }) {
 }
 
 // ── Segmented control group ───────────────────────────────────────────────────
-export function SegmentedControl({ options, selected, onToggle, multi = true }) {
-  return (
-    <div style={{ display: 'flex', background: C.bg, borderRadius: 8, padding: 3, gap: 2 }}>
-      {options.map(opt => (
-        <SegBtn
-          key={opt}
-          label={opt}
-          active={selected.includes(opt)}
-          onClick={() => {
-            if (multi) {
-              onToggle(selected.includes(opt) ? selected.filter(x => x !== opt) : [...selected, opt]);
-            } else {
-              onToggle(selected === opt ? '' : opt);
-            }
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 // ── Segmented filter (label + control, single or multi) ───────────────────────
 export function SegmentedFilter({ label, options, selected, onToggle, multi = true, includeAll = false }) {
   const allOptions = includeAll ? ['All', ...options] : options;

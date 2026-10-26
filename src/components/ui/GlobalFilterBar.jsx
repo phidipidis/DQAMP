@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFilters } from '@/lib/FilterContext';
 import { C, FONT, QUARTERS, DIVISIONS, SegBtn, FilterLabel, FilterDivider, ClearFiltersButton } from './DashboardSystem';
 

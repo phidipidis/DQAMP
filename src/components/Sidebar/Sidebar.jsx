@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { navigationConfig } from '../config/roleBasedNavigation';
 import { useNotificationCounts } from '../hooks/useNotificationCounts';
 import SidebarHeader from './SidebarHeader';

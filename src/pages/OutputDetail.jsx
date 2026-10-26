@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { logAuditEvent } from '../components/audit/AuditLogger';
@@ -22,17 +22,8 @@ export default function OutputDetail() {
   const [outputId, setOutputId] = useState(null);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const [currentUser, setCurrentUser] = useState(null);
 
   const queryClient = useQueryClient();
-
-  React.useEffect(() => {
-    const getUser = async () => {
-      const user = await base44.auth.me();
-      setCurrentUser(user);
-    };
-    getUser();
-  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

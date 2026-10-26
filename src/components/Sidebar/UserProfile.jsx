@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LogOut, ChevronDown } from 'lucide-react';
 
 const MUTED = '#6B7280';

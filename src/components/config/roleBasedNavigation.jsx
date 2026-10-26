@@ -1,33 +1,3 @@
-export const ACCESS_LEVELS = {
-  full: {
-    label: "Full Access",
-    icon: null,
-    can_view: true,
-    can_edit: true,
-    can_delete: true,
-    can_create: true
-  },
-  "read-only": {
-    label: "View Only",
-    icon: "Eye",
-    icon_color: "rgba(255, 255, 255, 0.4)",
-    can_view: true,
-    can_edit: false,
-    can_delete: false,
-    can_create: false
-  },
-  filtered: {
-    label: "Your Data Only",
-    icon: "Filter",
-    icon_color: "#FCFF00",
-    can_view: true,
-    can_edit: true,
-    can_delete: false,
-    can_create: true,
-    filter_required: true
-  }
-};
-
 export const navigationConfig = {
   Implementer: {
     sections: [
@@ -47,8 +17,8 @@ export const navigationConfig = {
         access: "full",
         collapsed: false,
         items: [
-          { name: "My Outputs", icon: "Archive", path: "Outputs", filter: "assigned_to=current_user", badge: "count" },
-          { name: "My Projects", icon: "FolderKanban", path: "Projects", filter: "team_members_includes=current_user", badge: "count" },
+          { name: "My Outputs", icon: "Archive", path: "Outputs", filter: "assigned_to=current_user", badge: "count", badgeKey: "my_outputs_count" },
+          { name: "My Projects", icon: "FolderKanban", path: "Projects", filter: "team_members_includes=current_user", badge: "count", badgeKey: "my_projects_count" },
           { name: "My Activities", icon: "ClipboardList", path: "Activities", filter: "responsible_person=current_user", badge: "pending_count" },
           { name: "Activity Calendar", icon: "CalendarDays", path: "ActivityCalendar" }
         ]

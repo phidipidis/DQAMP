@@ -1,4 +1,3 @@
-import React from 'react';
 import { C, FONT, PageHeader, KPIBand, KPITile, DashboardPanel, DashboardTable } from '@/components/ui/DashboardSystem';
 import { Scale, ShieldCheck, CheckCircle, Database } from 'lucide-react';
 

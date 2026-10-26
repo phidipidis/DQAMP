@@ -1,4 +1,3 @@
-import React from 'react';
 
 const LOGO_URL = 'https://media.base44.com/images/public/698b102282e22235c0d3a033/5808b6b39_2026DepEdLucenaLogo.jpg';
 const BRAND = '#0B2EA9';

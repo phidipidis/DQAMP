@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { logAuditEvent } from './components/audit/AuditLogger';
 import Sidebar from './components/Sidebar/Sidebar';

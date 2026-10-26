@@ -1,4 +1,3 @@
-import React from 'react';
 import { Eye, Filter } from 'lucide-react';
 
 const MUTED = '#9CA3AF';

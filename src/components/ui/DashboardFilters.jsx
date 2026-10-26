@@ -1,4 +1,3 @@
-import React from 'react';
 import { C, FONT, QUARTERS, DIVISIONS, SegBtn, FilterLabel, FilterDivider, ClearFiltersButton } from './DashboardSystem';
 
 /**
