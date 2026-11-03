@@ -1,16 +1,17 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFilters } from '@/lib/FilterContext';
+import { yearOf, yearOptions } from '@/lib/fiscalYear';
 import { Download, FileText } from 'lucide-react';
 import { createDoc, drawReportHeader, drawSummaryStats, drawSectionHeading, drawTable, drawFooter } from '@/lib/pdfReportTemplate';
 
 export default function PIRPAReport() {
-  const { quarters, divisions } = useFilters();
-  const [selectedYear, setSelectedYear] = useState('2026');
+  // The report year is the app-wide year filter, so it matches the filter bar.
+  const { year, setYear, fiscalYear, quarters, divisions } = useFilters();
+  const selectedYear = year === 'All' ? 'AllYears' : String(year);
 
   const { data: activities = [] } = useQuery({
     queryKey: ['activities'],
@@ -27,7 +28,7 @@ export default function PIRPAReport() {
     if (!activity.Date_Conducted && !activity.Start_Date) return false;
     const dateStr = activity.Date_Conducted || activity.Start_Date;
     const activityDate = new Date(dateStr);
-    if (activityDate.getFullYear().toString() !== selectedYear) return false;
+    if (year !== 'All' && yearOf(dateStr) !== year) return false;
     if (divisions.length > 0 && !divisions.includes(activity.Functional_Division)) return false;
     if (quarters.length > 0) {
       const q = `Q${Math.floor(activityDate.getMonth() / 3) + 1}`;
@@ -75,7 +76,7 @@ export default function PIRPAReport() {
   // Export to PDF
   const exportToPDF = () => {
     const doc = createDoc('landscape');
-    const period = `${quarters.length > 0 ? quarters.join(', ') : 'All Quarters'} ${selectedYear}`;
+    const period = `${quarters.length > 0 ? quarters.join(', ') : 'All Quarters'} ${year === 'All' ? '(all years)' : year}`;
     const utilizationRate = totals.allocation > 0 ? ((totals.utilization / totals.allocation) * 100).toFixed(1) : '0.0';
     let y = drawReportHeader(doc, {
       reportTitle: 'Program Implementation Review and Plan Adjustment (PIRPA) Report',
@@ -124,15 +125,15 @@ export default function PIRPAReport() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="text-sm font-medium mb-2 block">Year</label>
-              <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <Select value={String(year)} onValueChange={v => setYear(v === 'All' ? 'All' : parseInt(v, 10))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="2024">2024</SelectItem>
-                  <SelectItem value="2025">2025</SelectItem>
-                  <SelectItem value="2026">2026</SelectItem>
-                  <SelectItem value="2027">2027</SelectItem>
+                  <SelectItem value="All">All years</SelectItem>
+                  {[...new Set([...yearOptions(fiscalYear), ...(year === 'All' ? [] : [year])])].sort().map(y => (
+                    <SelectItem key={y} value={String(y)}>{y}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

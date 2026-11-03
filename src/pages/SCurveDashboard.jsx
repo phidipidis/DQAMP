@@ -4,13 +4,16 @@ import { useQuery } from '@tanstack/react-query';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { TrendingUp, Target, Calendar, CheckCircle } from 'lucide-react';
 import DashboardFilters from '../components/ui/DashboardFilters';
+import { useFilters } from '@/lib/FilterContext';
+import { yearOf } from '@/lib/fiscalYear';
 import {
   C, FONT, PageHeader, DashboardPanel, KPIBand, KPITile,
   DashboardTable, chartTickSmall, chartTickStyle, chartTooltipStyle, chartGridStroke
 } from '@/components/ui/DashboardSystem';
 
 export default function SCurveDashboard() {
-  const [year, setYear] = useState(new Date().getFullYear());
+  // Year comes from the app-wide filter so it matches the filter bar.
+  const { year, setYear } = useFilters();
   const [quarters, setQuarters] = useState([]);
   const [divisions, setDivisions] = useState([]);
   const [projectId, setProjectId] = useState('All');
@@ -32,7 +35,7 @@ export default function SCurveDashboard() {
     const dateStr = activity.Planned_Start_Date || activity.Start_Date;
     if (year !== 'All') {
       if (!dateStr) return false;
-      if (new Date(dateStr).getFullYear() !== year) return false;
+      if (yearOf(dateStr) !== year) return false;
     }
     if (quarters.length > 0) {
       if (!dateStr) return false;

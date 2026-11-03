@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { calendarYear } from '@/lib/fiscalYear';
 import { ClipboardList, Activity, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 
 // Colours taken from the Schools Division of Lucena City seal.
@@ -89,7 +90,7 @@ export default function Login() {
             />
           </div>
           <div className="leading-tight">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: SEAL_GOLD }}>DQAMP 2026</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: SEAL_GOLD }}>DQAMP {calendarYear()}</p>
             <p className="mt-0.5 text-sm text-blue-100">Schools Division of Lucena City</p>
           </div>
         </header>

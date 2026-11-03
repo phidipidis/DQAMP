@@ -33,6 +33,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useFiscalYear, yearStart, yearEnd } from '@/lib/fiscalYear';
 import { Plus, Search, Eye, Edit, Trash2, Download } from 'lucide-react';
 import {
   AlertDialog,
@@ -56,13 +57,14 @@ export default function Projects() {
   const [sortBy, setSortBy] = useState('Project_Code');
   const [sortOrder, setSortOrder] = useState('asc');
   
+  const fiscalYear = useFiscalYear();
   const [formData, setFormData] = useState({
     Project_Code: '',
     Project_Title: '',
     Project_Description: '',
     Functional_Division: '',
-    Project_Start_Date: '2026-01-05',
-    Project_End_Date: '2026-12-31',
+    Project_Start_Date: yearStart(fiscalYear),
+    Project_End_Date: yearEnd(fiscalYear),
     Project_Status: 'Planning'
   });
 
@@ -201,8 +203,8 @@ export default function Projects() {
       Project_Title: '',
       Project_Description: '',
       Functional_Division: '',
-      Project_Start_Date: '2026-01-05',
-      Project_End_Date: '2026-12-31',
+      Project_Start_Date: yearStart(fiscalYear),
+      Project_End_Date: yearEnd(fiscalYear),
       Project_Status: 'Planning'
     });
     setDialogOpen(true);
@@ -215,8 +217,8 @@ export default function Projects() {
       Project_Title: project.Project_Title || '',
       Project_Description: project.Project_Description || '',
       Functional_Division: project.Functional_Division || '',
-      Project_Start_Date: project.Project_Start_Date || '2026-01-05',
-      Project_End_Date: project.Project_End_Date || '2026-12-31',
+      Project_Start_Date: project.Project_Start_Date || yearStart(fiscalYear),
+      Project_End_Date: project.Project_End_Date || yearEnd(fiscalYear),
       Project_Status: project.Project_Status || 'Planning'
     });
     setDialogOpen(true);

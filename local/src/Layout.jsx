@@ -6,6 +6,7 @@ import { logAuditEvent } from './components/audit/AuditLogger';
 import Sidebar from './components/Sidebar/Sidebar';
 import { ToastProvider } from './components/ui/toast-provider';
 import { FilterProvider } from './lib/FilterContext';
+import { useFiscalYear } from './lib/fiscalYear';
 import GlobalFilterBar from './components/ui/GlobalFilterBar';
 
 
@@ -13,6 +14,7 @@ import GlobalFilterBar from './components/ui/GlobalFilterBar';
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
   const [navOpen, setNavOpen] = useState(false);
+  const fiscalYear = useFiscalYear();
   const location = useLocation();
 
   // Close the drawer after navigating, and on Escape.
@@ -108,7 +110,7 @@ export default function Layout({ children, currentPageName }) {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="font-semibold text-[#1B2A8F]">DQAMP 2026</span>
+          <span className="font-semibold text-[#1B2A8F]">DQAMP {fiscalYear}</span>
         </div>
         <FilterProvider>
           {currentPageName !== 'MainDashboard' && <GlobalFilterBar />}

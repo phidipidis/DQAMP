@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { useFiscalYear, yearOf, yearOptions } from '@/lib/fiscalYear';
 import { Download, FileText } from 'lucide-react';
 import { createDoc, drawReportHeader, drawSummaryStats, drawSectionHeading, drawTable, drawFooter } from '@/lib/pdfReportTemplate';
 import {
@@ -12,7 +13,9 @@ const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
 const DIVISIONS = ['CID', 'SGOD', 'OSDS'];
 
 export default function FinancialUtilizationReport() {
-  const [selectedYear, setSelectedYear] = useState('2026');
+  const fiscalYear = String(useFiscalYear());
+  const [yearChoice, setSelectedYear] = useState(null); // null = fiscal year
+  const selectedYear = yearChoice ?? fiscalYear;
   const [selectedQuarter, setSelectedQuarter] = useState('All');
   const [selectedDivision, setSelectedDivision] = useState('All');
   const [selectedSaro, setSelectedSaro] = useState('All');
@@ -33,8 +36,7 @@ export default function FinancialUtilizationReport() {
     if (selectedSaro !== 'All' && activity.saro_number !== selectedSaro) return false;
     const dateStr = activity.Start_Date || activity.Planned_Start_Date;
     if (dateStr) {
-      const year = new Date(dateStr).getFullYear().toString();
-      if (year !== selectedYear) return false;
+      if (String(yearOf(dateStr)) !== selectedYear) return false;
       if (selectedQuarter !== 'All') {
         const month = new Date(dateStr).getMonth();
         const quarter = `Q${Math.floor(month / 3) + 1}`;
@@ -127,10 +129,10 @@ export default function FinancialUtilizationReport() {
     transition: 'opacity 0.13s',
   };
 
-  const hasActiveFilters = selectedYear !== '2026' || selectedQuarter !== 'All' || selectedDivision !== 'All' || selectedSaro !== 'All';
+  const hasActiveFilters = selectedYear !== fiscalYear || selectedQuarter !== 'All' || selectedDivision !== 'All' || selectedSaro !== 'All';
 
   const clearAll = () => {
-    setSelectedYear('2026');
+    setSelectedYear(null);
     setSelectedQuarter('All');
     setSelectedDivision('All');
     setSelectedSaro('All');
@@ -158,7 +160,7 @@ export default function FinancialUtilizationReport() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <FilterLabel>Year</FilterLabel>
           <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)} style={selectStyle}>
-            {['2024','2025','2026','2027'].map(y => <option key={y} value={y}>{y}</option>)}
+            {yearOptions(Number(fiscalYear)).map(String).map(y => <option key={y} value={y}>{y}</option>)}
           </select>
         </div>
         <FilterDivider />

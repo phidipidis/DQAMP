@@ -62,7 +62,7 @@ const EMPTY_FORM = {
 };
 
 export default function Activities() {
-  const { quarters, divisions } = useFilters();
+  const { matchesFilters } = useFilters();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -252,16 +252,8 @@ export default function Activities() {
     const matchesSearch = activity.Activity_Title?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDivision = filterDivision === 'All' || activity.Functional_Division === filterDivision;
     const matchesStatus = filterStatus === 'All' || activity.Workflow_Status === filterStatus;
-    // Global division filter
-    if (divisions.length > 0 && !divisions.includes(activity.Functional_Division)) return false;
-    // Global quarter filter — check all date fields in priority order
-    if (quarters.length > 0) {
-      const dateStr = activity.Start_Date || activity.Planned_Start_Date || activity.Date_Conducted;
-      if (!dateStr) return false;
-      const month = new Date(dateStr).getMonth();
-      const q = `Q${Math.floor(month / 3) + 1}`;
-      if (!quarters.includes(q)) return false;
-    }
+    // Global year, quarter and division filters
+    if (!matchesFilters(activity)) return false;
     return matchesSearch && matchesDivision && matchesStatus;
   });
 

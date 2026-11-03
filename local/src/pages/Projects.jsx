@@ -3,6 +3,7 @@ import { canEditPlanning } from '@/lib/permissions';
 import { useAuth } from '@/lib/AuthContext';
 import { formatPeso } from '@/lib/format';
 import { useFilters } from '@/lib/FilterContext';
+import { runsInYear, useFiscalYear, yearStart, yearEnd } from '@/lib/fiscalYear';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -53,7 +54,7 @@ import { exportProjectsNaming } from '../utils/namingStandardsExport';
 export default function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const { divisions } = useFilters();
+  const { year, divisions } = useFilters();
   const { user } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
@@ -61,13 +62,14 @@ export default function Projects() {
   const [sortBy, setSortBy] = useState('Project_Code');
   const [sortOrder, setSortOrder] = useState('asc');
   
+  const fiscalYear = useFiscalYear();
   const [formData, setFormData] = useState({
     Project_Code: '',
     Project_Title: '',
     Project_Description: '',
     Functional_Division: '',
-    Project_Start_Date: '2026-01-05',
-    Project_End_Date: '2026-12-31',
+    Project_Start_Date: yearStart(fiscalYear),
+    Project_End_Date: yearEnd(fiscalYear),
     Project_Status: 'Planning'
   });
 
@@ -171,7 +173,8 @@ export default function Projects() {
                            project.Project_Title?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === 'All' || project.Project_Status === statusFilter;
       const matchesDivision = divisions.length === 0 || divisions.includes(project.Functional_Division);
-      return matchesSearch && matchesStatus && matchesDivision;
+      const matchesYear = runsInYear(project, year);
+      return matchesSearch && matchesStatus && matchesDivision && matchesYear;
     })
     .sort((a, b) => {
       const aVal = a[sortBy];
@@ -206,8 +209,8 @@ export default function Projects() {
       Project_Title: '',
       Project_Description: '',
       Functional_Division: '',
-      Project_Start_Date: '2026-01-05',
-      Project_End_Date: '2026-12-31',
+      Project_Start_Date: yearStart(fiscalYear),
+      Project_End_Date: yearEnd(fiscalYear),
       Project_Status: 'Planning'
     });
     setDialogOpen(true);
@@ -220,8 +223,8 @@ export default function Projects() {
       Project_Title: project.Project_Title || '',
       Project_Description: project.Project_Description || '',
       Functional_Division: project.Functional_Division || '',
-      Project_Start_Date: project.Project_Start_Date || '2026-01-05',
-      Project_End_Date: project.Project_End_Date || '2026-12-31',
+      Project_Start_Date: project.Project_Start_Date || yearStart(fiscalYear),
+      Project_End_Date: project.Project_End_Date || yearEnd(fiscalYear),
       Project_Status: project.Project_Status || 'Planning'
     });
     setDialogOpen(true);

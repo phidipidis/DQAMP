@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useFiscalYear } from '@/lib/fiscalYear';
 import {
   Dialog,
   DialogContent,
@@ -22,12 +23,13 @@ import {
 
 export default function DivisionObjectiveDialog({ open, onOpenChange, objective, organizationalGoals }) {
   const queryClient = useQueryClient();
+  const fiscalYear = useFiscalYear();
   const [formData, setFormData] = useState({
     Objective_Code: '',
     Objective_Title: '',
     Description: '',
     Functional_Division: 'CID',
-    Target_Year: new Date().getFullYear(),
+    Target_Year: fiscalYear,
     Quarter: 'Q1',
     Status: 'Not Started',
     Owner: '',
@@ -44,7 +46,7 @@ export default function DivisionObjectiveDialog({ open, onOpenChange, objective,
         Objective_Title: objective.Objective_Title || '',
         Description: objective.Description || '',
         Functional_Division: objective.Functional_Division || 'CID',
-        Target_Year: objective.Target_Year || new Date().getFullYear(),
+        Target_Year: objective.Target_Year || fiscalYear,
         Quarter: objective.Quarter || 'Q1',
         Status: objective.Status || 'Not Started',
         Owner: objective.Owner || '',
@@ -59,7 +61,7 @@ export default function DivisionObjectiveDialog({ open, onOpenChange, objective,
         Objective_Title: '',
         Description: '',
         Functional_Division: 'CID',
-        Target_Year: new Date().getFullYear(),
+        Target_Year: fiscalYear,
         Quarter: 'Q1',
         Status: 'Not Started',
         Owner: '',

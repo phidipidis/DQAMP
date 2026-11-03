@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { formatPeso, formatPercent } from '@/lib/format';
 import { useFilters } from '@/lib/FilterContext';
+import { yearOptions } from '@/lib/fiscalYear';
 import {
   C, FONT, QUARTERS, DIVISIONS, PageHeader, FilterToolbar, FilterLabel, FilterDivider,
-  SegBtn, ClearFiltersButton, Panel, DashboardPanel, SectionHead,
+  SegBtn, ClearFiltersButton, YearFilter, Panel, DashboardPanel, SectionHead,
   KPIBand, KPITile, StatusSegment, StatusStrip, AlertRow, DashboardTable,
   chartTickStyle, chartTickSmall, chartTooltipStyle, chartGridStroke
 } from '@/components/ui/DashboardSystem';
@@ -19,9 +20,9 @@ import {
 } from 'recharts';
 
 export default function MainDashboard() {
-  const { quarters, divisions, toggleQuarter, toggleDivision, clearFilters, matchesFilters } = useFilters();
+  const { year, setYear, fiscalYear, quarters, divisions, toggleQuarter, toggleDivision, clearFilters, hasActiveFilters, matchesFilters } = useFilters();
   const [projectId, setProjectId] = useState('All');
-  const hasFilters = quarters.length > 0 || divisions.length > 0 || projectId !== 'All';
+  const hasFilters = hasActiveFilters || projectId !== 'All';
 
   // Data (unchanged)
   const { data: activities = [] } = useQuery({ queryKey: ['activities'], queryFn: () => base44.entities.DQAMPActivity.list() });
@@ -79,6 +80,8 @@ export default function MainDashboard() {
 
       {/* 2. Unified filter toolbar */}
       <FilterToolbar>
+        <YearFilter value={year} onChange={setYear} years={yearOptions(fiscalYear)} />
+        <FilterDivider />
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <FilterLabel>Quarter</FilterLabel>
           <div style={{ display: 'flex', background: C.bg, borderRadius: 7, padding: 3, gap: 2 }}>

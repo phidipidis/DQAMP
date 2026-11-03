@@ -24,6 +24,7 @@ import {
 import {
   Tabs, TabsContent, TabsList, TabsTrigger
 } from "@/components/ui/tabs";
+import { useFiscalYear, yearOptions } from '@/lib/fiscalYear';
 import { Plus, Search, Edit, FolderKanban, Target, Package } from 'lucide-react';
 
 export default function OrganizationalGoals() {
@@ -31,10 +32,11 @@ export default function OrganizationalGoals() {
   const [searchTerm, setSearchTerm] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState(null);
+  const fiscalYear = useFiscalYear();
   const [formData, setFormData] = useState({
     Goal_Title: '',
     Description: '',
-    Target_Year: '2026',
+    Target_Year: String(fiscalYear),
     Priority_Level: 'Medium',
     Linked_Projects: [],
     Linked_Objectives: [],
@@ -104,7 +106,7 @@ export default function OrganizationalGoals() {
     setFormData({
       Goal_Title: '',
       Description: '',
-      Target_Year: '2026',
+      Target_Year: String(fiscalYear),
       Priority_Level: 'Medium',
       Linked_Projects: [],
       Linked_Objectives: [],
@@ -123,7 +125,7 @@ export default function OrganizationalGoals() {
     setFormData({
       Goal_Title: goal.Goal_Title || '',
       Description: goal.Description || '',
-      Target_Year: goal.Target_Year || '2026',
+      Target_Year: String(goal.Target_Year || fiscalYear),
       Priority_Level: goal.Priority_Level || 'Medium',
       Linked_Projects: goal.Linked_Projects || [],
       Linked_Objectives: linkedObjs,
@@ -345,10 +347,9 @@ export default function OrganizationalGoals() {
                   <Select value={formData.Target_Year} onValueChange={(v) => setFormData(prev => ({ ...prev, Target_Year: v }))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="2025">2025</SelectItem>
-                      <SelectItem value="2026">2026</SelectItem>
-                      <SelectItem value="2027">2027</SelectItem>
-                      <SelectItem value="2028">2028</SelectItem>
+                      {[...new Set([...yearOptions(fiscalYear, 1, 2).map(String), formData.Target_Year].filter(Boolean))].sort().map(y => (
+                        <SelectItem key={y} value={y}>{y}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

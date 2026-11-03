@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { useFiscalYear } from '@/lib/fiscalYear';
 import { Plus, Search, Edit, Trash2, Target } from 'lucide-react';
 
 const DIVISIONS = ['CID', 'SGOD', 'OSDS'];
@@ -45,6 +46,7 @@ export default function DivisionObjectives() {
   const [divisionFilter, setDivisionFilter] = useState('All');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingObjective, setEditingObjective] = useState(null);
+  const fiscalYear = useFiscalYear();
   const [formData, setFormData] = useState(EMPTY_FORM);
 
   const { data: objectives = [], isLoading } = useQuery({
@@ -83,7 +85,7 @@ export default function DivisionObjectives() {
 
   const openCreate = () => {
     setEditingObjective(null);
-    setFormData(EMPTY_FORM);
+    setFormData({ ...EMPTY_FORM, Target_Year: fiscalYear });
     setDialogOpen(true);
   };
 
@@ -94,7 +96,7 @@ export default function DivisionObjectives() {
       Objective_Title: obj.Objective_Title || '',
       Description: obj.Description || '',
       Functional_Division: obj.Functional_Division || '',
-      Target_Year: obj.Target_Year || new Date().getFullYear(),
+      Target_Year: obj.Target_Year || fiscalYear,
       Quarter: obj.Quarter || '',
       Status: obj.Status || 'Not Started',
       Owner: obj.Owner || '',
@@ -254,7 +256,7 @@ export default function DivisionObjectives() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label>Target Year</Label>
-                <Input type="number" {...inp('Target_Year')} placeholder="2026" />
+                <Input type="number" {...inp('Target_Year')} placeholder={String(fiscalYear)} />
               </div>
               <div>
                 <Label>Quarter</Label>

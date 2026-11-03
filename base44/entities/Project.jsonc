@@ -38,13 +38,11 @@
     "Project_Start_Date": {
       "type": "string",
       "format": "date",
-      "default": "2026-01-05",
       "description": "Project start date"
     },
     "Project_End_Date": {
       "type": "string",
       "format": "date",
-      "default": "2026-12-31",
       "description": "Project end date"
     },
     "Project_Status": {

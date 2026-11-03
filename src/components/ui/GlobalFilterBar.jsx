@@ -1,9 +1,10 @@
 import { useFilters } from '@/lib/FilterContext';
-import { C, FONT, QUARTERS, DIVISIONS, SegBtn, FilterLabel, FilterDivider, ClearFiltersButton } from './DashboardSystem';
+import { yearOptions } from '@/lib/fiscalYear';
+import { C, FONT, QUARTERS, DIVISIONS, SegBtn, FilterLabel, FilterDivider, ClearFiltersButton, YearFilter } from './DashboardSystem';
 
 export default function GlobalFilterBar() {
-  const { quarters, divisions, toggleQuarter, toggleDivision, clearFilters } = useFilters();
-  const hasActive = quarters.length > 0 || divisions.length > 0;
+  const { year, setYear, fiscalYear, quarters, divisions, toggleQuarter, toggleDivision, clearFilters, hasActiveFilters: hasActive } = useFilters();
+  const summary = [...(year !== fiscalYear ? [year === 'All' ? 'All years' : String(year)] : []), ...quarters, ...divisions];
 
   return (
     <div style={{
@@ -13,6 +14,10 @@ export default function GlobalFilterBar() {
       borderBottom: `1px solid ${C.border}`,
       fontFamily: FONT,
     }}>
+
+      <YearFilter value={year} onChange={setYear} years={yearOptions(fiscalYear)} />
+
+      <FilterDivider />
 
       {/* Quarter */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -42,7 +47,7 @@ export default function GlobalFilterBar() {
           <FilterDivider />
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: 12, color: C.brand, fontWeight: 600 }}>
-              {[...quarters, ...divisions].join(' · ')}
+              {summary.join(' · ')}
             </span>
             <ClearFiltersButton onClick={clearFilters} />
           </div>

@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { FolderKanban, Target, Package, CheckCircle, Clock } from 'lucide-react';
 import DashboardFilters from '../components/ui/DashboardFilters';
+import { useFilters } from '@/lib/FilterContext';
 import {
   C, FONT, PageHeader, DashboardPanel, KPIBand, KPITile, chartTickSmall, chartTooltipStyle, chartGridStroke
 } from '@/components/ui/DashboardSystem';
@@ -22,7 +23,8 @@ const statusBadgeClass = {
 };
 
 export default function ProjectPerformance() {
-  const [year, setYear] = useState(new Date().getFullYear());
+  // Year comes from the app-wide filter so it matches the filter bar.
+  const { year, setYear } = useFilters();
   const [quarters, setQuarters] = useState([]);
   const [divisions, setDivisions] = useState([]);
   const [projectId, setProjectId] = useState('All');

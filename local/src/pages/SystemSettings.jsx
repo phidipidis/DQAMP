@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
+import { calendarYear } from '@/lib/fiscalYear';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { C, FONT, PageHeader, DashboardPanel } from '@/components/ui/DashboardSystem';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 export default function SystemSettings() {
   const queryClient = useQueryClient();
   const { data: settings = [] } = useQuery({ queryKey: ['systemSettings'], queryFn: () => base44.entities.SystemSetting.list() });
-  const [fiscal, setFiscal] = useState({ startMonth: 'January', endMonth: 'December', currentYear: '2026' });
+  const [fiscal, setFiscal] = useState({ startMonth: 'January', endMonth: 'December', currentYear: String(calendarYear()) });
   const [theme, setTheme] = useState({ primaryColor: '#1B2A8F', fontScale: 'Standard' });
   const [messaging, setMessaging] = useState({ bannerText: '', bannerEnabled: false, supportEmail: 'dqamp.support@depedlucena.ph' });
   const [saved, setSaved] = useState(null);
@@ -42,10 +43,13 @@ export default function SystemSettings() {
     }
   };
 
+  const fiscalYearValid = /^\d{4}$/.test(String(fiscal.currentYear).trim());
+
   const saveFiscal = async () => {
+    if (!fiscalYearValid) return;
     await upsert('fiscal_start_month', fiscal.startMonth, 'Fiscal', 'Fiscal year start month');
     await upsert('fiscal_end_month', fiscal.endMonth, 'Fiscal', 'Fiscal year end month');
-    await upsert('fiscal_current_year', fiscal.currentYear, 'Fiscal', 'Current fiscal year');
+    await upsert('fiscal_current_year', String(fiscal.currentYear).trim(), 'Fiscal', 'Current fiscal year');
     await queryClient.invalidateQueries({ queryKey: ['systemSettings'] });
     setSaved('fiscal'); setTimeout(() => setSaved(null), 2000);
   };
@@ -84,8 +88,16 @@ export default function SystemSettings() {
                   <SelectContent>{MONTHS.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
-              <div><Label>Current fiscal year</Label><Input value={fiscal.currentYear} onChange={e => setFiscal({ ...fiscal, currentYear: e.target.value })} placeholder="2026" /></div>
-              <Button onClick={saveFiscal} variant="primary" size="sm" style={{ alignSelf: 'flex-start' }}>{saved === 'fiscal' ? <><CheckCircle2 size={14} /> Saved</> : <><Save size={14} /> Save fiscal settings</>}</Button>
+              <div>
+                <Label htmlFor="fiscal-current-year">Current fiscal year</Label>
+                <Input id="fiscal-current-year" inputMode="numeric" maxLength={4} value={fiscal.currentYear} onChange={e => setFiscal({ ...fiscal, currentYear: e.target.value })} placeholder={String(calendarYear())} aria-describedby="fiscal-year-help" aria-invalid={!fiscalYearValid} />
+                <p id="fiscal-year-help" style={{ fontSize: 12, marginTop: 6, color: fiscalYearValid ? C.muted : C.danger }}>
+                  {fiscalYearValid
+                    ? 'Dashboards, reports and new records start in this year. Change it when the new fiscal year begins.'
+                    : 'Enter a four-digit year, for example 2027.'}
+                </p>
+              </div>
+              <Button onClick={saveFiscal} disabled={!fiscalYearValid} variant="primary" size="sm" style={{ alignSelf: 'flex-start' }}>{saved === 'fiscal' ? <><CheckCircle2 size={14} /> Saved</> : <><Save size={14} /> Save fiscal settings</>}</Button>
             </div>
           </div>
         </DashboardPanel>

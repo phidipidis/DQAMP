@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFilters } from '@/lib/FilterContext';
+import { yearOf } from '@/lib/fiscalYear';
 import { Download, FileText } from 'lucide-react';
 import { createDoc, drawReportHeader, drawSummaryStats, drawSectionHeading, drawTable, drawFooter } from '@/lib/pdfReportTemplate';
 
 export default function ARTACSMSummary() {
-  const { quarters, divisions } = useFilters();
+  const { year, quarters, divisions } = useFilters();
   const [selectedUnit, setSelectedUnit] = useState('All');
   const [selectedCustomerType, setSelectedCustomerType] = useState('All');
 
@@ -31,6 +32,10 @@ export default function ARTACSMSummary() {
 
   // Filter feedback using global filters + local filters
   const filteredFeedback = feedback.filter(item => {
+    if (year !== 'All') {
+      const itemYear = item.Year || yearOf(item.Survey_Date || item.created_date);
+      if (itemYear && Number(itemYear) !== year) return false;
+    }
     if (quarters.length > 0 && !quarters.includes(item.Quarter)) return false;
     if (selectedUnit !== 'All' && item.Operating_Unit !== selectedUnit) return false;
     if (selectedCustomerType !== 'All' && item.Customer_Type !== selectedCustomerType) return false;
@@ -99,7 +104,7 @@ export default function ARTACSMSummary() {
     ? scoredItems.reduce((sum, item) => sum + parseFloat(item.average_sqd_score) * item.total_respondents, 0) / totalRespondentsWithScore
     : 0;
 
-  const quarterLabel = quarters.length === 0 ? 'AllQuarters' : quarters.join('-');
+  const quarterLabel = `${year === 'All' ? 'AllYears' : year}_${quarters.length === 0 ? 'AllQuarters' : quarters.join('-')}`;
 
   // Export to CSV
   const exportToCSV = () => {
@@ -126,7 +131,7 @@ export default function ARTACSMSummary() {
   // Export summary PDF (all activities)
   const exportToPDF = () => {
     const doc = createDoc('landscape');
-    const period = quarters.length === 0 ? 'All Quarters' : quarters.join(', ');
+    const period = `${quarters.length === 0 ? 'All Quarters' : quarters.join(', ')} ${year === 'All' ? '(all years)' : year}`;
     let y = drawReportHeader(doc, {
       reportTitle: 'ARTA Client Satisfaction Measurement (CSM) Summary',
       reportSubtitle: 'ARTA Memorandum Circular 2022-05',
@@ -160,7 +165,7 @@ export default function ARTACSMSummary() {
     });
 
     const doc = createDoc('portrait');
-    const period = quarters.length === 0 ? 'All Quarters' : quarters.join(', ');
+    const period = `${quarters.length === 0 ? 'All Quarters' : quarters.join(', ')} ${year === 'All' ? '(all years)' : year}`;
     let y = drawReportHeader(doc, {
       reportTitle: 'ARTA CSM – Activity Feedback Report',
       reportSubtitle: 'ARTA MC 2022-05',

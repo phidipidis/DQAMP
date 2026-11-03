@@ -33,13 +33,14 @@ import {
 } from "@/components/ui/dialog";
 import { Plus, Search, Edit, Trash2, CheckCircle } from 'lucide-react';
 import { useFilters } from '@/lib/FilterContext';
+import { yearOf } from '@/lib/fiscalYear';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
 export default function Outputs() {
-  const { divisions } = useFilters();
+  const { year, divisions } = useFilters();
   const [searchTerm, setSearchTerm] = useState('');
   const [projectFilter, setProjectFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
@@ -153,10 +154,15 @@ export default function Outputs() {
     const matchesSearch = output.Output_Description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesProject = projectFilter === 'All' || output.Linked_Project === projectFilter;
     const matchesStatus = statusFilter === 'All' || output.Output_Verification_Status === statusFilter;
+    const proj = projects.find(p => p.id === output.Linked_Project);
     // Global division filter: match via linked project's division
     if (divisions.length > 0) {
-      const proj = projects.find(p => p.id === output.Linked_Project);
       if (!proj || !divisions.includes(proj.Functional_Division)) return false;
+    }
+    // Global year filter: the output's own date, else its project's start
+    if (year !== 'All') {
+      const outputYear = yearOf(output.Target_Date || output.Due_Date || proj?.Project_Start_Date || output.created_date);
+      if (outputYear !== null && outputYear !== year) return false;
     }
     return matchesSearch && matchesProject && matchesStatus;
   });

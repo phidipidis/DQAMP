@@ -5,6 +5,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { MessageSquareText, Users, Building2, ThumbsUp, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DashboardFilters from '../components/ui/DashboardFilters';
+import { useFilters } from '@/lib/FilterContext';
+import { yearOf } from '@/lib/fiscalYear';
 import {
   C, FONT, PageHeader, DashboardPanel, KPIBand, KPITile,
   DashboardTable, chartTickSmall, chartTooltipStyle, chartGridStroke
@@ -13,7 +15,8 @@ import {
 const COLORS = [C.brand, C.accent, C.warningBar, C.successBar, C.dangerBar];
 
 export default function ARTADashboard() {
-  const [year, setYear] = useState(new Date().getFullYear());
+  // Year comes from the app-wide filter so it matches the filter bar.
+  const { year, setYear } = useFilters();
   const [quarter, setQuarter] = useState('All');
   const [division, setDivision] = useState('All');
   const [projectId, setProjectId] = useState('All');
@@ -29,7 +32,7 @@ export default function ARTADashboard() {
     if (division !== 'All' && activity.Functional_Division !== division) return false;
     if (projectId !== 'All' && activity.Linked_Project !== projectId) return false;
     if (year !== 'All' && fb.created_date) {
-      const fbYear = new Date(fb.created_date).getFullYear();
+      const fbYear = yearOf(fb.created_date);
       if (fbYear !== year) return false;
     }
     if (quarter !== 'All' && fb.created_date) {

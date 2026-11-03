@@ -1,4 +1,4 @@
-# DQAMP 2026 — local version
+# DQAMP — local version
 
 Runs on your own Windows PC at http://127.0.0.1:3002. Data stays in `data\dqamp.db` on this computer.
 

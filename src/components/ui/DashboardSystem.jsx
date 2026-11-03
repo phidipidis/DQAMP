@@ -292,6 +292,30 @@ export function DashboardTable({ headers, rows, emptyMessage = null, renderRow }
   );
 }
 
+// ── Year filter (label + select) ──────────────────────────────────────────────
+// value is a year number or 'All'; years is the list of years to offer.
+export function YearFilter({ value, onChange, years, allowAll = true }) {
+  const options = years.includes(value) || value === 'All' ? years : [...years, value].sort();
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <FilterLabel>Year</FilterLabel>
+      <select
+        aria-label="Year"
+        value={String(value)}
+        onChange={e => onChange(e.target.value === 'All' ? 'All' : parseInt(e.target.value, 10))}
+        style={{
+          ...fontFam, border: `1px solid ${C.border}`, borderRadius: 6,
+          padding: '5px 10px', fontSize: 13, fontWeight: 500,
+          color: C.neutral, background: C.surface, outline: 'none', cursor: 'pointer',
+        }}
+      >
+        {allowAll && <option value="All">All years</option>}
+        {options.map(y => <option key={y} value={String(y)}>{y}</option>)}
+      </select>
+    </div>
+  );
+}
+
 // ── Clear filters button ──────────────────────────────────────────────────────
 export function ClearFiltersButton({ onClick }) {
   return (

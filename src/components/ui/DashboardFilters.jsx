@@ -1,3 +1,4 @@
+import { useFiscalYear, yearOptions } from '@/lib/fiscalYear';
 import { C, FONT, QUARTERS, DIVISIONS, SegBtn, FilterLabel, FilterDivider, ClearFiltersButton } from './DashboardSystem';
 
 /**
@@ -11,8 +12,8 @@ export default function DashboardFilters({
   projectId, setProjectId,
   projects = []
 }) {
-  const currentYear = new Date().getFullYear();
-  const years = [currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+  const fiscalYear = useFiscalYear();
+  const years = yearOptions(fiscalYear);
 
   const toggleQuarter = (q) => {
     setQuarters(prev => prev.includes(q) ? prev.filter(x => x !== q) : [...prev, q]);
@@ -22,10 +23,10 @@ export default function DashboardFilters({
     setDivisions(prev => prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d]);
   };
 
-  const hasActiveFilters = quarters.length > 0 || divisions.length > 0 || year !== 'All' || projectId !== 'All';
+  const hasActiveFilters = quarters.length > 0 || divisions.length > 0 || year !== fiscalYear || projectId !== 'All';
 
   const clearAll = () => {
-    setYear('All');
+    setYear(null); // back to the fiscal year
     setQuarters([]);
     setDivisions([]);
     setProjectId('All');
